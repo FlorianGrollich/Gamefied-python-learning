@@ -11,4 +11,21 @@ git clone https://github.com/FlorianGrollich/Banana.git
 
 ### Install dependencies
 ``` bash
+````
+
+## Run the Project
+### Run both backend and frontend
+``` bash
+npm start
+````
+
+### Run only the backend
+``` bash
+npm run server
+````
+
+### Run only the frontend
+``` bash
+npm run frontend
+````
 
