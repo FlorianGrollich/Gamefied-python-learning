@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "concurrently \"yarn workspace server start\" \"yarn workspace frontend start\"",
+    "start": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "cd server && npm start",
     "frontend": "cd frontend && npm start"
   },
