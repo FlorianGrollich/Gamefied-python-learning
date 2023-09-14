@@ -1,0 +1,19 @@
+{
+  "name": "banana",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"yarn workspace server start\" \"yarn workspace frontend start\"",
+    "server": "cd server && npm start",
+    "frontend": "cd frontend && npm start"
+  },
+  "workspaces": [
+    "server",
+    "frontend"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
