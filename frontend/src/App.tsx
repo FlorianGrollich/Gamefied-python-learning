@@ -2,7 +2,6 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 function App() {
-
     return (
         <div className="App">
             <nav className="bg-blue-400 p-4 fixed top-0 w-full">
