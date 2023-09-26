@@ -2,6 +2,12 @@
 
 ## 1. Overview
 
+This documentation introduces Python Playground, a gamified Python learning application for children aged 8 - 16. The game mechanics work by dragging and dropping text boxes into the correct order. These text boxes are logical blocks that represent Python code. If the correct blocks are placed in the correct sequence, a figure moves along a maze.
+
+Python Playground offers children a wide range of challenges, with games of varying complexity. Game sessions are saved automatically and can be shared with other users, e.g., with teachers. These other users can comment and suggest improvements.
+
+Python Playground is a web application that integrates game logic, a user-friendly interface, backend server handling data storage, and collaboration features.
+
 ## 2. Architecture
 
 ### Frontend
