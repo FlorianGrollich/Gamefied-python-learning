@@ -36,15 +36,13 @@ Python Playground is a web application that integrates game logic, a user-friend
 
 ## 8. Setup & Installation
 
-## 9. Contribution Guidelines
-
-## 10. Diagrams
+## 9. Diagrams
 
 - **System Architecture Diagrams**
 - **Data Flow Diagrams**
 - **Visual Aids**
 
-## 11. References
+## 10. References
 
 - **Libraries**
 - **Frameworks**
