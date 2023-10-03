@@ -1,7 +1,7 @@
 FROM node:14
 WORKDIR /usr/src/app
-COPY ./backend/package*.json ./
+COPY ./package*.json ./
 RUN npm install
-COPY ./backend/ ./
+COPY ./ ./
 EXPOSE 3000
 CMD ["node", "index.ts"]

@@ -1,9 +1,9 @@
 # Stage 1: Build the React application
 FROM node:14 AS build
 WORKDIR /usr/src/app
-COPY ./frontend/package*.json ./
+COPY ./package*.json ./
 RUN npm install
-COPY ./frontend/ ./
+COPY ./ ./
 RUN npm run build
 
 # Stage 2: Serve the React application from Nginx
