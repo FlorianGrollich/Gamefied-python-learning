@@ -1,5 +1,5 @@
 import React from 'react';
-import CodeEditor from "./CodeEditor";
+import CodeEditor from "./CodeEditor/CodeEditor";
 function App() {
     return (
         <div className="App">
