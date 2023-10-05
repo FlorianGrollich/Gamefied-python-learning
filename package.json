@@ -15,6 +15,15 @@
   ],
   "devDependencies": {
     "concurrently": "^8.2.1",
-    "tailwindcss": "^3.3.3"
+    "eslint-plugin-flowtype": "^8.0.3",
+    "react-app-rewired": "^2.2.1",
+    "tailwindcss": "^3.3.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.5.2",
+    "eslint-config-react-app": "^7.0.1",
+    "monaco-editor": "^0.43.0",
+    "react-scripts": "^5.0.1"
   }
 }
