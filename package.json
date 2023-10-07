@@ -9,7 +9,8 @@
     "server": "cd server && npm start",
     "frontend": "cd frontend && npm start",
     "lint": "eslint 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'"
   },
   "workspaces": [
     "server",
