@@ -10,7 +10,8 @@
     "frontend": "cd frontend && npm start",
     "lint": "eslint 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'"
+    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'",
+    "lint-format": "eslint 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}' && prettier --write 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'"
   },
   "workspaces": [
     "server",
