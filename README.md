@@ -11,6 +11,7 @@ git clone https://github.com/FlorianGrollich/Banana.git
 
 ### Install dependencies
 ``` bash
+npm install
 ````
 
 ## Run the Project
