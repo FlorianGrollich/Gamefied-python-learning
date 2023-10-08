@@ -29,3 +29,20 @@ npm run server
 npm run frontend
 ````
 
+## Code Quality and Linting
+To check the code for syntax and styling issues, run the following commands before committing:
+
+### ESLint
+```bash
+npm run lint
+```
+
+### Prettier
+```bash
+npm run format
+```
+
+### ESLint + Prettier
+```bash
+npm run lint-format
+```
