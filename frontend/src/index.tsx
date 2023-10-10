@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './config/reportWebVitals';
 import './tailwind.output.css';
-import {editorTheme} from "./CodeEditor/editorTheme";
+import {editorTheme} from "./CodeEditor/utils/editorTheme";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
