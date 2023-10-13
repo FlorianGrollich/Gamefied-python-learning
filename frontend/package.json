@@ -9,7 +9,7 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.50",
     "autoprefixer": "^9.8.8",
-    "postcss": "^6.0.23",
+    "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^2.1.8",
