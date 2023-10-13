@@ -1,4 +1,4 @@
-# Pythong Playground
+# Python Playground
 
 ## Description
 A Project which enables users, especially kids, to learn the basics of programming in a more playful way.
@@ -30,7 +30,6 @@ npm run server
 npm run frontend
 ````
 
-
 ## Code Quality and Linting
 To check the code for syntax and styling issues, run the following commands before committing:
 
@@ -48,7 +47,7 @@ npm run format
 ```bash
 npm run lint-format
 ```
-=======
+
 ## Dependabot Automatic Updates of Dependencies
 
 The following steps need to be followed if Dependabot opens a pull request.
