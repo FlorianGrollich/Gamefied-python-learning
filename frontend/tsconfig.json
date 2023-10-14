@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "types": ["node"],
-    "lib": ["es6", "dom"],
     "target": "es5",
     "lib": [
+      "es6",
       "dom",
       "dom.iterable",
       "esnext"
