@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 cleanup() {
     echo "Caught Signal ... shutting down."
     if [ ! -z "$SERVER_PID" ]; then
@@ -15,12 +17,12 @@ cleanup() {
 
 trap cleanup SIGINT SIGTERM
 
-./dependency-check.sh
+$DIR/dependency-check.sh
 if [ $? -ne 0 ]; then
     exit 1
 fi
 
-./app-startup-check.sh &
+$DIR/app-startup-check.sh &
 
 SERVER_PID=$!
 
