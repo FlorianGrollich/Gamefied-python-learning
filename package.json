@@ -7,7 +7,8 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "cd server && npm start",
-    "frontend": "cd frontend && npm start"
+    "frontend": "cd frontend && npm start",
+    "check": "./scripts/full-check.sh"
   },
   "workspaces": [
     "server",
