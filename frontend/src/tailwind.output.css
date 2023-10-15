@@ -597,6 +597,14 @@ video {
   margin-right: 0.5rem;
 }
 
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.flex {
+  display: flex;
+}
+
 .w-full {
   width: 100%;
 }
@@ -640,11 +648,6 @@ video {
 
 .p-4 {
   padding: 1rem;
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .text-white {
