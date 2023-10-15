@@ -1,16 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import RegistrationPage from './RegistrationPage';
+import RegistrationForm from './RegistrationForm';
 
-const App: React.FC = () => {
+const RegistrationPage: React.FC = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/register" component={RegistrationPage} />
-        <Route path="/" render={() => <h1>Welcome to the Home Page</h1>} />
-      </Switch>
-    </Router>
+    <div>
+      <h2>Register</h2>
+      <RegistrationForm />
+    </div>
   );
 };
 
-export default App;
+export default RegistrationPage;
