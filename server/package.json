@@ -15,6 +15,7 @@
     "ws": "^8.14.2"
   },
   "devDependencies": {
+    "@types/es6-shim": "^0.31.43",
     "@types/ws": "^8.5.7",
     "nodemon": "^3.0.1"
   }
