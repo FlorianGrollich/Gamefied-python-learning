@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<<< HEAD:frontend/src/routes/RegistrationPage/RegistrationPage.tsx
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+========
+import RegistrationForm from '../RegistrationForm/RegistrationForm';
+>>>>>>>> origin/feat/authentication-forms-ui:frontend/src/RegistrationPage/RegistrationPage.tsx
 
 const RegistrationPage: React.FC = () => {
   return (
