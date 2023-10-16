@@ -5,6 +5,7 @@ const LoginForm: React.FC = () => {
     email: '',
     password: '',
   });
+  const [loginStatus, setLoginStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -14,9 +15,21 @@ const LoginForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await response.json();
+    if (data.token) {
+      setLoginStatus('Login successful');
+    } else {
+      setLoginStatus('Login failed');
+    }
   };
 
   return (
@@ -40,6 +53,7 @@ const LoginForm: React.FC = () => {
       <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">
         Login
       </button>
+      {loginStatus && <p>{loginStatus}</p>}
     </form>
   );
 };
