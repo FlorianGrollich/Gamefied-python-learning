@@ -20,14 +20,14 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 space-y-4 mt-16">
+    <form onSubmit={handleSubmit} className="p-4 space-y-4">
       <input 
         type="email" 
         name="email" 
         placeholder="Email" 
         value={formData.email} 
         onChange={handleChange} 
-        className="p-2 border rounded"
+        className="p-2 m-0.5 border rounded"
       />
       <input 
         type="password" 
@@ -35,9 +35,9 @@ const LoginForm: React.FC = () => {
         placeholder="Password" 
         value={formData.password} 
         onChange={handleChange} 
-        className="p-2 border rounded"
+        className="p-2 m-0.5 border rounded"
       />
-      <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+      <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">
         Login
       </button>
     </form>
