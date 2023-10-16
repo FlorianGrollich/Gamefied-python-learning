@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../RegistrationForm/RegistrationForm';
 
 describe('RegistrationForm', () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm from '../../RegistrationForm/RegistrationForm';
 
 describe('RegistrationForm Component', () => {
   test('renders RegistrationForm component', () => {

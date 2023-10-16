@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import LoginForm from '../../components/LoginForm/LoginForm';
+import LoginForm from '../../LoginForm/LoginForm';
 import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 
