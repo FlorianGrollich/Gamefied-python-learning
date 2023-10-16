@@ -14,7 +14,7 @@ const wss = new WebSocketServer({noServer: true});
 
 const PostgresDataSource = new DataSource({
     type: "postgres",
-    host: "db",
+    host: "localhost",
     port: 5432,
     username: "user",
     password: "password",
