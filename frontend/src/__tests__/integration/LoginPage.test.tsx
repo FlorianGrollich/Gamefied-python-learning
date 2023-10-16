@@ -5,6 +5,7 @@ import LoginPage from '../../routes/LoginPage/LoginPage';
 describe('LoginPage Component', () => {
   test('renders LoginPage component', () => {
     render(<LoginPage />);
-    expect(screen.getByText('Login')).toBeInTheDocument();
+    const loginButton = screen.getByRole('button', { name: /login/i });
+    expect(loginButton).toBeInTheDocument();
   });
 });
