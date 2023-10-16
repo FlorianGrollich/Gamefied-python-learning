@@ -28,7 +28,7 @@ const RegistrationForm: React.FC = () => {
         placeholder="Email" 
         value={formData.email} 
         onChange={handleChange} 
-        className="p-2 border rounded"
+        className="p-2 m-0.5 border rounded"
       />
       <input 
         type="password" 
@@ -36,7 +36,7 @@ const RegistrationForm: React.FC = () => {
         placeholder="Password" 
         value={formData.password} 
         onChange={handleChange} 
-        className="p-2 border rounded"
+        className="p-2 m-0.5 border rounded"
       />
       <input 
         type="password" 
@@ -44,9 +44,9 @@ const RegistrationForm: React.FC = () => {
         placeholder="Confirm Password" 
         value={formData.passwordConfirmation} 
         onChange={handleChange} 
-        className="p-2 border rounded"
+        className="p-2 m-0.5 border rounded"
       />
-      <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+      <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">
         Sign Up
       </button>
     </form>
