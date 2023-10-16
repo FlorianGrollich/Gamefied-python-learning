@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders welcome message', () => {
   render(<App />);
-  const welcomeElement = screen.getByText(/Welcome to the Home Page/i);
+  const welcomeElement = screen.getByText(/Python Playground/i);
   expect(welcomeElement).toBeInTheDocument();
 });
