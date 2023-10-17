@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import LoginPage from '../../routes/LoginPage/LoginPage';
+import LoginPage from '../../LoginPage/LoginPage';
 
 describe('LoginPage Component', () => {
   test('renders LoginPage component', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import RegistrationPage from '../../routes/RegistrationPage/RegistrationPage';
+import RegistrationPage from '../../RegistrationPage/RegistrationPage';
 
 describe('RegistrationPage Component', () => {
   test('renders RegistrationPage component', () => {
