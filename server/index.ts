@@ -2,6 +2,7 @@ import express from 'express';
 import {Server as WebSocketServer} from 'ws';
 import {createServer} from 'http';
 import {DataSource} from 'typeorm';
+import {PostgresDataSource} from "./utils/data-source";
 
 const port = 3200;
 
@@ -10,21 +11,6 @@ const app = express();
 const server = createServer(app);
 
 const wss = new WebSocketServer({noServer: true});
-
-
-const PostgresDataSource = new DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "user",
-    password: "password",
-    database: "mydatabase",
-    synchronize: true,
-    logging: false,
-    entities: [
-        "src/entity/**/*.ts"
-    ],
-});
 
 PostgresDataSource.initialize()
     .then(() => {
