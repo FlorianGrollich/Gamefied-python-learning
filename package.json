@@ -10,9 +10,9 @@
     "frontend": "cd frontend && npm start",
     "check": "./scripts/full-check.sh",
     "test": "cd frontend && npm test",
-    "lint": "eslint 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'",
+    "lint": "eslint 'frontend/src/**/*.{ts,tsx}'",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}' 'frontend/src/components/**/*.{ts,tsx}'",
+    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
     "lint-format": "npm run lint -- --fix && npm run format"
   },
   "workspaces": [
@@ -36,7 +36,7 @@
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "typescript": "^3.9.2"
   },
   "dependencies": {
     "postcss": "^8.1.0"
