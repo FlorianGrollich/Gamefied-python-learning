@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
+import GameGrid from "./GameGrid/game-grid";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                         </div>
                     </div>
                 </nav>
+               <GameGrid />
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegistrationPage />} />
