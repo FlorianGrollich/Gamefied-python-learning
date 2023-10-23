@@ -28,3 +28,8 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+.idea/
+.vscode/
+
+package-lock.json
