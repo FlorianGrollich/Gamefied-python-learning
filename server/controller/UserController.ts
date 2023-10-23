@@ -19,7 +19,7 @@ export class UserController {
         })
 
         if (!user) {
-            return "unregistered user"
+            return response.status(404).json({ error: "Unregistered user" });
         }
         return user
     }
