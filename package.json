@@ -7,18 +7,28 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "cd server && npm start",
-    "frontend": "cd frontend && npm start"
+    "frontend": "cd frontend && npm start",
+    "check": "./scripts/full-check.sh",
+    "test": "cd frontend && npm test",
+    "lint": "eslint 'frontend/src/**/*.{ts,tsx}'",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
+    "lint-format": "npm run lint -- --fix && npm run format",
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "workspaces": [
     "server",
     "frontend"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "concurrently": "^8.2.1",
     "eslint-plugin-flowtype": "^8.0.3",
     "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.3.3",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "@types/node": "^20.8.4"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
