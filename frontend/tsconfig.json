@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "jest"],
     "target": "es5",
     "lib": ["es6", "dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -20,5 +20,5 @@
   },
   "include": [
     "src/**/*"
-  ]
+, "src/config/setupTests.ts"  ]
 }

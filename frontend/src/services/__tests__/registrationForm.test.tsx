@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import RegistrationForm from '../../RegistrationForm/RegistrationForm'
+import fetchMock from 'jest-fetch-mock';
 
 describe('RegistrationForm', () => {
   beforeEach(() => {
