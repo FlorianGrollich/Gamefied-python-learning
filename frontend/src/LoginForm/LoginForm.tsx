@@ -5,7 +5,7 @@ const LoginForm: React.FC = () => {
     email: '',
     password: '',
   });
-  const [loginStatus, setLoginStatus] = useState<string | null>(null);
+  const [loginStatus, setLoginStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,35 +17,19 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const response = await fetch('http://backend-url/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
-      switch (response.status) {
-        case 200: {
-          const data = await response.json();
-          if (data.token) {
-            localStorage.setItem('token', data.token);
-            setLoginStatus('Login successful');
-          } else {
-            setLoginStatus('Login failed');
-          }
-          break;
-        }
-        case 401:
-          setLoginStatus('Invalid email or password');
-          break;
-        case 404:
-          setLoginStatus('Endpoint not found');
-          break;
-        default:
-          setLoginStatus('An error occurred. Please try again later.');
+      const data = await response.json();
+      if (data.token) {
+        setLoginStatus('Login successful');
+      } else {
+        setLoginStatus('Login failed');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -73,13 +57,11 @@ const LoginForm: React.FC = () => {
       />
       <button
         type="submit"
-        className="p-2 m-0.5 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="p-2 m-0.5 bg-blue-500 text-white rounded"
       >
         Login
       </button>
-      {loginStatus && (
-        <p className="text-red-500">{loginStatus}</p>
-      )}
+      {loginStatus && <p>{loginStatus}</p>}
     </form>
   );
 };
