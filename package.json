@@ -22,6 +22,7 @@
   ],
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
+    "@types/bcrypt": "^5.0.1",
     "@types/node": "^20.8.4",
     "concurrently": "^8.2.1",
     "react-app-rewired": "^2.2.1",
