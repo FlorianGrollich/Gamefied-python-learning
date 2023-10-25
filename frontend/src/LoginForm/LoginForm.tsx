@@ -27,14 +27,25 @@ const LoginForm: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      if (response.status === 200) {
-        setLoginStatus('Login successful');
-      } else if (response.status === 401) {
-        setLoginStatus('Invalid email or password');
-      } else if (response.status === 404) {
-        setLoginStatus('Endpoint not found');
-      } else {
-        setLoginStatus('An error occurred. Please try again later.');
+      switch (response.status) {
+        case 200: {
+          const data = await response.json();
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+            setLoginStatus('Login successful');
+          } else {
+            setLoginStatus('Login failed');
+          }
+          break;
+        }
+        case 401:
+          setLoginStatus('Invalid email or password');
+          break;
+        case 404:
+          setLoginStatus('Endpoint not found');
+          break;
+        default:
+          setLoginStatus('An error occurred. Please try again later.');
       }
     } catch (error) {
       console.error('Login error:', error);
