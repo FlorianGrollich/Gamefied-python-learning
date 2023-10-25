@@ -3,6 +3,9 @@ import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { PostgresDataSource } from "../utils/data-source";
 import { User } from "../entity/User";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export class AuthController {
 
@@ -12,7 +15,6 @@ export class AuthController {
         try {
             const { email, password } = request.body;
 
-            // Use the `where` property for the email condition
             const user = await this.userRepository.findOne({ where: { email } });
             if (!user) {
                 return response.status(401).json({ error: "Invalid email or password" });
@@ -23,7 +25,12 @@ export class AuthController {
                 return response.status(401).json({ error: "Invalid email or password" });
             }
 
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const secret = process.env.JWT_SECRET;
+            if (!secret) {
+                throw new Error('JWT_SECRET is not defined in .env file');
+            }
+
+            const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
             return response.json({ token });
         } catch (error) {
             console.error(error);
