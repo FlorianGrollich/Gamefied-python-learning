@@ -1,7 +1,27 @@
 # Python Playground
 
+## Table of Contents
+
+1. [Description](#description)
+2. [Setup](#setup)
+   - [Clone the Project](#clone-the-project)
+   - [Install dependencies](#install-dependencies)
+3. [Run the Project](#run-the-project)
+   - [Run both backend and frontend](#run-both-backend-and-frontend)
+   - [Run only the backend](#run-only-the-backend)
+   - [Run only the frontend](#run-only-the-frontend)
+4. [Code Quality and Dependencies Check](#code-quality-and-dependencies-check)
+   - [Code Quality and Styling (ESLint + Prettier)](#code-quality-and-styling-eslint--prettier)
+   - [Dependencies Check](#dependencies-check)
+   - [Dependencies Fix](#dependencies-fix)
+5. [Run Tests](#run-tests)
+   - [Run All Tests](#run-all-tests)
+6. [Review Dependabot Dependency Updates](#review-dependabot-dependency-updates)
+
 ## Description
-A project which enables users, especially kids, to learn the basics of programming in a more playful way.
+
+A Project which enables users, especially kids, to learn the basics of programming in a more playful way.
+
 
 ## Setup
 
@@ -37,6 +57,7 @@ npm run frontend
 ````
 
 ## Code Quality and Dependencies Check
+
 To check the code for syntax and dependencies issues, run the following commands before committing:
 
 ### Code Quality and Styling (ESLint + Prettier)
@@ -55,29 +76,30 @@ npm run check
 npm audit fix
 ```
 
-## Dependabot Automatic Updates of Dependencies
+## Run Tests
+
+### Run All Tests
+To run all tests across the unit, integration, and API layers enter:
+```bash
+npm run test
+```
+
+## Review Dependabot Dependency Updates
 
 The following steps need to be followed if Dependabot opens a pull request.
 
-### 1) Local Testing:
-
-- **Checkout the branch created by Dependabot.**
+**1) **Checkout the branch created by Dependabot:****
   ```bash
   git checkout dependabot/npm_and_yarn/your-dependency-version
   ```
 
-- **Run tests locally** to ensure that the update does not introduce issues.
+**2) Run tests locally** to ensure that the update does not introduce issues:
   ```bash
   npm run check
   ```
 
-- **Test the application manually** if needed.
+**3) Test the application manually if needed.**
 
-### 2) Review Changes:
+**4) Go through changelog of updated dependency and check for breaking changes.**
 
-- Go through the changelog of the updated dependency.
-- Ensure that there are no breaking changes.
-
-### 3) Merge the PR:
-
-- If everything works well, merge the pull request.
+**5) Merge the PR.**
