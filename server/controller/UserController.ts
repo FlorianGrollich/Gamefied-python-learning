@@ -13,7 +13,9 @@ export class UserController {
     async one(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id);
 
-        const user = await this.userRepository.findOne({ where: { id: id } });
+        const user = await this.userRepository.findOne({
+            where: { id }
+        });
 
         if (!user) {
             return response.status(404).json({ error: "Unregistered user" });
@@ -21,28 +23,28 @@ export class UserController {
         return user;
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
+    async register(request: Request, response: Response, next: NextFunction) {
         const { username, email, password } = request.body;
+
+        const existingUser = await this.userRepository.findOne({ where: [{ email }, { username }] });
+        if (existingUser) {
+            return response.status(400).json({ error: "User with the provided email or username already exists" });
+        }
 
         const user = new User();
         user.username = username;
         user.email = email;
         user.setPassword(password);
 
-        try {
-            await this.userRepository.save(user);
-            return response.status(201).json({ message: "User created successfully" });
-        } catch (error) {
-            console.error(error);
-            return response.status(500).json({ error: "Internal Server Error" });
-        }
+        await this.userRepository.save(user);
+
+        return response.status(201).json({ message: "User registered successfully" });
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id);
 
         let userToRemove = await this.userRepository.findOne({ where: { id: id } });
-
         if (!userToRemove) {
             return response.status(404).json({ error: "User not found" });
         }
