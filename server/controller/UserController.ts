@@ -7,7 +7,8 @@ export class UserController {
     private userRepository = PostgresDataSource.getRepository(User);
 
     async all(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.find();
+        const users = await this.userRepository.find();
+        return response.json(users);
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
@@ -20,7 +21,7 @@ export class UserController {
         if (!user) {
             return response.status(404).json({ error: "Unregistered user" });
         }
-        return user;
+        return response.json(user);
     }
 
     async register(request: Request, response: Response, next: NextFunction) {
