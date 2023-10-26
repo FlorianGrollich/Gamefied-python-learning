@@ -8,7 +8,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": ["express"]
   },
   "include": [
     "*.ts"
