@@ -1,38 +1,38 @@
 require('dotenv').config();
 
-import express from "express";
+import cors from 'cors';
+import express, { Request, Response, NextFunction } from 'express';
 import * as bodyParser from "body-parser";
-import {Routes} from "./routes";
-import {Request, Response} from "express";
-import {createServer} from "http";
-import {Server as WebSocketServer} from "ws";
-import {PostgresDataSource} from "./utils/data-source";
-import {User} from "./entity/User";
+import { Routes } from "./routes";
+import { createServer } from "http";
+import { Server as WebSocketServer } from "ws";
+import { PostgresDataSource } from "./utils/data-source";
+import { User } from "./entity/User";
+
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
 PostgresDataSource.initialize().then(async () => {
 
-    // create express app
-    const app = express()
-    app.use(bodyParser.json())
-
-    // register express routes from defined application routes
     Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next)
+        (app as any)[route.method](route.route, (req: Request, res: Response<any>, next: NextFunction) => {
+            const controllerInstance = new route.controller();
+            const actionMethod = controllerInstance[route.action as keyof typeof controllerInstance] as (req: Request, res: Response, next: NextFunction) => Promise<any> | any;
+            const result = actionMethod(req, res, next);
             if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
-
+                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
             } else if (result !== null && result !== undefined) {
-                res.json(result)
+                res.json(result);
             }
-        })
-    })
+        });
+    });    
 
     const port = 3200;
 
     const server = createServer(app);
 
-    const wss = new WebSocketServer({noServer: true});
+    const wss = new WebSocketServer({ noServer: true });
 
     wss.on('connection', (ws) => {
         console.log('Client connected');
@@ -58,16 +58,14 @@ PostgresDataSource.initialize().then(async () => {
         console.log(`Server listening on port:${port}`);
     });
 
-
-
     // insert new users for test
     await PostgresDataSource.manager.save(
         PostgresDataSource.manager.create(User, {
             username: "username",
             email: "email",
         })
-    )
+    );
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
+    console.log("Express server has started on port 3200. Open http://localhost:3200/users to see results");
 
-}).catch(error => console.log(error))
+}).catch(error => console.log(error));
