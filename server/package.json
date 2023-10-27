@@ -8,11 +8,15 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.9.1",
+    "typeorm": "^0.3.17",
     "typescript": "^5.2.2",
     "ws": "^8.14.2"
   },
   "devDependencies": {
+    "@types/es6-shim": "^0.31.43",
     "@types/ws": "^8.5.7",
     "nodemon": "^3.0.1"
   }
