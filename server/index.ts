@@ -58,14 +58,6 @@ PostgresDataSource.initialize().then(async () => {
         console.log(`Server listening on port:${port}`);
     });
 
-    // insert new users for test
-    await PostgresDataSource.manager.save(
-        PostgresDataSource.manager.create(User, {
-            username: "username",
-            email: "email",
-        })
-    );
-
     console.log("Express server has started on port 3200. Open http://localhost:3200/users to see results");
 
 }).catch(error => console.log(error));
