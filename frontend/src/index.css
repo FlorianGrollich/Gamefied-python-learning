@@ -16,3 +16,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
+.grid-row {
+  @apply flex;
+}
+
+.cell {
+  @apply p-4 border border-gray-200;
+}
+
+
+
