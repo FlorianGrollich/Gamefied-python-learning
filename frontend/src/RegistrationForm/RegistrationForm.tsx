@@ -17,28 +17,28 @@ const RegistrationForm: React.FC = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-        const response = await fetch('http://localhost:3200/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+      const response = await fetch('http://localhost:3200/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-        const data = await response.json();
-        if (response.status === 201) {
-            setRegistrationStatus('Registration successful');
-        } else {
-            setRegistrationStatus(data.error);
-        }
+      const data = await response.json()
+      if (response.status === 201) {
+        setRegistrationStatus('Registration successful')
+      } else {
+        setRegistrationStatus(data.error)
+      }
     } catch (error) {
-        console.error('Registration error:', error);
-        setRegistrationStatus('An error occurred. Please try again later.');
+      console.error('Registration error:', error)
+      setRegistrationStatus('An error occurred. Please try again later.')
     }
-  };
+  }
 
   return (
     <div>

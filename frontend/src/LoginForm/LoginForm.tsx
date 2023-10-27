@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  });
-  const [loginStatus, setLoginStatus] = useState('');
+  })
+  const [loginStatus, setLoginStatus] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -24,18 +24,18 @@ const LoginForm: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
-      const data = await response.json();
+      })
+      const data = await response.json()
       if (data.token) {
-        setLoginStatus('Login successful');
+        setLoginStatus('Login successful')
       } else {
-        setLoginStatus('Login failed');
+        setLoginStatus('Login failed')
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setLoginStatus('An error occurred. Please try again later.');
+      console.error('Login error:', error)
+      setLoginStatus('An error occurred. Please try again later.')
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="p-4 space-y-4">
@@ -63,7 +63,7 @@ const LoginForm: React.FC = () => {
       </button>
       {loginStatus && <p>{loginStatus}</p>}
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
