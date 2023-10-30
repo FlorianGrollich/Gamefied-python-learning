@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from "typeorm";
 import * as bcrypt from 'bcrypt';
 
 @Entity()
@@ -15,23 +15,11 @@ export class User {
     @Column()
     hashedPassword: string;
 
-    private plainPassword?: string;
-
     setPassword(password: string) {
-        this.plainPassword = password;
+        this.hashedPassword = bcrypt.hashSync(password, 12);
     }
 
-    async validatePassword(password: string): Promise<boolean> {
-        return bcrypt.compare(password, this.hashedPassword);
-    }
-
-    @BeforeInsert()
-    @BeforeUpdate()
-    private async hashPassword() {
-        if (this.plainPassword) {
-            const salt = await bcrypt.genSalt(12);
-            this.hashedPassword = await bcrypt.hash(this.plainPassword, salt);
-            this.plainPassword = undefined;
-        }
+    validatePassword(password: string): boolean {
+        return bcrypt.compareSync(password, this.hashedPassword);
     }
 }
