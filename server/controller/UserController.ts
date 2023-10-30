@@ -6,6 +6,24 @@ export class UserController {
 
     private userRepository = PostgresDataSource.getRepository(User);
 
+    async register(request: Request, response: Response, next: NextFunction) {
+        const { username, email, password } = request.body;
+
+        const existingUser = await this.userRepository.findOne({ where: { email } });
+        if (existingUser) {
+            return response.status(400).json({ error: "User with the provided email already exists" });
+        }
+
+        const user = new User();
+        user.username = username;
+        user.email = email;
+        user.setPassword(password);
+
+        await this.userRepository.save(user);
+
+        return response.status(201).json({ message: "User registered successfully" });
+    }
+
     async all(request: Request, response: Response, next: NextFunction) {
         const users = await this.userRepository.find();
         return response.json(users);
@@ -22,24 +40,6 @@ export class UserController {
             return response.status(404).json({ error: "Unregistered user" });
         }
         return response.json(user);
-    }
-
-    async register(request: Request, response: Response, next: NextFunction) {
-        const { username, email, password } = request.body;
-
-        const existingUser = await this.userRepository.findOne({ where: [{ email }, { username }] });
-        if (existingUser) {
-            return response.status(400).json({ error: "User with the provided email or username already exists" });
-        }
-
-        const user = new User();
-        user.username = username;
-        user.email = email;
-        user.setPassword(password);
-
-        await this.userRepository.save(user);
-
-        return response.status(201).json({ message: "User registered successfully" });
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
