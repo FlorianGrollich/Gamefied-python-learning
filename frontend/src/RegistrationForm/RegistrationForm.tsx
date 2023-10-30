@@ -1,23 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const RegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
+    username: '',
     email: '',
     password: '',
     passwordConfirmation: '',
-  })
-  const [registrationStatus, setRegistrationStatus] = useState('')
+  });
+  const [registrationStatus, setRegistrationStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    if (formData.password !== formData.passwordConfirmation) {
+      setRegistrationStatus('Passwords do not match.');
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:3200/api/register', {
@@ -26,23 +32,32 @@ const RegistrationForm: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
       if (response.status === 201) {
-        setRegistrationStatus('Registration successful')
+        setRegistrationStatus('Registration successful');
       } else {
-        setRegistrationStatus(data.error)
+        setRegistrationStatus(data.error);
       }
     } catch (error) {
-      console.error('Registration error:', error)
-      setRegistrationStatus('An error occurred. Please try again later.')
+      console.error('Registration error:', error);
+      setRegistrationStatus('An error occurred. Please try again later.');
     }
-  }
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          className="p-2 m-0.5 border rounded"
+          required
+        />
         <input
           type="email"
           name="email"
@@ -50,6 +65,7 @@ const RegistrationForm: React.FC = () => {
           value={formData.email}
           onChange={handleChange}
           className="p-2 m-0.5 border rounded"
+          required
         />
         <input
           type="password"
@@ -58,6 +74,7 @@ const RegistrationForm: React.FC = () => {
           value={formData.password}
           onChange={handleChange}
           className="p-2 m-0.5 border rounded"
+          required
         />
         <input
           type="password"
@@ -66,6 +83,7 @@ const RegistrationForm: React.FC = () => {
           value={formData.passwordConfirmation}
           onChange={handleChange}
           className="p-2 m-0.5 border rounded"
+          required
         />
         <button
           type="submit"
@@ -78,7 +96,7 @@ const RegistrationForm: React.FC = () => {
         <p className="mt-4 text-center">{registrationStatus}</p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default RegistrationForm
+export default RegistrationForm;
