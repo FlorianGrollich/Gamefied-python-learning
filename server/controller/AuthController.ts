@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
-import * as bcrypt from 'bcrypt';
+import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { PostgresDataSource } from "../utils/data-source";
 import { User } from "../entity/User";
@@ -11,16 +10,11 @@ export class AuthController {
 
     private userRepository = PostgresDataSource.getRepository(User);
 
-    async login(request: Request, response: Response, next: NextFunction) {
+    async login(request: Request, response: Response) {
         const { email, password } = request.body;
 
         const user = await this.userRepository.findOne({ where: { email } });
-        if (!user) {
-            return response.status(401).json({ error: "Invalid email or password" });
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.hashedPassword);
-        if (!isPasswordValid) {
+        if (!user || !user.validatePassword(password)) {
             return response.status(401).json({ error: "Invalid email or password" });
         }
 
@@ -30,6 +24,7 @@ export class AuthController {
         }
 
         const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
+
         return response.json({ token });
     }
 }
