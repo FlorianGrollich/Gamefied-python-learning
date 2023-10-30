@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  })
-  const [loginStatus, setLoginStatus] = useState('')
+  });
+  const [loginStatus, setLoginStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -24,18 +25,19 @@ const LoginForm: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
-      const data = await response.json()
+      });
+      const data = await response.json();
       if (data.token) {
-        setLoginStatus('Login successful')
+        localStorage.setItem('token', data.token);
+        setLoginStatus('Login successful');
       } else {
-        setLoginStatus('Login failed')
+        setLoginStatus('Login failed: ' + data.error);
       }
     } catch (error) {
-      console.error('Login error:', error)
-      setLoginStatus('An error occurred. Please try again later.')
+      console.error('Login error:', error);
+      setLoginStatus('An error occurred. Please try again later.');
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="p-4 space-y-4">
@@ -46,6 +48,7 @@ const LoginForm: React.FC = () => {
         value={formData.email}
         onChange={handleChange}
         className="p-2 m-0.5 border rounded"
+        required
       />
       <input
         type="password"
@@ -54,6 +57,7 @@ const LoginForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
         className="p-2 m-0.5 border rounded"
+        required
       />
       <button
         type="submit"
@@ -61,9 +65,9 @@ const LoginForm: React.FC = () => {
       >
         Login
       </button>
-      {loginStatus && <p>{loginStatus}</p>}
+      {loginStatus && <p className="mt-4 text-center">{loginStatus}</p>}
     </form>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
