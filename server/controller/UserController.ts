@@ -3,8 +3,14 @@ import { PostgresDataSource } from "../utils/data-source";
 import { User } from "../entity/User";
 
 export class UserController {
-
     private userRepository = PostgresDataSource.getRepository(User);
+
+    constructor() {
+        this.register = this.register.bind(this);
+        this.all = this.all.bind(this);
+        this.one = this.one.bind(this);
+        this.remove = this.remove.bind(this);
+    }
 
     async register(request: Request, response: Response, next: NextFunction) {
         const { username, email, password } = request.body;
@@ -30,27 +36,24 @@ export class UserController {
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id);
+        const id = request.params.id;
 
-        const user = await this.userRepository.findOne({
-            where: { id }
-        });
-
+        const user = await this.userRepository.findOneBy({ id: parseInt(id) });
         if (!user) {
-            return response.status(404).json({ error: "Unregistered user" });
+            return response.status(404).json({ error: "User not found" });
         }
         return response.json(user);
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id);
+        const id = request.params.id;
 
-        let userToRemove = await this.userRepository.findOne({ where: { id: id } });
+        let userToRemove = await this.userRepository.findOneBy({ id: parseInt(id) });
         if (!userToRemove) {
             return response.status(404).json({ error: "User not found" });
         }
 
         await this.userRepository.remove(userToRemove);
-        return response.status(200).json({ message: "User has been removed" });
+        return response.status(200).json({ message: "User removed successfully" });
     }
 }
