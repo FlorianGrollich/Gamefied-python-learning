@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
+    "axios": "^1.6.0",
     "eslint-config-react-app": "^7.0.1",
     "monaco-editor": "^0.43.0",
     "monaco-languageclient": "^6.5.2",
