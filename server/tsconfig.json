@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "es2019",
     "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./",
     "strict": true,
     "strictPropertyInitialization": false,
     "esModuleInterop": true,
@@ -11,12 +13,14 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["./types", "./node_modules/@types"],
-    "types": ["express"]
+    "types": ["express"],
+    "moduleResolution": "node"
   },
   "include": [
     "*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist"
   ]
 }
