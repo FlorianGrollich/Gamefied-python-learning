@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 
-const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  onLogin: (user: any) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,19 +23,26 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:3200/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
+
+      if (response.headers.get('Content-Length') === '0' || !response.ok) {
+        throw new Error('No content or response not OK');
+      }
+
       const data = await response.json();
+
       if (data.token) {
         localStorage.setItem('token', data.token);
+        onLogin(data.user);
         setLoginStatus('Login successful');
       } else {
-        setLoginStatus('Login failed: ' + data.error);
+        setLoginStatus('Login failed: ' + data.message);
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -59,12 +70,7 @@ const LoginForm: React.FC = () => {
         className="p-2 m-0.5 border rounded"
         required
       />
-      <button
-        type="submit"
-        className="p-2 m-0.5 bg-blue-500 text-white rounded"
-      >
-        Login
-      </button>
+      <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">Login</button>
       {loginStatus && <p className="mt-4 text-center">{loginStatus}</p>}
     </form>
   );
