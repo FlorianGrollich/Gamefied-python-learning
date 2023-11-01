@@ -4,6 +4,10 @@ import { render, fireEvent, screen } from '@testing-library/react'
 import RegistrationForm from '../../RegistrationForm/RegistrationForm'
 
 describe('RegistrationForm Component', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('renders RegistrationForm component', () => {
     render(<RegistrationForm />)
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
