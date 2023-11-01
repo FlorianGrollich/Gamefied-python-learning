@@ -53,7 +53,7 @@
     "@types/react": "^18.2.28",
     "@types/react-dom": "^18.2.10",
     "@types/testing-library__react": "^10.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^5.5.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^29.7.0",
