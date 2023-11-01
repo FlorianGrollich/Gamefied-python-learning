@@ -14,7 +14,7 @@
     "type-check": "tsc --noEmit",
     "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
     "lint-format": "npm run lint -- --fix && npm run format",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
   "workspaces": [
     "server",
@@ -42,6 +42,6 @@
     "monaco-editor": "^0.43.0",
     "monaco-languageclient": "^6.5.2",
     "react-scripts": "^5.0.1",
-    "typescript": "^3.9.10"
+    "typescript": "^4.0.0"
   }
 }
