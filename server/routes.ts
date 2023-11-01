@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express';
 import { UserController } from "./controller/UserController";
 import { AuthController } from "./controller/AuthController";
 

@@ -1,6 +1,6 @@
-const { DataSource } = require("typeorm");
+import { DataSource } from "typeorm";
 
-const PostgresDataSource = new DataSource({
+export const PostgresDataSource = new DataSource({
     type: "postgres",
     host: process.env.DB_HOST || "localhost",
     port: Number(process.env.DB_PORT) || 5432,
@@ -10,8 +10,6 @@ const PostgresDataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [
-        "src/entity/**/*.ts"
+        "entity/**/*.ts"
     ],
 });
-
-module.exports = { PostgresDataSource };
