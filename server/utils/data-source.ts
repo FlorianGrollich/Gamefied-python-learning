@@ -1,4 +1,5 @@
 import {DataSource} from "typeorm";
+import {BananaEntities} from "../entity/_BananaEntities";
 
 export const PostgresDataSource = new DataSource({
     type: "postgres",
@@ -9,8 +10,7 @@ export const PostgresDataSource = new DataSource({
     database: "mydatabase",
     synchronize: true,
     logging: false,
-    entities: [
-        "src/entity/**/*.ts"
-    ],
-
+    entities: BananaEntities,
+    migrations: [],
+    subscribers: [],
 });
