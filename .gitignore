@@ -27,5 +27,6 @@ coverage
 .idea/
 .vscode/
 .env
+/server/.env
 
 package-lock.json
