@@ -47,7 +47,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
           <Route path="/register" element={<RegistrationPage />} />
           <Route path="/editor" element={<CodeEditor />} />
-          <Route path="/" element={user ? <h1 className="mt-14 p-5 text-2xl font-bold text-white">Hello, {user.username}</h1> : <Navigate to="/login" replace />} />
+          <Route path="/" element={user ? <h1 className="mt-14 p-5 text-2xl font-bold text-white">Hello, {user.username}</h1> : <h1 className="mt-14 p-5 text-2xl font-bold text-white">Python Playground</h1>} />
         </Routes>
       </Router>
     </div>
