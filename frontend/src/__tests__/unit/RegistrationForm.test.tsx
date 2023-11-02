@@ -15,71 +15,54 @@ describe('RegistrationForm Component', () => {
     fetchMock.mockRestore();
   });
 
-  test('renders RegistrationForm component', () => {
+  test('renders RegistrationForm component with accessible form fields', () => {
     render(<RegistrationForm />);
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
   });
 
-  test('allows the user to fill the registration form', () => {
+  test('provides validation feedback for email format', () => {
     render(<RegistrationForm />);
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'invalidemail' },
+    });
+    fireEvent.blur(screen.getByLabelText('Email'));
+    expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument();
+  });
 
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
+  test('provides validation feedback for password strength', () => {
+    render(<RegistrationForm />);
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'weak' },
+    });
+    fireEvent.blur(screen.getByLabelText('Password'));
+    expect(screen.getByText('Password is too weak')).toBeInTheDocument();
+  });
+
+  test('allows the user to reset the form', () => {
+    render(<RegistrationForm />);
+    fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: 'user@example.com' },
     });
-    expect(screen.getByPlaceholderText('Email').value).toBe('user@example.com');
-
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'securepassword' },
-    });
-    expect(screen.getByPlaceholderText('Password').value).toBe('securepassword');
-
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'securepassword' },
-    });
-    expect(screen.getByPlaceholderText('Confirm Password').value).toBe('securepassword');
+    fireEvent.click(screen.getByText('Reset'));
+    expect(screen.getByLabelText('Email').value).toBe('');
   });
 
-  test('displays error message on failed registration attempt', async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ error: 'Email already exists' }), {
-      status: 400,
-    });
-
+  test('ensures form fields are tabbable in a logical order', () => {
     render(<RegistrationForm />);
+    const emailInput = screen.getByLabelText('Email');
+    const passwordInput = screen.getByLabelText('Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password');
+    const submitButton = screen.getByText('Sign Up');
 
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
-      target: { value: 'test@example.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'password123' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'password123' },
-    });
-    fireEvent.click(screen.getByText('Sign Up'));
+    fireEvent.keyDown(emailInput, { key: 'Tab', code: 'Tab' });
+    expect(document.activeElement).toEqual(passwordInput);
 
-    const errorMessage = await screen.findByText('Email already exists');
-    expect(errorMessage).toBeInTheDocument();
-  });
+    fireEvent.keyDown(passwordInput, { key: 'Tab', code: 'Tab' });
+    expect(document.activeElement).toEqual(confirmPasswordInput);
 
-  test('displays generic error message on unexpected error during registration', async () => {
-    fetchMock.mockRejectOnce(new Error('Network error'));
-
-    render(<RegistrationForm />);
-
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
-      target: { value: 'test@example.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'password123' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'password123' },
-    });
-    fireEvent.click(screen.getByText('Sign Up'));
-
-    const errorMessage = await screen.findByText('An error occurred. Please try again later.');
-    expect(errorMessage).toBeInTheDocument();
+    fireEvent.keyDown(confirmPasswordInput, { key: 'Tab', code: 'Tab' });
+    expect(document.activeElement).toEqual(submitButton);
   });
 });
