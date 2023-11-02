@@ -1,57 +1,39 @@
-import '@testing-library/jest-dom'
-import React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
-import LoginForm from '../../LoginForm/LoginForm'
-import { SpyInstance } from 'jest-mock'
+import '@testing-library/jest-dom';
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import LoginForm from '../../LoginForm/LoginForm';
+import fetchMock from 'jest-fetch-mock';
 
-let mockFetch: SpyInstance
+fetchMock.enableMocks();
+
+const mockOnLogin = jest.fn();
 
 beforeEach(() => {
-  mockFetch = jest.spyOn(global, 'fetch').mockImplementation(() =>
-    Promise.resolve({
-      json: () => Promise.resolve({ token: '12345' }),
-      status: 200,
-      headers: new Headers(),
-      ok: true,
-      redirected: false,
-      statusText: 'OK',
-      type: 'default',
-      url: '',
-      clone: jest.fn(),
-      blob: jest.fn(),
-      formData: jest.fn(),
-      text: jest.fn(),
-      arrayBuffer: jest.fn(),
-      body: null,
-      bodyUsed: false,
-    }),
-  )
-})
+  fetchMock.resetMocks();
+  fetchMock.mockResponseOnce(JSON.stringify({ token: 'sample_token' }));
+});
 
 describe('LoginForm Component', () => {
   afterEach(() => {
-    jest.clearAllMocks()
-  })
+    fetchMock.mockRestore();
+  });
 
   test('renders LoginForm component', () => {
-    render(<LoginForm />)
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
-  })
+    render(<LoginForm onLogin={mockOnLogin} />);
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+  });
 
   test('allows the user to fill the form', () => {
-    render(<LoginForm />)
+    render(<LoginForm onLogin={mockOnLogin} />);
     fireEvent.change(screen.getByPlaceholderText('Email'), {
       target: { value: 'user@example.com' },
-    })
+    });
     fireEvent.change(screen.getByPlaceholderText('Password'), {
       target: { value: 'securepassword' },
-    })
+    });
     expect(
       (screen.getByPlaceholderText('Email') as HTMLInputElement).value,
-    ).toBe('user@example.com')
-  })
+    ).toBe('user@example.com');
+  });
 
-  afterEach(() => {
-    mockFetch.mockRestore()
-  })
-})
+});
