@@ -52,14 +52,6 @@ describe('RegistrationForm', () => {
     });
     fireEvent.click(screen.getByText('Sign Up'));
   
-    await screen.findByText((content, node) => {
-      const hasText = (node: HTMLElement) => node.textContent === 'Passwords do not match.';
-      const nodeHasText = hasText(node);
-      const childrenDontHaveText = Array.from(node.children).every(
-        (child) => !hasText(child)
-      );
-  
-      return nodeHasText && childrenDontHaveText;
-    });
+    await screen.findByText('Passwords do not match', { exact: false });
   });
 });
