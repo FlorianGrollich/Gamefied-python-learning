@@ -1,9 +1,10 @@
 module.exports = {
     roots: ['banana/frontend/src'],
-    setupFilesAfterEnv: ['banana/frontend/src/config/setupTests.ts'],
+    setupFilesAfterEnv: ['config/setupTests.ts'],
     testEnvironment: 'jsdom',
     transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': 'banana/node_modules/babel-jest',
+      '^.+\\.(ts|tsx)$': 'ts-jest',
+      '^.+\\.(js|jsx)$': 'babel-jest',
     },
     moduleNameMapper: {
       '\\.(css|less|scss|sass)$': 'identity-obj-proxy',

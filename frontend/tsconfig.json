@@ -16,9 +16,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "typeRoots": ["./banana", "./node_modules/@types"]
   },
   "include": [
-    "src/**/*"
-, "src/config/setupTests.ts"  ]
+    "src/**/*",
+    "src/config/setupTests.ts",
+    "banana/types/declarations.d.ts"
+  ]
 }

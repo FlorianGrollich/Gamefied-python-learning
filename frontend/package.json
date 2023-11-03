@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
-    "@types/node": "^20.8.4",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
-    "@types/testing-library__react": "^10.2.0",
     "autoprefixer": "^10.4.16",
     "fetch-mock": "^9.11.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
@@ -50,13 +49,17 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/jest": "^29.5.6",
+    "@types/node": "^20.8.9",
     "@types/react": "^18.2.28",
     "@types/react-dom": "^18.2.10",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/parser": "^5.5.0",
+    "@types/testing-library__react": "^10.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "jest-fetch-mock": "^3.0.3",
+    "jest-mock": "^29.7.0",
     "lint-staged": "^15.0.2",
+    "monaco-editor": "^0.44.0",
     "prettier": "^3.0.3",
-    "typescript": "^3.9.2"
+    "react-app-rewired": "^2.2.1"
   }
 }
