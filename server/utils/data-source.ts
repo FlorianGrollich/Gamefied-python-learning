@@ -1,16 +1,18 @@
 import {DataSource} from "typeorm";
 import {BananaEntities} from "../entity/_BananaEntities";
 
+
 export const PostgresDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "user",
-    password: "password",
-    database: "mydatabase",
+    host: process.env.DB_HOST || "localhost",
+    port: Number(process.env.DB_PORT) || 5432,
+    username: process.env.DB_USERNAME || "user",
+    password: process.env.DB_PASSWORD || "password",
+    database: process.env.DB_NAME || "mydatabase",
     synchronize: true,
     logging: false,
     entities: BananaEntities,
     migrations: [],
     subscribers: [],
 });
+
