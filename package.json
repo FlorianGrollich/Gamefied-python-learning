@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
+
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "eslint-config-react-app": "^7.0.1",

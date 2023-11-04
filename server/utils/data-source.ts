@@ -1,4 +1,6 @@
-import { DataSource } from "typeorm";
+import {DataSource} from "typeorm";
+import {BananaEntities} from "../entity/_BananaEntities";
+
 
 export const PostgresDataSource = new DataSource({
     type: "postgres",
@@ -9,7 +11,8 @@ export const PostgresDataSource = new DataSource({
     database: process.env.DB_NAME || "mydatabase",
     synchronize: true,
     logging: false,
-    entities: [
-        "entity/**/*.ts"
-    ],
+    entities: BananaEntities,
+    migrations: [],
+    subscribers: [],
 });
+
