@@ -29,23 +29,8 @@ const App: React.FC = () => {
     return (
         <div className="App bg-slate-950">
             <Router>
-                <nav className="bg-slate-800 p-4 fixed top-0 w-full">
-                    <div className="flex justify-between text-white">
-                        <Link to="/" className="mx-2 hover:text-blue-500">Home</Link>
-                        <div>
-                            {user ? (
-                                <span className="mx-2 hover:text-blue-500" onClick={() => setUser(null)}>Logout</span>
-                            ) : (
-                                <>
-                                    <Link to="/login" className="mx-2 hover:text-blue-500">Login</Link>
-                                    <Link to="/register" className="mx-2 hover:text-blue-500">Register</Link>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </nav>
                 <Routes> <Route path="/home" element={<Grid gridArray={[
-                    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+                    ["", "", "", "", "", "", "", "", "P", "", "", "", "", "", "", ""],
                     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
                     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
                     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],

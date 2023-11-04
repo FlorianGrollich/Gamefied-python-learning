@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-800;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -20,13 +19,6 @@ code {
 
 
 
-.grid-row {
-  @apply flex;
-}
-
-.cell {
-  @apply p-4 border border-gray-200;
-}
 
 
 
