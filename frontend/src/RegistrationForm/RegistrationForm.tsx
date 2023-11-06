@@ -22,12 +22,41 @@ const RegistrationForm: React.FC = () => {
     if (name === 'password') setPasswordError('');
   };
 
+  const getPasswordStrengthError = (password: string) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumbers = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    const errors = [];
+
+    if (password.length < minLength) {
+      errors.push(`Password must be at least ${minLength} characters long.`);
+    }
+    if (!hasUpperCase.test(password)) {
+      errors.push("Password must include at least one uppercase letter.");
+    }
+    if (!hasLowerCase.test(password)) {
+      errors.push("Password must include at least one lowercase letter.");
+    }
+    if (!hasNumbers.test(password)) {
+      errors.push("Password must include at least one number.");
+    }
+    if (!hasSpecialChar.test(password)) {
+      errors.push("Password must include at least one special character (!@#$%^&*(),.?\":{}|<>).");
+    }
+
+    return errors.length > 0 ? errors.join(' ') : '';
+  };
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'email' && !validateEmail(value)) {
       setEmailError('Please enter a valid email address');
-    } else if (name === 'password' && !validatePasswordStrength(value)) {
-      setPasswordError('Password is too weak');
+    } else if (name === 'password') {
+      const passwordError = getPasswordStrengthError(value);
+      setPasswordError(passwordError);
     }
   };
 
@@ -35,37 +64,15 @@ const RegistrationForm: React.FC = () => {
     return /\S+@\S+\.\S+/.test(email);
   };
 
-  const validatePasswordStrength = (password: string) => {
-    
-    const minLength = 8;
-
-    const hasUpperCase = /[A-Z]/;
-    const hasLowerCase = /[a-z]/;
-    const hasNumbers = /[0-9]/;
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
-  
-    const isLongEnough = password.length >= minLength;
-  
-    const hasMixedCharacters =
-      hasUpperCase.test(password) &&
-      hasLowerCase.test(password) &&
-      hasNumbers.test(password) &&
-      hasSpecialChar.test(password);
-  
-    return isLongEnough && hasMixedCharacters;
-  };
-  
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateEmail(formData.email)) {
-      setEmailError('Please enter a valid email address');
-      return;
-    }
+    const emailError = validateEmail(formData.email) ? '' : 'Please enter a valid email address';
+    const passwordError = getPasswordStrengthError(formData.password);
+    setEmailError(emailError);
+    setPasswordError(passwordError);
 
-    if (!validatePasswordStrength(formData.password)) {
-      setPasswordError('Password is too weak');
+    if (emailError || passwordError) {
       return;
     }
 
@@ -92,7 +99,6 @@ const RegistrationForm: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        {/* Username Field */}
         <label htmlFor="username" className="block text-sm font-medium text-gray-700">
           Username
         </label>
@@ -107,7 +113,6 @@ const RegistrationForm: React.FC = () => {
           required
         />
 
-        {/* Email Field */}
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email
         </label>
@@ -129,7 +134,6 @@ const RegistrationForm: React.FC = () => {
           </p>
         )}
 
-        {/* Password Field */}
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           Password
         </label>
@@ -151,7 +155,6 @@ const RegistrationForm: React.FC = () => {
           </p>
         )}
 
-        {/* Password Confirmation Field */}
         <label htmlFor="passwordConfirmation" className="block text-sm font-medium text-gray-700">
           Confirm Password
         </label>
@@ -166,17 +169,14 @@ const RegistrationForm: React.FC = () => {
           required
         />
 
-        {/* Reset Button */}
         <button type="button" onClick={handleReset} className="p-2 m-0.5 border rounded">
           Reset
         </button>
 
-        {/* Submit Button */}
         <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">
           Sign Up
         </button>
 
-        {/* Registration Status Message */}
         {registrationStatus && (
           <p className="mt-4 text-center">{registrationStatus}</p>
         )}
