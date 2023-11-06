@@ -36,8 +36,25 @@ const RegistrationForm: React.FC = () => {
   };
 
   const validatePasswordStrength = (password: string) => {
-    return password.length >= 6;
+    
+    const minLength = 8;
+
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumbers = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  
+    const isLongEnough = password.length >= minLength;
+  
+    const hasMixedCharacters =
+      hasUpperCase.test(password) &&
+      hasLowerCase.test(password) &&
+      hasNumbers.test(password) &&
+      hasSpecialChar.test(password);
+  
+    return isLongEnough && hasMixedCharacters;
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
