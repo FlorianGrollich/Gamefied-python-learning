@@ -124,90 +124,98 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-          Username
-        </label>
-        <input
-          id="username"
-          type="text"
-          name="username"
-          value={formData.username}
-          placeholder="Username"
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-md mx-auto bg-white rounded-lg border shadow-md p-6 sm:p-8">
+        <h2 className="mb-4 text-xl font-bold text-gray-700">Register</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Username */}
+          <div>
+            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              value={formData.username}
+              placeholder="Username"
+              onChange={handleChange}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              placeholder="Email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              aria-describedby="email-error"
+              required
+            />
+            {emailError && (
+              <p id="email-error" className="mt-1 text-xs font-medium text-red-600">{emailError}</p>
+            )}
+          </div>
+          
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              placeholder="Password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              aria-describedby="password-error"
+              required
+            />
+            {passwordError && (
+              <p id="password-error" className="mt-1 text-xs font-medium text-red-600">{passwordError}</p>
+            )}
+          </div>
+          
+          {/* Password Confirmation */}
+          <div>
+            <label htmlFor="passwordConfirmation" className="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
+            <input
+              id="passwordConfirmation"
+              type="password"
+              name="passwordConfirmation"
+              value={formData.passwordConfirmation}
+              placeholder="Confirm Password"
+              onChange={handleChange}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+              required
+            />
+          </div>
+          
+          {/* Buttons */}
+          <div className="flex items-center justify-between">
+            <button type="button" onClick={handleReset} className="text-sm font-medium text-blue-600 hover:underline">
+              Reset
+            </button>
+            <button type="submit" className="inline-block px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-200">
+              Sign Up
+            </button>
+          </div>
 
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          value={formData.email}
-          placeholder="Email"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className="p-2 m-0.5 border rounded"
-          aria-describedby="email-error"
-          required
-        />
-        {emailError && (
-          <p id="email-error" className="mt-2 text-sm text-red-600">
-            {emailError}
-          </p>
-        )}
-
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-          Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          value={formData.password}
-          placeholder="Password"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className="p-2 m-0.5 border rounded"
-          aria-describedby="password-error"
-          required
-        />
-        {passwordError && (
-          <p id="password-error" className="mt-2 text-sm text-red-600">
-            {passwordError}
-          </p>
-        )}
-
-        <label htmlFor="passwordConfirmation" className="block text-sm font-medium text-gray-700">
-          Confirm Password
-        </label>
-        <input
-          id="passwordConfirmation"
-          type="password"
-          name="passwordConfirmation"
-          value={formData.passwordConfirmation}
-          placeholder="Confirm Password"
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
-
-        <button type="button" onClick={handleReset} className="p-2 m-0.5 text-white border rounded">
-          Reset
-        </button>
-
-        <button type="submit" className="p-2 m-0.5 bg-blue-500 text-white rounded">
-          Sign Up
-        </button>
-
-        {registrationStatus && (
-          <p className="mt-4 text-center">{registrationStatus}</p>
-        )}
-      </form>
+          {/* Registration Status */}
+          {registrationStatus && (
+            <div className="mt-4 text-center p-3 rounded-lg font-medium bg-green-100 text-green-700">
+              {registrationStatus}
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };
