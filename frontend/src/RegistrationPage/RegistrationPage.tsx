@@ -3,7 +3,7 @@ import RegistrationForm from '../RegistrationForm/RegistrationForm'
 
 const RegistrationPage: React.FC = () => {
   return (
-    <div className='mt-8'>
+    <div>
       <RegistrationForm />
     </div>
   )

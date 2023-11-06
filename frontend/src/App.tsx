@@ -26,27 +26,27 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="App bg-slate-950">
+    <div className="App min-h-screen bg-slate-900 text-gray-200">
       <Router>
-        <nav className="bg-slate-800 p-4 fixed top-0 w-full">
-          <div className="flex justify-between text-white">
-            <Link to="/" className="mx-2 hover:text-blue-500">
-              Home
+        <nav className="bg-slate-800 shadow-md p-4 fixed top-0 w-full z-10">
+          <div className="container mx-auto flex justify-between items-center">
+            <Link to="/" className="text-xl font-semibold hover:text-blue-400 transition-colors">
+              Python Playground
             </Link>
             <div>
               {user ? (
                 <span
-                  className="mx-2 hover:text-blue-500"
+                  className="cursor-pointer mx-3 hover:text-blue-400 transition-colors"
                   onClick={() => setUser(null)}
                 >
-                  Logout
+                  Logout ({user.username})
                 </span>
               ) : (
                 <>
-                  <Link to="/login" className="mx-2 hover:text-blue-500">
+                  <Link to="/login" className="mx-3 hover:text-blue-400 transition-colors">
                     Login
                   </Link>
-                  <Link to="/register" className="mx-2 hover:text-blue-500">
+                  <Link to="/register" className="mx-3 hover:text-blue-400 transition-colors">
                     Register
                   </Link>
                 </>
@@ -54,25 +54,31 @@ const App: React.FC = () => {
             </div>
           </div>
         </nav>
-        <Routes>
-          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/editor" element={<CodeEditor />} />
-          <Route
-            path="/"
-            element={
-              user ? (
-                <h1 className="mt-14 p-5 text-2xl font-bold text-white">
-                  Hello, {user.username}
-                </h1>
-              ) : (
-                <h1 className="mt-14 p-5 text-2xl font-bold text-white">
-                  Python Playground
-                </h1>
-              )
-            }
-          />
-        </Routes>
+        <main className="pt-16">
+          <Routes>
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+            <Route path="/register" element={<RegistrationPage />} />
+            <Route path="/editor" element={<CodeEditor />} />
+            <Route
+              path="/"
+              element={
+                user ? (
+                  <div className="mt-8 p-5 text-center">
+                    <h1 className="text-3xl font-bold">
+                      Hello, {user.username}
+                    </h1>
+                  </div>
+                ) : (
+                  <div className="mt-8 p-5 text-center">
+                    <h1 className="text-3xl font-bold">
+                      Welcome to the Python Playground
+                    </h1>
+                  </div>
+                )
+              }
+            />
+          </Routes>
+        </main>
       </Router>
     </div>
   )
