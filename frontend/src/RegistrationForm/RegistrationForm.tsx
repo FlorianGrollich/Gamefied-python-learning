@@ -196,7 +196,7 @@ const RegistrationForm: React.FC = () => {
           required
         />
 
-        <button type="button" onClick={handleReset} className="p-2 m-0.5 border rounded">
+        <button type="button" onClick={handleReset} className="p-2 m-0.5 text-white border rounded">
           Reset
         </button>
 
