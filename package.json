@@ -41,7 +41,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "monaco-editor": "^0.43.0",
-    "monaco-languageclient": "^6.5.2",
+    "monaco-languageclient": "^7.0.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.0.0"
   }
