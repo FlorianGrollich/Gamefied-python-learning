@@ -9,7 +9,4 @@ export class Grid {
     @Column()
     grid: string;
 
-    @Column()
-
-
 }
