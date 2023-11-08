@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const RegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,23 +6,23 @@ const RegistrationForm: React.FC = () => {
     email: '',
     password: '',
     passwordConfirmation: '',
-  });
-  const [registrationStatus, setRegistrationStatus] = useState('');
+  })
+  const [registrationStatus, setRegistrationStatus] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (formData.password !== formData.passwordConfirmation) {
-      setRegistrationStatus('Passwords do not match.');
-      return;
+      setRegistrationStatus('Passwords do not match.')
+      return
     }
 
     try {
@@ -32,19 +32,19 @@ const RegistrationForm: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
       if (response.status === 201) {
-        setRegistrationStatus('Registration successful');
+        setRegistrationStatus('Registration successful')
       } else {
-        setRegistrationStatus(data.error);
+        setRegistrationStatus(data.error)
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      setRegistrationStatus('An error occurred. Please try again later.');
+      console.error('Registration error:', error)
+      setRegistrationStatus('An error occurred. Please try again later.')
     }
-  };
+  }
 
   return (
     <div>
@@ -96,7 +96,7 @@ const RegistrationForm: React.FC = () => {
         <p className="mt-4 text-center">{registrationStatus}</p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm
