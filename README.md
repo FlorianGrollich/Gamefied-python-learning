@@ -62,7 +62,7 @@ To check the code for syntax and dependencies issues, run the following commands
 
 ### Code Quality and Styling (ESLint + Prettier)
 ```bash
-npm run lint-format
+npm run lint-format-all
 ```
 
 ### Dependencies Check
