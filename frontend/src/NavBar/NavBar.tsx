@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { User } from 'src/types/types';
+import { User } from '../types/types';
 
 interface NavbarProps {
   user: User | null;
