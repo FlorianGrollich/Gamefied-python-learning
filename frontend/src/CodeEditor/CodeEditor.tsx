@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Editor } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 import Grid from './../GameGrid/Grid'
