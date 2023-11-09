@@ -28,5 +28,6 @@ coverage
 .vscode/
 .env
 /server/.env
+.scannerwork/
 
 package-lock.json
