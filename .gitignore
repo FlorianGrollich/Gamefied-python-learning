@@ -29,5 +29,6 @@ coverage
 .env
 /server/.env
 .scannerwork/
+sonar-project.properties
 
 package-lock.json
