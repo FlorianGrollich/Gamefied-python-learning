@@ -1,6 +1,7 @@
-import { NextFunction, Request, Response } from 'express'
-import { PostgresDataSource } from '../utils/data-source'
-import { User } from '../entity/User'
+import { NextFunction, Request, Response } from "express";
+import { PostgresDataSource } from "../utils/data-source";
+import { User } from "../entity/User";
+import { generateToken } from '../utils/token';
 
 export class UserController {
   private userRepository = PostgresDataSource.getRepository(User)
@@ -13,7 +14,11 @@ export class UserController {
   }
 
   async register(request: Request, response: Response, next: NextFunction) {
-    const { username, email, password } = request.body
+    const { username, email, password, passwordConfirmation } = request.body;
+
+    if (password !== passwordConfirmation) {
+      return response.status(400).json({ error: "Passwords do not match" });
+    }
 
     const existingUser = await this.userRepository.findOne({ where: { email } })
     if (existingUser) {
@@ -22,42 +27,42 @@ export class UserController {
         .json({ error: 'User with the provided email already exists' })
     }
 
-    const user = new User()
-    user.username = username
-    user.email = email
-    user.setPassword(password)
+    const user = new User();
+    user.username = username;
+    user.email = email;
+    user.setPassword(password);
 
-    await this.userRepository.save(user)
+    await this.userRepository.save(user);
 
-    return response
-      .status(201)
-      .json({ message: 'User registered successfully' })
+    const token = generateToken(user.id, user.email);
+
+    return response.status(201).json({ token: token, message: "User registered successfully" });
   }
 
   async all(request: Request, response: Response, next: NextFunction) {
-    const users = await this.userRepository.find()
-    return response.json(users)
+    const users = await this.userRepository.find();
+    return response.json(users);
   }
 
   async one(request: Request, response: Response, next: NextFunction) {
-    const id = request.params.id
+    const id = request.params.id;
 
-    const user = await this.userRepository.findOneBy({ id: parseInt(id) })
+    const user = await this.userRepository.findOneBy({ id: parseInt(id) });
     if (!user) {
-      return response.status(404).json({ error: 'User not found' })
+      return response.status(404).json({ error: 'User not found' });
     }
-    return response.json(user)
+    return response.json(user);
   }
 
   async remove(request: Request, response: Response, next: NextFunction) {
-    const id = request.params.id
+    const id = request.params.id;
 
-    let userToRemove = await this.userRepository.findOneBy({ id: parseInt(id) })
+    let userToRemove = await this.userRepository.findOneBy({ id: parseInt(id) });
     if (!userToRemove) {
-      return response.status(404).json({ error: 'User not found' })
+      return response.status(404).json({ error: 'User not found' });
     }
 
-    await this.userRepository.remove(userToRemove)
-    return response.status(200).json({ message: 'User removed successfully' })
+    await this.userRepository.remove(userToRemove);
+    return response.status(200).json({ message: 'User removed successfully' });
   }
 }
