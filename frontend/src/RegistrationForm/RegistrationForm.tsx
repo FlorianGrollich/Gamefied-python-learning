@@ -98,8 +98,6 @@ const RegistrationForm: React.FC = () => {
       if (!response.ok) {
         throw new Error('Registration failed');
       }
-
-      const data = await response.json();
       
       setRegistrationStatus('Registration successful. Please log in.');
     } catch (error) {
