@@ -29,9 +29,7 @@ const App: React.FC = () => {
     return (
         <div className="App bg-slate-950">
             <Router>
-                <Routes> <Route path="/home" element={<Grid
-
-                />}/>
+                <Routes> <Route path="/home" element={<Grid />}/>
                     <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
                     <Route path="/register" element={<RegistrationPage/>}/>
                     <Route path="/editor" element={<CodeEditor/>}/>
