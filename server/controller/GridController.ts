@@ -26,6 +26,7 @@ export class GridController {
 
     async initialGrid(request: Request, response: Response, next: NextFunction) {
         //const grid = await this.gridRepository.findOneBy({id: 1});
+        console.log("initialGrid Called");
         return response.status(200).json([
             ["", "", "", "", "", "", "", "", "P", "", "", "", "", "", "", ""],
             ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],

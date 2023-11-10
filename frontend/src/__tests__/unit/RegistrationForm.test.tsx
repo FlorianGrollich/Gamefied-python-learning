@@ -1,43 +1,64 @@
-import '@testing-library/jest-dom'
-import React from 'react'
-import { render, fireEvent, screen } from '@testing-library/react'
-import RegistrationForm from '../../RegistrationForm/RegistrationForm'
+import '@testing-library/jest-dom';
+import React from 'react';
+import { render, fireEvent, screen } from '@testing-library/react';
+import RegistrationForm from '../../RegistrationForm/RegistrationForm';
 
 describe('RegistrationForm Component', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
+  test('renders RegistrationForm component with accessible form fields', () => {
+    render(<RegistrationForm />);
+    expect(screen.getByLabelText('Username')).toBeInTheDocument();
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Confirm Password')).toBeInTheDocument();
+  });
 
-  test('renders RegistrationForm component', () => {
-    render(<RegistrationForm />)
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument()
-  })
+  test('provides validation feedback for email format', () => {
+    render(<RegistrationForm />);
+    const emailInput = screen.getByLabelText('Email');
+    fireEvent.change(emailInput, {
+      target: { value: 'invalidemail' },
+    });
+    fireEvent.blur(emailInput);
+    expect(screen.getByText('Please enter a valid email address')).toBeInTheDocument();
+  });
 
-  test('allows the user to fill the registration form', () => {
-    render(<RegistrationForm />)
+  test('provides validation feedback for password strength', () => {
+    render(<RegistrationForm />);
+    const passwordInput = screen.getByLabelText('Password');
+    fireEvent.change(passwordInput, {
+      target: { value: 'weak' },
+    });
+    fireEvent.blur(passwordInput);
+    expect(screen.getByText('Password is too weak')).toBeInTheDocument();
+  });
 
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
+  test('allows the user to reset the form', () => {
+    render(<RegistrationForm />);
+    const emailInput = screen.getByLabelText('Email');
+    fireEvent.change(emailInput, {
       target: { value: 'user@example.com' },
-    })
-    expect(
-      (screen.getByPlaceholderText('Email') as HTMLInputElement).value,
-    ).toBe('user@example.com')
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(emailInput.value).toBe('');
+  });
 
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'securepassword' },
-    })
-    expect(
-      (screen.getByPlaceholderText('Password') as HTMLInputElement).value,
-    ).toBe('securepassword')
+  test('ensures form fields are tabbable in a logical order', () => {
+    render(<RegistrationForm />);
+    const emailInput = screen.getByLabelText('Email');
+    const passwordInput = screen.getByLabelText('Password');
+    const confirmPasswordInput = screen.getByLabelText('Confirm Password');
+    const submitButton = screen.getByRole('button', { name: 'Sign Up' });
 
-    fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
-      target: { value: 'securepassword' },
-    })
-    expect(
-      (screen.getByPlaceholderText('Confirm Password') as HTMLInputElement)
-        .value,
-    ).toBe('securepassword')
-  })
-})
+    emailInput.focus();
+    expect(document.activeElement).toEqual(emailInput);
+
+    passwordInput.focus();
+    expect(document.activeElement).toEqual(passwordInput);
+
+    confirmPasswordInput.focus();
+    expect(document.activeElement).toEqual(confirmPasswordInput);
+
+    submitButton.focus();
+    expect(document.activeElement).toEqual(submitButton);
+  });
+});

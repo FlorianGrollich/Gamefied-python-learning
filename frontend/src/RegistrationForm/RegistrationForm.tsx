@@ -8,6 +8,8 @@ const RegistrationForm: React.FC = () => {
     passwordConfirmation: '',
   });
   const [registrationStatus, setRegistrationStatus] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,86 +17,205 @@ const RegistrationForm: React.FC = () => {
       ...formData,
       [name]: value,
     });
+
+    if (name === 'email') setEmailError('');
+    if (name === 'password') setPasswordError('');
+  };
+
+  const getPasswordStrengthError = (password: string) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumbers = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    const errors = [];
+
+    if (password.length < minLength) {
+      errors.push(`Password must be at least ${minLength} characters long.`);
+    }
+    if (!hasUpperCase.test(password)) {
+      errors.push("Password must include at least one uppercase letter.");
+    }
+    if (!hasLowerCase.test(password)) {
+      errors.push("Password must include at least one lowercase letter.");
+    }
+    if (!hasNumbers.test(password)) {
+      errors.push("Password must include at least one number.");
+    }
+    if (!hasSpecialChar.test(password)) {
+      errors.push("Password must include at least one special character (!@#$%^&*(),.?\":{}|<>).");
+    }
+
+    return errors.length > 0 ? errors.join(' ') : '';
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email' && !validateEmail(value)) {
+      setEmailError('Please enter a valid email address');
+    } else if (name === 'password') {
+      const passwordError = getPasswordStrengthError(value);
+      setPasswordError(passwordError);
+    }
+  };
+
+  const validateEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
+    const emailError = validateEmail(formData.email) ? '' : 'Please enter a valid email address';
+    const passwordError = getPasswordStrengthError(formData.password);
+    setEmailError(emailError);
+    setPasswordError(passwordError);
+  
+    if (emailError || passwordError) {
+      return;
+    }
+  
     if (formData.password !== formData.passwordConfirmation) {
       setRegistrationStatus('Passwords do not match.');
       return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:3200/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          passwordConfirmation: formData.passwordConfirmation
+        }),
       });
 
-      const data = await response.json();
-      if (response.status === 201) {
-        setRegistrationStatus('Registration successful');
-      } else {
-        setRegistrationStatus(data.error);
+      if (!response.ok) {
+        throw new Error('Registration failed');
       }
+  
+      const data = await response.json();
+      
+      setRegistrationStatus('Registration successful. Please log in.');
     } catch (error) {
-      console.error('Registration error:', error);
-      setRegistrationStatus('An error occurred. Please try again later.');
+      if (error instanceof Error) {
+        setRegistrationStatus(error.message || 'An error occurred during registration.');
+      } else {
+        setRegistrationStatus('An error occurred during registration.');
+      }
     }
+  };  
+
+  const handleReset = () => {
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    });
+    setRegistrationStatus('');
+    setEmailError('');
+    setPasswordError('');
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
-        <input
-          type="password"
-          name="passwordConfirmation"
-          placeholder="Confirm Password"
-          value={formData.passwordConfirmation}
-          onChange={handleChange}
-          className="p-2 m-0.5 border rounded"
-          required
-        />
-        <button
-          type="submit"
-          className="p-2 m-0.5 bg-blue-500 text-white rounded"
-        >
-          Sign Up
-        </button>
-      </form>
-      {registrationStatus && (
-        <p className="mt-4 text-center">{registrationStatus}</p>
-      )}
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="w-full max-w-md mx-auto bg-white rounded-lg border shadow-md p-6 sm:p-8">
+        <h2 className="mb-4 text-xl font-bold text-gray-700">Register</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Username */}
+          <div>
+            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              value={formData.username}
+              placeholder="Username"
+              onChange={handleChange}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              placeholder="Email"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              aria-describedby="email-error"
+              required
+            />
+            {emailError && (
+              <p id="email-error" className="mt-1 text-xs font-medium text-red-600">{emailError}</p>
+            )}
+          </div>
+          
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              placeholder="Password"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              aria-describedby="password-error"
+              required
+            />
+            {passwordError && (
+              <p id="password-error" className="mt-1 text-xs font-medium text-red-600">{passwordError}</p>
+            )}
+          </div>
+          
+          {/* Password Confirmation */}
+          <div>
+            <label htmlFor="passwordConfirmation" className="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
+            <input
+              id="passwordConfirmation"
+              type="password"
+              name="passwordConfirmation"
+              value={formData.passwordConfirmation}
+              placeholder="Confirm Password"
+              onChange={handleChange}
+              className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+              required
+            />
+          </div>
+          
+          {/* Buttons */}
+          <div className="flex items-center justify-between">
+            <button type="button" onClick={handleReset} className="text-sm font-medium text-blue-600 hover:underline">
+              Reset
+            </button>
+            <button type="submit" className="inline-block px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-200">
+              Sign Up
+            </button>
+          </div>
+
+          {/* Registration Status */}
+          {registrationStatus && (
+            <div className="mt-4 text-center p-3 rounded-lg font-medium bg-green-100 text-green-700">
+              {registrationStatus}
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

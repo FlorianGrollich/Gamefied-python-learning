@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { PostgresDataSource } from "../utils/data-source";
 import { User } from "../entity/User";
+import { generateToken } from '../utils/token';
 
 export class UserController {
     private userRepository = PostgresDataSource.getRepository(User);
@@ -13,7 +14,11 @@ export class UserController {
     }
 
     async register(request: Request, response: Response, next: NextFunction) {
-        const { username, email, password } = request.body;
+        const { username, email, password, passwordConfirmation } = request.body;
+
+        if (password !== passwordConfirmation) {
+            return response.status(400).json({ error: "Passwords do not match" });
+        }
 
         const existingUser = await this.userRepository.findOne({ where: { email } });
         if (existingUser) {
@@ -27,7 +32,9 @@ export class UserController {
 
         await this.userRepository.save(user);
 
-        return response.status(201).json({ message: "User registered successfully" });
+        const token = generateToken(user.id, user.email);
+
+        return response.status(201).json({ token: token, message: "User registered successfully" });
     }
 
     async all(request: Request, response: Response, next: NextFunction) {

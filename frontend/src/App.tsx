@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route, Routes, Navigate, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
 import CodeEditor from './CodeEditor/CodeEditor';
+import Navbar from "./Navbar/NavBar";
 import Grid from "./GameGrid/Grid";
 
 interface User {
@@ -26,17 +27,41 @@ const App: React.FC = () => {
         localStorage.setItem('user', JSON.stringify(userData));
     };
 
+    const handleLogout = () => {
+        setUser(null);
+        localStorage.removeItem('user');
+    };
+
     return (
-        <div className="App bg-slate-950">
+        <div className="App min-h-screen bg-slate-900 text-gray-200">
             <Router>
-                <Routes> <Route path="/home" element={<Grid />}/>
-                    <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
-                    <Route path="/register" element={<RegistrationPage/>}/>
-                    <Route path="/editor" element={<CodeEditor/>}/>
-                    <Route path="/" element={user ?
-                        <h1 className="mt-14 p-5 text-2xl font-bold text-white">Hello, {user.username}</h1> :
-                        <Navigate to="/login" replace/>}/>
-                </Routes>
+                <Navbar user={user} onLogout={handleLogout}/> {/* Use the Navbar component */}
+                <main className="pt-16">
+                    <Routes>
+                        <Route path="/home" element={<Grid/>}/>
+                        <Route path="/login" element={<LoginPage onLogin={handleLogin}/>}/>
+                        <Route path="/register" element={<RegistrationPage/>}/>
+                        <Route path="/editor" element={<CodeEditor/>}/>
+                        <Route
+                            path="/"
+                            element={
+                                user ? (
+                                    <div className="mt-8 p-5 text-center">
+                                        <h1 className="text-3xl font-bold">
+                                            Hello, {user.username}
+                                        </h1>
+                                    </div>
+                                ) : (
+                                    <div className="mt-8 p-5 text-center">
+                                        <h1 className="text-3xl font-bold">
+                                            Welcome to Python Playground
+                                        </h1>
+                                    </div>
+                                )
+                            }
+                        />
+                    </Routes>
+                </main>
             </Router>
         </div>
     );
