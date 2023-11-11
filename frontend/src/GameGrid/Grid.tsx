@@ -1,15 +1,21 @@
 import React from 'react';
 import Cell from './Cell';
-import useFetchGrid from "./useGameGrid";
+import useFetchGrid from "./hooks/useGameGrid";
 import Navbar from "../Navbar/NavBar";
+import {useStoreGrid} from "./hooks/useStoreGrid";
 
 
 
 const Grid: React.FC = () => {
     const { gridData, loading, error } = useFetchGrid("http://localhost:3200/api/grid/initial");
+    const { postData, response, error: postError, isLoading: isPostLoading } = useStoreGrid();
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    const handleButtonClick = async () => {
+        await postData("http://localhost:3200/api/grid/create", gridData);
+    };
+
+    if (loading || isPostLoading) return <div>Loading...</div>;
+    if (error || postError) return <div>Error: {error?.message || postError?.message}</div>;
     if (!gridData) return <div>No grid data</div>;
 
     return (
@@ -23,6 +29,8 @@ const Grid: React.FC = () => {
                     </div>
                 ))}
             </div>
+            <button onClick={handleButtonClick} className="p-2 mt-4 bg-blue-500 text-white rounded">Post Data</button>
+            {response && <div>Response: {JSON.stringify(response)}</div>}
         </div>
     );
 };

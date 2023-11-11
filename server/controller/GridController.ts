@@ -14,37 +14,25 @@ export class GridController {
 
     async createNewGrid(request: Request, response: Response, next: NextFunction) {
         const {grid} = request.body;
-        const newGrid = new Grid();
-        newGrid.grid = grid;
-        await this.gridRepository.save(newGrid).catch((err) => {
+        console.log(grid);
+        if (grid === undefined || grid === null) {
+            return response.status(400).json({error: "Grid data is missing or null"});
+        }
+
+        try {
+            const newGrid = new Grid();
+            newGrid.grid = grid;
+            await this.gridRepository.save(newGrid);
+            return response.status(200).json({message: "Grid created successfully"});
+        } catch (err) {
             return response.status(400).json({error: err});
-        });
-
-        return response.status(200).json({message: "Grid created successfully"});
-
+        }
     }
 
     async initialGrid(request: Request, response: Response, next: NextFunction) {
-        //const grid = await this.gridRepository.findOneBy({id: 1});
-        console.log("initialGrid Called");
-        return response.status(200).json([
-            ["", "", "", "", "", "", "", "", "P", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ]);
+        const grid = await this.gridRepository.findOneBy({id: 2});
+        console.log(grid)
+        return response.status(200).json(grid!.grid);
     }
 
 
