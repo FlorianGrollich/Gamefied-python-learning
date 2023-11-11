@@ -1,5 +1,5 @@
 module.exports = {
-    roots: ['banana/frontend/src'],
+    roots: ['banana/frontend'],
     setupFilesAfterEnv: ['config/setupTests.ts'],
     testEnvironment: 'jsdom',
     transform: {
@@ -18,15 +18,8 @@ module.exports = {
       "!src/config/*.{js,jsx,ts,tsx}",
       "!src/services/__tests__/*.{js,jsx,ts,tsx}",
       "!**/node_modules/**",
-      "!**/vendor/**",
       "!**/coverage/**",
-      "!**/jest.config.js",
-      "!**/babel.config.js",
-      "!**/postcss.config.js",
-      "!**/tailwind.config.js",
-      "!**/tsconfig.json",
-      "!**/config-overrides.js",
-      "!**/Dockerfile",
+      "!*.",
     ],
     coverageDirectory: "<rootDir>/coverage",
     coverageReporters: ["lcov", "text"],
