@@ -16,9 +16,9 @@ const useFetchGrid = (url: string) => {
                 }
                 return response.json();
             })
-            .then((data: GridDataType) => {
+            .then((data) => {
                 console.log(data);
-                setGridData(data);
+                setGridData(JSON.parse(data));
                 setLoading(false);
             })
             .catch((error: Error) => {

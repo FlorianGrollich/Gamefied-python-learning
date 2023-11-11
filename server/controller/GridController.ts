@@ -14,7 +14,6 @@ export class GridController {
 
     async createNewGrid(request: Request, response: Response, next: NextFunction) {
         const {grid} = request.body;
-        console.log(grid);
         if (grid === undefined || grid === null) {
             return response.status(400).json({error: "Grid data is missing or null"});
         }
@@ -31,7 +30,6 @@ export class GridController {
 
     async initialGrid(request: Request, response: Response, next: NextFunction) {
         const grid = await this.gridRepository.findOneBy({id: 2});
-        console.log(grid)
         return response.status(200).json(grid!.grid);
     }
 
