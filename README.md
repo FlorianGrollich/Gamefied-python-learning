@@ -16,7 +16,7 @@
    - [Run Only the Frontend](#run-only-the-frontend)
 5. [Code Quality and Security Check](#code-quality-and-security-check)
    - [Code Quality and Styling (ESLint + Prettier)](#code-quality-and-styling-eslint--prettier)
-   - [SonarQube Security and Quality Check](#sonarqube-security-and-quality-check)
+   - [SonarQube Security and Code Quality Check](#sonarqube-security-and-code-quality-check)
 6. [Run Tests](#run-tests)
    - [Run All Tests](#run-all-tests)
 7. [Dependencies Check](#dependencies-check)
@@ -154,10 +154,25 @@ To check the code for syntax and security issues, run the following commands bef
 npm run lint-format-all
 ```
 
-### SonarQube Security and Quality Check
-```bash
-sonar-scanner
-```
+### SonarQube Security and Code Quality Check
+In case you want to do a new scan after you have shut down the docker container:
+1. List the container and copy the SonarQube container ID:
+  ```bash
+  docker ps -a
+  ```
+2. Start the container:
+  ```bash
+  docker start [container_id]
+  ```
+3. Verify that it is running:
+  ```bash
+  docker ps
+  ```
+4. Open the displayed http://127.0.0.1:8084/ in the browser.
+5. Run a new scan:
+  ```bash
+  sonar-scanner
+  ```
 
 ## Run Tests
 
