@@ -33,28 +33,35 @@ function safeStringify(obj: any) {
   return stringified;
 }
 
-PostgresDataSource.initialize().then(async () => {
-  Routes.forEach(route => {
-    const method = route.method as keyof Express;
-    if (typeof app[method] === 'function') {
-      app[method](route.route, (req: Request, res: Response, next: NextFunction) => {
-        const result = new (route.controller as any)()[route.action](req, res, next);
-        if (result instanceof Promise) {
-          result.then(result => {
-            if (result !== null && result !== undefined && !res.headersSent) {
-              res.send(safeStringify(result));
-            }
-          }).catch(err => {
-            if (!res.headersSent) {
-              next(err);
-            }
-          });
-        } else if (result !== null && result !== undefined && !res.headersSent) {
-          res.send(safeStringify(result));
-        }
-      });
+async function processResult(result: any, res: Response, next: NextFunction) {
+  try {
+    const processedResult = await result;
+    if (processedResult !== null && processedResult !== undefined && !res.headersSent) {
+      res.send(safeStringify(processedResult));
     }
-  });
+  } catch (err) {
+    if (!res.headersSent) {
+      next(err);
+    }
+  }
+}
+
+function setupRoute(route: any) {
+  const method = route.method as keyof Express;
+  if (typeof app[method] === 'function') {
+    app[method](route.route, async (req: Request, res: Response, next: NextFunction) => {
+      const result = new (route.controller as any)()[route.action](req, res, next);
+      if (result instanceof Promise) {
+        await processResult(result, res, next);
+      } else if (result !== null && result !== undefined && !res.headersSent) {
+        res.send(safeStringify(result));
+      }
+    });
+  }
+}
+
+PostgresDataSource.initialize().then(async () => {
+  Routes.forEach(setupRoute);
 
   const server = createServer(app);
   const wss = new WebSocketServer({ noServer: true });
