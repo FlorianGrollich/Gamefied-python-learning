@@ -50,7 +50,8 @@ function setupRoute(route: any) {
   const method = route.method as keyof Express;
   if (typeof app[method] === 'function') {
     app[method](route.route, async (req: Request, res: Response, next: NextFunction) => {
-      const result = new (route.controller as any)()[route.action](req, res, next);
+      const controllerInstance = new route.controller();
+      const result = controllerInstance[route.action](req, res, next);
       if (result instanceof Promise) {
         await processResult(result, res, next);
       } else if (result !== null && result !== undefined && !res.headersSent) {
