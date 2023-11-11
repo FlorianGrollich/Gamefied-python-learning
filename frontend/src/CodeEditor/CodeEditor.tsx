@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { Editor } from '@monaco-editor/react'
 
 const CodeEditor = () => {

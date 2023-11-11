@@ -4,7 +4,7 @@ interface LoginFormProps {
   onLogin: (user: any) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin = () => {} }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',

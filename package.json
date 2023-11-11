@@ -10,11 +10,17 @@
     "frontend": "cd frontend && npm start",
     "check": "./scripts/full-check.sh",
     "test": "cd frontend && npm test",
-    "lint": "eslint 'frontend/src/**/*.{ts,tsx}'",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
-    "lint-format": "npm run lint -- --fix && npm run format",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "lint-frontend": "cd frontend && eslint 'src/**/*.{ts,tsx}' --fix",
+    "format-frontend": "cd frontend && prettier --write 'src/**/*.{ts,tsx,json,css,scss}'",
+    "lint-format-frontend": "npm run lint-frontend && npm run format-frontend",
+    "lint-server": "cd server && eslint '**/*.ts' --fix",
+    "format-server": "cd server && prettier --write '**/*.ts'",
+    "lint-format-server": "npm run lint-server && npm run format-server",
+    "lint-all": "npm run lint-frontend && npm run lint-server",
+    "format-all": "npm run format-frontend && npm run format-server",
+    "lint-format-all": "npm run lint-all && npm run format-all"
   },
   "workspaces": [
     "server",
@@ -37,7 +43,6 @@
 
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
-    "eslint-config-react-app": "^7.0.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "monaco-editor": "^0.43.0",

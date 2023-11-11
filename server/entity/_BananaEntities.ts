@@ -1,6 +1,3 @@
-import {User} from "./User";
+import { User } from './User'
 
-
-export const BananaEntities = [
-    User
-]
+export const BananaEntities = [User]

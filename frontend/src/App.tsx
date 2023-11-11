@@ -1,7 +1,5 @@
-// App.tsx
-
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './NavBar/NavBar';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
@@ -36,7 +34,7 @@ const App: React.FC = () => {
   return (
     <div className="App min-h-screen bg-slate-900 text-gray-200">
       <Router>
-        <Navbar user={user} onLogout={handleLogout} /> {/* Use the Navbar component */}
+        <Navbar user={user} onLogout={handleLogout} />
         <main className="pt-16">
           <Routes>
             <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
@@ -45,19 +43,11 @@ const App: React.FC = () => {
             <Route
               path="/"
               element={
-                user ? (
-                  <div className="mt-8 p-5 text-center">
-                    <h1 className="text-3xl font-bold">
-                      Hello, {user.username}
-                    </h1>
-                  </div>
-                ) : (
-                  <div className="mt-8 p-5 text-center">
-                    <h1 className="text-3xl font-bold">
-                      Welcome to Python Playground
-                    </h1>
-                  </div>
-                )
+                <div className="mt-8 p-5 text-center">
+                  <h1 className="text-3xl font-bold">
+                    Welcome to Python Playground
+                  </h1>
+                </div>
               }
             />
           </Routes>
