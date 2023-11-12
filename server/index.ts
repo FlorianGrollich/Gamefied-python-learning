@@ -7,6 +7,7 @@ import {createServer} from "http";
 import {Server as WebSocketServer} from "ws";
 import {PostgresDataSource} from "./utils/data-source";
 import {rateLimit} from "express-rate-limit";
+import {headerValidationMiddleware} from "./middleware/headerValidation";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ const app: Express = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(limiter);
+app.use(headerValidationMiddleware);
 
 
 if (!process.env.JWT_SECRET) {
