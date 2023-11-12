@@ -1,14 +1,14 @@
-import '@testing-library/jest-dom'
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import RegistrationPage from '../../RegistrationPage/RegistrationPage'
+import '@testing-library/jest-dom';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import RegistrationPage from '../../RegistrationPage/RegistrationPage';
 
-describe('RegistrationPage Component', () => {
-  test('renders RegistrationPage component', () => {
-    render(<RegistrationPage />)
-    const registrationHeading = screen.getByRole('heading', {
-      name: /register/i,
-    })
-    expect(registrationHeading).toBeInTheDocument()
-  })
-})
+describe('RegistrationPage', () => {
+  it('renders the registration page with the form', () => {
+    render(<RegistrationPage />);
+    expect(screen.getByText(/register/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Confirm Password')).toBeInTheDocument();
+  });
+});
