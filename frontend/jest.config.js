@@ -22,7 +22,7 @@ module.exports = {
       "!*.",
     ],
     coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["lcov", "text"],
+    coverageReporters: ["json", "lcov", "text", "clover"],
     coverageThreshold: {
       global: {
         branches: 50,
