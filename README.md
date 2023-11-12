@@ -19,7 +19,7 @@
    - [SonarQube Security and Code Quality Check](#sonarqube-security-and-code-quality-check)
 6. [Run Tests](#run-tests)
    - [Run All Tests](#run-all-tests)
-7. [Dependencies Check](#dependencies-check)
+7. [App Startup and Dependencies Check](#app-startup-and-dependencies-check)
    - [Dependencies Check](#dependencies-check)
    - [Dependencies Fix](#dependencies-fix)
 8. [Review Dependabot Dependency Updates](#review-dependabot-dependency-updates)
@@ -182,7 +182,12 @@ To run all tests across the unit, integration, and API layers, enter:
 npm test
 ```
 
-## Dependencies Check
+## App Startup and Dependencies Check
+
+Before running the check, be sure to enable the command with:
+```bash
+chmod +x scripts/ull-check.sh
+```
 
 ### Dependencies Check
 ```bash
