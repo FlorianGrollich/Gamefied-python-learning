@@ -15,7 +15,8 @@
     "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
     "lint-format": "npm run lint -- --fix && npm run format",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "test:coverage": "npm run test:coverage --prefix frontend && npm run test:coverage --prefix server"
+    "test:coverage": "npm run test:coverage --prefix frontend && npm run test:coverage --prefix server",
+    "merge-coverage": "cat frontend/coverage/lcov.info server/coverage/lcov.info > coverage/merged.lcov.info"
   },
   "workspaces": [
     "server",
@@ -35,7 +36,6 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
-
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "eslint-config-react-app": "^7.0.1",
