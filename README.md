@@ -14,15 +14,16 @@
    - [Run Both Backend and Frontend](#run-both-backend-and-frontend)
    - [Run Only the Backend](#run-only-the-backend)
    - [Run Only the Frontend](#run-only-the-frontend)
-5. [Code Quality and Security Check](#code-quality-and-security-check)
-   - [Code Quality and Styling (ESLint + Prettier)](#code-quality-and-styling-eslint--prettier)
-   - [SonarQube Security and Code Quality Check](#sonarqube-security-and-code-quality-check)
-6. [Run Tests](#run-tests)
+5. [Unit, Integration, API Tests](#unit-integration-api-tests)
    - [Run All Tests](#run-all-tests)
-7. [App Startup and Dependencies Check](#app-startup-and-dependencies-check)
-   - [Dependencies Check](#dependencies-check)
+   - [Coverage Test](#coverage-test)
+6. [Code Quality and Security Tests](#code-quality-and-security-tests)
+   - [Code Quality and Styling Tests (ESLint + Prettier)](#code-quality-and-styling-tests-eslint--prettier)
+   - [SonarQube Security and Code Quality Tests](#sonarqube-security-and-code-quality-tests)
+7. [Dependencies Tests](#app-startup-and-dependencies-tests)
+   - [Dependencies and App Startup Tests](#dependencies-and-app-startup-tests)
    - [Dependencies Fix](#dependencies-fix)
-8. [Review Dependabot Dependency Updates](#review-dependabot-dependency-updates)
+   - [Dependabot Dependency Updates](#dependabot-dependency-updates)
 
 ## Description
 
@@ -146,16 +147,34 @@ npm run server
 npm run frontend
 ```
 
-## Code Quality and Security Check
+## Unit, Integration, API Tests
+
+### Run All Tests
+To run all tests across the unit, integration, and API layers, enter:
+```bash
+npm test
+```
+
+### Coverage Test
+1. To check the amount of code covered by tests, run:
+```bash
+npm run test:coverage
+```
+2. To combine frontend and server test coverage reports for SonarQube analysis:
+```bash
+npm run merge-coverage
+```
+
+## Code Quality and Security Tests
 
 To check the code for syntax and security issues, run the following commands before committing:
 
-### Code Quality and Styling (ESLint + Prettier)
+### Code Quality and Styling Tests (ESLint + Prettier)
 ```bash
 npm run lint-format-all
 ```
 
-### SonarQube Security and Code Quality Check
+### SonarQube Security and Code Quality Tests
 In case you want to do a new scan after you have shut down the docker container:
 1. List the container and copy the SonarQube container ID:
   ```bash
@@ -170,27 +189,20 @@ In case you want to do a new scan after you have shut down the docker container:
   docker ps
   ```
 4. Open the displayed http://127.0.0.1:8084/ in the browser.
-5. Run a new scan:
+5. To include code coverage tests run a [Coverage Test](#coverage-test)
+6. Run a new scan:
   ```bash
   sonar-scanner
   ```
 
-## Run Tests
+## Dependencies Tests
 
-### Run All Tests
-To run all tests across the unit, integration, and API layers, enter:
+### Dependencies and App Startup Tests
+1. Enable the command:
 ```bash
-npm test
+chmod +x scripts/full-check.sh
 ```
-
-## App Startup and Dependencies Check
-
-Before running the check, be sure to enable the command with:
-```bash
-chmod +x scripts/ull-check.sh
-```
-
-### Dependencies Check
+2. Run the check:
 ```bash
 npm run check
 ```
@@ -201,23 +213,23 @@ If dependency vulnerabilities are found, the following command can be used. Plea
 npm audit fix
 ```
 
-## Review Dependabot Dependency Updates
+### Dependabot Dependency Updates
 
 The following steps need to be followed if Dependabot opens a pull request.
 
-### 1) Checkout the Branch Created by Dependabot
+1. Checkout the branch created by Dependabot:
   ```bash
   git checkout dependabot/npm_and_yarn/your-dependency-version
   ```
 
-### 2) Run Tests Locally
+2. Run tests locally:
 To ensure that the update does not introduce issues:
   ```bash
   npm run check
   ```
 
-### 3) Test the Application Manually if Needed
+3. Test the application manually if needed.
 
-### 4) Go Through Changelog of Updated Dependency and Check for Breaking Changes
+4. Go through the changelog of the updated dependency and check for breaking changes.
 
-### 5) Merge the PR
+5. Merge the PR.
