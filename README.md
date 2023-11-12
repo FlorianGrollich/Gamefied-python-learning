@@ -158,8 +158,10 @@ npm test
 ### Coverage Test
 1. To check the amount of code covered by tests, run:
 ```bash
-npm run test:coverage
+npm run test:coverage-frontend
+npm run test:coverage-server
 ```
+
 2. To combine frontend and server test coverage reports for SonarQube analysis:
 ```bash
 npm run merge-coverage
