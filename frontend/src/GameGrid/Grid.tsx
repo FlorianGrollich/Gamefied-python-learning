@@ -1,8 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
 import useFetchGrid from "./hooks/useGameGrid";
-import Navbar from "../Navbar/NavBar";
-import {useStoreGrid} from "./hooks/useStoreGrid";
 
 
 const Grid: React.FC = () => {

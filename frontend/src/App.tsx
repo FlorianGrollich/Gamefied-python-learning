@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
 import CodeEditor from './CodeEditor/CodeEditor';
-import Navbar from "./Navbar/NavBar";
 import Grid from "./GameGrid/Grid";
+import Navbar from "./NavBar/NavBar";
 
 interface User {
     id: number;

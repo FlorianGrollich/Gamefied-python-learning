@@ -66,21 +66,21 @@ const RegistrationForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const emailError = validateEmail(formData.email) ? '' : 'Please enter a valid email address';
     const passwordError = getPasswordStrengthError(formData.password);
     setEmailError(emailError);
     setPasswordError(passwordError);
-  
+
     if (emailError || passwordError) {
       return;
     }
-  
+
     if (formData.password !== formData.passwordConfirmation) {
       setRegistrationStatus('Passwords do not match.');
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:3200/api/register', {
         method: 'POST',
@@ -98,8 +98,6 @@ const RegistrationForm: React.FC = () => {
       if (!response.ok) {
         throw new Error('Registration failed');
       }
-  
-      const data = await response.json();
       
       setRegistrationStatus('Registration successful. Please log in.');
     } catch (error) {
@@ -109,7 +107,7 @@ const RegistrationForm: React.FC = () => {
         setRegistrationStatus('An error occurred during registration.');
       }
     }
-  };  
+  };
 
   const handleReset = () => {
     setFormData({
