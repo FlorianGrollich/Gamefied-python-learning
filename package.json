@@ -15,7 +15,7 @@
     "format": "prettier --write 'frontend/src/**/*.{ts,tsx}'",
     "lint-format": "npm run lint -- --fix && npm run format",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "test:coverage": "npm run test -- --coverage"
+    "test:coverage": "npm run test:coverage --prefix frontend && npm run test:coverage --prefix server"
   },
   "workspaces": [
     "server",
