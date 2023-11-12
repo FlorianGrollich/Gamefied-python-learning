@@ -115,6 +115,7 @@ Create `.env` files with the necessary environment variables. Use the following 
     sonar.sources=.
     sonar.host.url=http://127.0.0.1:8084
     sonar.login=[login]
+    sonar.javascript.lcov.reportPaths=coverage/merged.lcov.info
     ```
 11) Put SonarQube configuration file and scans into the `.gitignore` file:
     ```bash
