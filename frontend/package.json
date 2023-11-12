@@ -26,7 +26,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "build:tailwind": "tailwindcss build src/index.css -o src/tailwind.output.css"
+    "build:tailwind": "tailwindcss build src/index.css -o src/tailwind.output.css",
+    "test:coverage": "react-app-rewired test --coverage"
   },
   "eslintConfig": {
     "extends": [
