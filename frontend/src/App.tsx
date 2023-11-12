@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
 import CodeEditor from './CodeEditor/CodeEditor';
-import Navbar from "./Navbar/NavBar";
+import NavBar from "./NavBar/NavBar";
 import Grid from "./GameGrid/Grid";
 
 interface User {
@@ -35,7 +35,7 @@ const App: React.FC = () => {
     return (
         <div className="App min-h-screen bg-slate-900 text-gray-200">
             <Router>
-                <Navbar user={user} onLogout={handleLogout}/> {/* Use the Navbar component */}
+                <NavBar user={user} onLogout={handleLogout}/>
                 <main className="pt-16">
                     <Routes>
                         <Route path="/home" element={<Grid/>}/>
