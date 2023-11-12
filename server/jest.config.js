@@ -13,6 +13,6 @@ module.exports = {
       "!**/coverage/**",
     ],
     coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["text-summary", "lcov"],
+    coverageReporters: ["json", "lcov", "text", "clover"],
   };
     
