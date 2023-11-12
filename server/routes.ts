@@ -1,5 +1,7 @@
-import { UserController } from './controller/UserController'
-import { AuthController } from './controller/AuthController'
+import {UserController} from "./controller/UserController";
+import {AuthController} from "./controller/AuthController";
+import {GridController} from "./controller/GridController";
+
 
 export const Routes = [
   {
@@ -30,6 +32,19 @@ export const Routes = [
     method: 'post',
     route: '/api/login',
     controller: AuthController,
-    action: 'login',
-  },
-]
+    action: "login"
+}, {
+    method: "get",
+    route: "/api/grid/initial",
+    controller: GridController,
+    action: "initialGrid"
+}, {
+    method: "post",
+    route: "/api/grid/create",
+    controller: GridController,
+    action: "createNewGrid"
+}
+
+
+];
+
