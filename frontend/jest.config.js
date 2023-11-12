@@ -1,5 +1,5 @@
 module.exports = {
-    roots: ['banana/frontend'],
+    roots: ['.'],
     setupFilesAfterEnv: ['config/setupTests.ts'],
     testEnvironment: 'jsdom',
     transform: {
