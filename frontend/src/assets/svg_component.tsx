@@ -2,7 +2,7 @@ import React from "react";
 
 const BananaSVG: React.FC = () => {
     return (
-        <svg width="32px" height="32pxpx" viewBox="0 0 1024 1024" className="icon" version="1.1"
+        <svg width="32px" height="32px" viewBox="0 0 1024 1024" className="icon" version="1.1"
              xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M348.78 708.45A169 169 0 0 1 236 549v-45a169 169 0 0 1 147.12-167.53l2.54-259.41q66.93-50.54 87-48.26Q664.92 50.6 739 198.58v612.88Q604.71 1004.61 331.52 988.6q-75.59-4.43-98.58-110.81z"
