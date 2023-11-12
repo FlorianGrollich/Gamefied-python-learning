@@ -1,6 +1,6 @@
 module.exports = {
     testEnvironment: 'node',
-    roots: ['banana/server'],
+    roots: ['.'],
     transform: {
       '^.+\\.(ts|tsx)$': 'ts-jest'
     },
