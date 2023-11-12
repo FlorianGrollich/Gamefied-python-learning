@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { User } from 'src/types/types';
 
-interface NavbarProps {
+interface NavBarProps {
   user: User | null;
   onLogout: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
+const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
   return (
     <nav className="bg-slate-800 shadow-md p-4 fixed top-0 w-full z-10">
       <div className="container mx-auto flex justify-between items-center">
@@ -38,4 +38,4 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout }) => {
   );
 };
 
-export default Navbar;
+export default NavBar;
