@@ -22,7 +22,8 @@
     "format-all": "npm run format-frontend && npm run format-server",
     "lint-format-all": "npm run format-all && npm run lint-all",
     "cypress": "cd frontend && npx cypress run",
-    "test:coverage": "npm run test:coverage --prefix frontend && npm run test:coverage --prefix server"
+    "test:coverage": "npm run test:coverage --prefix frontend && npm run test:coverage --prefix server",
+    "merge-coverage": "cat frontend/coverage/lcov.info server/coverage/lcov.info > coverage/merged.lcov.info"
   },
   "workspaces": [
     "server",
