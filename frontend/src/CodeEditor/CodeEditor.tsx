@@ -68,6 +68,6 @@ const CodeEditor: React.FC = () => {
       </div>
     </div>
   )
-}
+};
 
-export default CodeEditor
+export default CodeEditor;
