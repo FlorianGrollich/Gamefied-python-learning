@@ -19,12 +19,17 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
         </Link>
         <div>
           {user ? (
-            <span
-              className="cursor-pointer mx-3 hover:text-blue-400 transition-colors"
-              onClick={onLogout}
-            >
-              Logout ({user.username})
-            </span>
+            <>
+              <Link to="/editor" className="mx-3 hover:text-blue-400 transition-colors">
+                Editor
+              </Link>
+              <span
+                className="cursor-pointer mx-3 hover:text-blue-400 transition-colors"
+                onClick={onLogout}
+              >
+                Logout
+              </span>
+            </>
           ) : (
             <>
               <Link
