@@ -2,29 +2,37 @@ import { NextFunction, Request, Response } from "express";
 import { PostgresDataSource } from "../utils/data-source";
 import { User } from "../entity/User";
 import { generateToken } from '../utils/token';
+import { validateEmailInput, validatePasswordInput, validateUsername } from '../utils/validation';
 
 export class UserController {
-  private userRepository = PostgresDataSource.getRepository(User)
+  private userRepository = PostgresDataSource.getRepository(User);
 
   constructor() {
-    this.register = this.register.bind(this)
-    this.all = this.all.bind(this)
-    this.one = this.one.bind(this)
-    this.remove = this.remove.bind(this)
+    this.register = this.register.bind(this);
+    this.all = this.all.bind(this);
+    this.one = this.one.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   async register(request: Request, response: Response, next: NextFunction) {
     const { username, email, password, passwordConfirmation } = request.body;
 
+    // Validate Username, Email, and Password
+    const { errors: usernameErrors, isValid: isUsernameValid } = validateUsername(username);
+    const { errors: emailErrors, isValid: isEmailValid } = validateEmailInput(email);
+    const { errors: passwordErrors, isValid: isPasswordValid } = validatePasswordInput(password);
+
+    if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
+      return response.status(400).json({ username: usernameErrors, email: emailErrors, password: passwordErrors });
+    }
+
     if (password !== passwordConfirmation) {
       return response.status(400).json({ error: "Passwords do not match" });
     }
 
-    const existingUser = await this.userRepository.findOne({ where: { email } })
+    const existingUser = await this.userRepository.findOne({ where: { email } });
     if (existingUser) {
-      return response
-        .status(400)
-        .json({ error: 'User with the provided email already exists' })
+      return response.status(400).json({ error: 'User with the provided email already exists' });
     }
 
     const user = new User();
