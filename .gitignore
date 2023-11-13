@@ -30,5 +30,6 @@ coverage
 /server/.env
 .scannerwork/
 sonar-project.properties
+frontend/cypress/screenshots
 
 package-lock.json
