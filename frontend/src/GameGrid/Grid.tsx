@@ -2,10 +2,8 @@ import React from 'react';
 import Cell from './Cell';
 import useFetchGrid from "./hooks/useGameGrid";
 
-
 const Grid: React.FC = () => {
     const {gridData, loading, error} = useFetchGrid("http://localhost:3200/api/grid/initial");
-
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error?.message}</div>;
