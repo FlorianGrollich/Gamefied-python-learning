@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
+import Grid from './../GameGrid/Grid';
 
 const CodeEditor: React.FC = () => {
   const getAutocompleteSuggestions = (
@@ -34,15 +35,24 @@ const CodeEditor: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-8 m-8 bg-slate-950 rounded-lg w-3/6">
-      <Editor
-        theme="vs-dark"
-        height="90vh"
-        defaultLanguage="python"
-        defaultValue="#Type your code here"
-      />
+    <div className="flex justify-center items-stretch h-screen bg-blue-200 space-x-10">
+      <div className="flex-1 max-w-[45vw] my-9 p-2 bg-white rounded-lg shadow-xl">
+        <Editor
+          height="85vh"
+          width="100%"
+          defaultLanguage="python"
+          theme="customTheme"
+          options={{
+            automaticLayout: true,
+            fontSize: 14,
+          }}
+        />
+      </div>
+      <div className="flex-1 max-w-[45vw] my-9 bg-indigo-100 rounded-lg shadow-xl overflow-hidden">
+        <Grid />
+      </div>
     </div>
-  )
+  );
 };
 
 export default CodeEditor;
