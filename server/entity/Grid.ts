@@ -1,10 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm'
 
 @Entity()
 export class Grid {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number
 
-    @Column({nullable: false})
-    grid: string;
+  @Column({ nullable: false })
+  grid: string
 }
