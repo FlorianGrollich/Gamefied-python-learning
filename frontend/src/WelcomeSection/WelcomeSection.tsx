@@ -1,11 +1,11 @@
-import React from 'react';
-import WelcomeImage from './../assets/background.png';
-import CollaborateImage from './../assets/solve-puzzle.png';
-import { User } from "./../types/types.d";
-import { content } from "./../content";
+import React from 'react'
+import WelcomeImage from './../assets/background.png'
+import CollaborateImage from './../assets/solve-puzzle.png'
+import { User } from './../types/types.d'
+import { content } from './../content'
 
 interface WelcomeSectionProps {
-  user: User | null;
+  user: User | null
 }
 
 const WelcomeSection: React.FC<WelcomeSectionProps> = ({ user }) => {
@@ -19,11 +19,15 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({ user }) => {
         <div className="relative z-5">
           {user ? (
             <>
-              <h1 className="text-6xl text-[#181043] font-bold bg-[#FFAB76] mt-4 rounded-lg">Hello, {user.username}!</h1>
+              <h1 className="text-6xl text-[#181043] font-bold bg-[#FFAB76] mt-4 rounded-lg">
+                Hello, {user.username}!
+              </h1>
             </>
           ) : (
             <>
-              <h1 className="text-6xl text-[#181043] font-bold bg-[#FFAB76] mt-4 rounded-lg">Welcome to Python Playground!</h1>
+              <h1 className="text-6xl text-[#181043] font-bold bg-[#FFAB76] mt-4 rounded-lg">
+                Welcome to Python Playground!
+              </h1>
             </>
           )}
         </div>
@@ -56,7 +60,7 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({ user }) => {
           />
         </div>
       </div>
-      
+
       <div className="h-screen flex flex-col md:flex-row justify-center items-center bg-gradient-to-b from-blue-200 to-white text-blue-900">
         <div className="md:w-1/2 p-8">
           <h2 className="text-4xl font-bold">{content.featureThirdTitle}</h2>
@@ -71,7 +75,7 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({ user }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default WelcomeSection;
+export default WelcomeSection
