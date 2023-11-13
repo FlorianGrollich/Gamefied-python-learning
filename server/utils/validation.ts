@@ -1,6 +1,7 @@
 interface ValidationErrors {
     email?: string[];
     password?: string[];
+    username?: string[];
   }
 
 const getPasswordStrengthError = (password: string): string[] => {
@@ -31,7 +32,22 @@ const getPasswordStrengthError = (password: string): string[] => {
     return errors;
   };
 
-const validateEmail = (email: string): boolean => {
+export const validateUsername = (username: string) => {
+    let errors: ValidationErrors = {};
+    let isValid = true;
+  
+    if (!username || username.trim() === '') {
+      errors.username = ['Username is required'];
+      isValid = false;
+    } else if (username.length < 3) {
+      errors.username = ['Username must be at least 3 characters'];
+      isValid = false;
+    }
+  
+    return { errors, isValid };
+  };
+
+  const validateEmail = (email: string): boolean => {
     return /\S+@\S+\.\S+/.test(email);
   };  
 
