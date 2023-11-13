@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor';
 
 export const editorTheme = () => {
   monaco.editor.defineTheme('customTheme', {
@@ -6,6 +6,6 @@ export const editorTheme = () => {
     inherit: true,
     rules: [],
     colors: {},
-  })
-  monaco.editor.setTheme('customTheme')
-}
+  });
+  monaco.editor.setTheme('customTheme');
+};
