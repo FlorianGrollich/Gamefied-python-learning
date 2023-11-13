@@ -18,7 +18,8 @@
    - [Dependencies Check](#dependencies-check)
    - [Dependencies Fix](#dependencies-fix)
 6. [Run Tests](#run-tests)
-   - [Run All Tests](#run-all-tests)
+   - [Run All Jest Tests](#run-all-jest-tests)
+   - [Run Frontend Cypress Tests](#run-frontend-cypress-tests)
 7. [Review Dependabot Dependency Updates](#review-dependabot-dependency-updates)
 
 ## Description
@@ -122,10 +123,16 @@ npm audit fix
 
 ## Run Tests
 
-### Run All Tests
+### Run All Jest Tests
 To run all tests across the unit, integration, and API layers enter:
 ```bash
 npm test
+```
+
+### Run Frontend Cypress Tests
+To run the Cypress frontend E2E tests enter:
+```bash
+npm run cypress
 ```
 
 ## Review Dependabot Dependency Updates
