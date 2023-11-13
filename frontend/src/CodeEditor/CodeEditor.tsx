@@ -1,38 +1,36 @@
-import React, { useEffect } from 'react';
-import { Editor } from '@monaco-editor/react';
-import * as monaco from 'monaco-editor';
-import Grid from './../GameGrid/Grid';
+import React, { useEffect } from 'react'
+import { Editor } from '@monaco-editor/react'
+import * as monaco from 'monaco-editor'
+import Grid from './../GameGrid/Grid'
 
 const CodeEditor: React.FC = () => {
   const getAutocompleteSuggestions = (
     model: monaco.editor.ITextModel,
-    position: monaco.Position
+    position: monaco.Position,
   ) => {
-    const word = model.getWordUntilPosition(position);
+    const word = model.getWordUntilPosition(position)
     const range = new monaco.Range(
       position.lineNumber,
       word.startColumn,
       position.lineNumber,
-      word.endColumn
-    );
+      word.endColumn,
+    )
 
     // This section makes custom suggestions for the autocomplete.
-    const suggestions: monaco.languages.CompletionItem[] = [
+    const suggestions: monaco.languages.CompletionItem[] = []
 
-    ];
-
-    return { suggestions: suggestions, incomplete: false };
-  };
+    return { suggestions: suggestions, incomplete: false }
+  }
 
   useEffect(() => {
     const provider = monaco.languages.registerCompletionItemProvider('python', {
       provideCompletionItems: getAutocompleteSuggestions,
-    });
+    })
 
     return () => {
-      provider.dispose();
-    };
-  }, []);
+      provider.dispose()
+    }
+  }, [])
 
   return (
     <div className="flex justify-center items-stretch h-screen bg-blue-200 space-x-10">
@@ -52,7 +50,7 @@ const CodeEditor: React.FC = () => {
         <Grid />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CodeEditor;
+export default CodeEditor
