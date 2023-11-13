@@ -98,10 +98,13 @@ PostgresDataSource.initialize()
     server.listen(port, () => {
       console.log(`Server listening on port: ${port}`)
     })
-  console.log(`Express server has started on port 3200. Open http://localhost:${port}/users to see results`);
-
-}).catch(error => console.log('Error during Data Source initialization:', error));
-
+    console.log(
+      `Express server has started on port 3200. Open http://localhost:${port}/users to see results`,
+    )
+  })
+  .catch(error =>
+    console.log('Error during Data Source initialization:', error),
+  )
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack)

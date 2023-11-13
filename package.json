@@ -25,7 +25,7 @@
     "lint-format-server": "npm run lint-server && npm run format-server",
     "lint-all": "npm run lint-frontend && npm run lint-server",
     "format-all": "npm run format-frontend && npm run format-server",
-    "lint-format-all": "npm run lint-all && npm run format-all"
+    "lint-format-all": "npm run format-all && npm run lint-all"
   },
   "workspaces": [
     "server",
