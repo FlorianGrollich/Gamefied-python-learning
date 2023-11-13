@@ -7,7 +7,7 @@ const CodeEditor = () => {
         theme="vs-darkd"
         height="90vh"
         defaultLanguage="python"
-        defaultValue="#some comment"
+        defaultValue="#Type your code here"
       />
     </div>
   )
