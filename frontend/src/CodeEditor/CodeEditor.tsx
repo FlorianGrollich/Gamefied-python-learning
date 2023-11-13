@@ -42,7 +42,7 @@ const CodeEditor: React.FC = () => {
           theme="customTheme"
           options={{
             automaticLayout: true,
-            fontSize: 14,
+            fontSize: 12,
           }}
         />
       </div>
