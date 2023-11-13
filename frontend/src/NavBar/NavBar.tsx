@@ -12,7 +12,6 @@ const NavBar: React.FC<NavBarProps> = ({ user, onLogout }) => {
   const location = useLocation()
 
   useEffect(() => {
-    // Close the dropdown when the location changes
     setIsDropdownOpen(false)
   }, [location])
 
