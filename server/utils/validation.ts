@@ -1,17 +1,49 @@
 interface ValidationErrors {
-    email?: string;
-    password?: string;
-  }  
+    email?: string[];
+    password?: string[];
+  }
 
-export const validateEmailInput = (email: string) => {
+const getPasswordStrengthError = (password: string): string[] => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumbers = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  
+    const errors: string[] = [];
+  
+    if (password.length < minLength) {
+      errors.push(`Password must be at least ${minLength} characters long.`);
+    }
+    if (!hasUpperCase.test(password)) {
+      errors.push("Password must include at least one uppercase letter.");
+    }
+    if (!hasLowerCase.test(password)) {
+      errors.push("Password must include at least one lowercase letter.");
+    }
+    if (!hasNumbers.test(password)) {
+      errors.push("Password must include at least one number.");
+    }
+    if (!hasSpecialChar.test(password)) {
+      errors.push("Password must include at least one special character (!@#$%^&*(),.?\":{}|<>).");
+    }
+  
+    return errors;
+  };
+
+const validateEmail = (email: string): boolean => {
+    return /\S+@\S+\.\S+/.test(email);
+  };  
+
+  export const validateEmailInput = (email: string) => {
     let errors: ValidationErrors = {};
     let isValid = true;
   
     if (!email || email.trim() === '') {
-      errors.email = 'Email is required';
+      errors.email = ['Email is required'];
       isValid = false;
-    } else if (!email.includes('@')) {
-      errors.email = 'Email is invalid';
+    } else if (!validateEmail(email)) {
+      errors.email = ['Email is invalid'];
       isValid = false;
     }
   
@@ -22,11 +54,9 @@ export const validateEmailInput = (email: string) => {
     let errors: ValidationErrors = {};
     let isValid = true;
   
-    if (!password || password.trim() === '') {
-      errors.password = 'Password is required';
-      isValid = false;
-    } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters';
+    const passwordErrors = getPasswordStrengthError(password);
+    if (passwordErrors.length > 0) {
+      errors.password = passwordErrors;
       isValid = false;
     }
   
