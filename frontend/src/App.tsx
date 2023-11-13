@@ -1,16 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './LoginPage/LoginPage';
 import RegistrationPage from './RegistrationPage/RegistrationPage';
 import CodeEditor from './CodeEditor/CodeEditor';
 import Grid from "./GameGrid/Grid";
 import NavBar from "./NavBar/NavBar";
-
-interface User {
-    id: number;
-    email: string;
-    username: string;
-}
+import { User } from "./types/types.d";
+import WelcomeSection from './WelcomeSection/WelcomeSection';
 
 const App: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -44,21 +40,7 @@ const App: React.FC = () => {
                         <Route path="/editor" element={<CodeEditor/>}/>
                         <Route
                             path="/"
-                            element={
-                                user ? (
-                                    <div className="mt-8 p-5 text-center">
-                                        <h1 className="text-3xl font-bold">
-                                            Hello, {user.username}
-                                        </h1>
-                                    </div>
-                                ) : (
-                                    <div className="mt-8 p-5 text-center">
-                                        <h1 className="text-3xl font-bold">
-                                            Welcome to Python Playground
-                                        </h1>
-                                    </div>
-                                )
-                            }
+                            element={<WelcomeSection user={user}/>}
                         />
                     </Routes>
                 </main>
@@ -66,6 +48,5 @@ const App: React.FC = () => {
         </div>
     );
 };
-
 
 export default App;
