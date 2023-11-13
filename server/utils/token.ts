@@ -13,7 +13,7 @@ export const generateToken = (userId: number, email: string): string => {
     return jwt.sign(
         { userId, email },
         secretKey,
-        { expiresIn: '1h' }
+        { expiresIn: '24h' }
     );
 };
 
