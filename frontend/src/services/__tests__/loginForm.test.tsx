@@ -18,13 +18,13 @@ describe('LoginForm', () => {
 
     render(<LoginForm onLogin={mockOnLogin} />)
 
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
+    fireEvent.change(screen.getByPlaceholderText('Enter your email'), {
       target: { value: 'test@example.com' },
     })
-    fireEvent.change(screen.getByPlaceholderText('Password'), {
+    fireEvent.change(screen.getByPlaceholderText('Enter your password'), {
       target: { value: 'password123' },
     })
-    fireEvent.click(screen.getByText('Login'))
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
 
     await screen.findByText('Login successful')
 
