@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { User } from './../types/types';
 
 interface LoginFormProps {
-  onLogin: (user: any) => void;
+  onLogin: (user: User) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
