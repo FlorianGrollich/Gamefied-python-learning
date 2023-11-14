@@ -10,7 +10,7 @@ const getAutocompleteSuggestions = (
   position: monaco.Position,
 ) => {
   const word = model.getWordUntilPosition(position)
-  const range = new monaco.Range(
+  new monaco.Range(
     position.lineNumber,
     word.startColumn,
     position.lineNumber,
