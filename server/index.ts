@@ -9,9 +9,27 @@ import { PostgresDataSource } from './utils/data-source'
 
 dotenv.config()
 
+const helmet = require('helmet');
+
 const app: Express = express()
 app.use(cors())
 app.use(bodyParser.json())
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "https:/"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'", "data:", "https://images.unsplash.com"],
+    connectSrc: ["'self'"],
+    fontSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    mediaSrc: ["'self'"],
+    frameSrc: ["'self'"],
+    reportUri: ["/csp-violation-report-endpoint"],
+    upgradeInsecureRequests: []
+  }
+}));
 
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET is not set')
