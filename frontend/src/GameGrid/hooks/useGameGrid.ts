@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-type GridDataType = string[][] // Define the type for your grid data
+type GridDataType = string[][]
 
 const useFetchGrid = (url: string) => {
   const [gridData, setGridData] = useState<GridDataType | null>(null)
