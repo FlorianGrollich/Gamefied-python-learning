@@ -35,6 +35,8 @@ app.use(helmet.hsts({ maxAge: 63072000 }));
 
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 
+app.use(helmet.noSniff());
+
 app.use(morgan('combined'));
 
 if (!process.env.JWT_SECRET) {
