@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const RegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,79 +6,83 @@ const RegistrationForm: React.FC = () => {
     email: '',
     password: '',
     passwordConfirmation: '',
-  });
-  const [registrationStatus, setRegistrationStatus] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  })
+  const [registrationStatus, setRegistrationStatus] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
+    })
 
-    if (name === 'email') setEmailError('');
-    if (name === 'password') setPasswordError('');
-  };
+    if (name === 'email') setEmailError('')
+    if (name === 'password') setPasswordError('')
+  }
 
   const getPasswordStrengthError = (password: string) => {
-    const minLength = 8;
-    const hasUpperCase = /[A-Z]/;
-    const hasLowerCase = /[a-z]/;
-    const hasNumbers = /[0-9]/;
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+    const minLength = 8
+    const hasUpperCase = /[A-Z]/
+    const hasLowerCase = /[a-z]/
+    const hasNumbers = /[0-9]/
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/
 
-    const errors = [];
+    const errors = []
 
     if (password.length < minLength) {
-      errors.push(`Password must be at least ${minLength} characters long.`);
+      errors.push(`Password must be at least ${minLength} characters long.`)
     }
     if (!hasUpperCase.test(password)) {
-      errors.push("Password must include at least one uppercase letter.");
+      errors.push('Password must include at least one uppercase letter.')
     }
     if (!hasLowerCase.test(password)) {
-      errors.push("Password must include at least one lowercase letter.");
+      errors.push('Password must include at least one lowercase letter.')
     }
     if (!hasNumbers.test(password)) {
-      errors.push("Password must include at least one number.");
+      errors.push('Password must include at least one number.')
     }
     if (!hasSpecialChar.test(password)) {
-      errors.push("Password must include at least one special character (!@#$%^&*(),.?\":{}|<>).");
+      errors.push(
+        'Password must include at least one special character (!@#$%^&*(),.?":{}|<>).',
+      )
     }
 
-    return errors.length > 0 ? errors.join(' ') : '';
-  };
+    return errors.length > 0 ? errors.join(' ') : ''
+  }
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     if (name === 'email' && !validateEmail(value)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError('Please enter a valid email address')
     } else if (name === 'password') {
-      const passwordError = getPasswordStrengthError(value);
-      setPasswordError(passwordError);
+      const passwordError = getPasswordStrengthError(value)
+      setPasswordError(passwordError)
     }
-  };
+  }
 
   const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email);
-  };
+    return /\S+@\S+\.\S+/.test(email)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const emailError = validateEmail(formData.email) ? '' : 'Please enter a valid email address';
-    const passwordError = getPasswordStrengthError(formData.password);
-    setEmailError(emailError);
-    setPasswordError(passwordError);
+    const emailError = validateEmail(formData.email)
+      ? ''
+      : 'Please enter a valid email address'
+    const passwordError = getPasswordStrengthError(formData.password)
+    setEmailError(emailError)
+    setPasswordError(passwordError)
 
     if (emailError || passwordError) {
-      return;
+      return
     }
 
     if (formData.password !== formData.passwordConfirmation) {
-      setRegistrationStatus('Passwords do not match.');
-      return;
+      setRegistrationStatus('Passwords do not match.')
+      return
     }
 
     try {
@@ -91,23 +95,25 @@ const RegistrationForm: React.FC = () => {
           username: formData.username,
           email: formData.email,
           password: formData.password,
-          passwordConfirmation: formData.passwordConfirmation
+          passwordConfirmation: formData.passwordConfirmation,
         }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Registration failed');
+        throw new Error('Registration failed')
       }
-      
-      setRegistrationStatus('Registration successful. Please log in.');
+
+      setRegistrationStatus('Registration successful. Please log in.')
     } catch (error) {
       if (error instanceof Error) {
-        setRegistrationStatus(error.message || 'An error occurred during registration.');
+        setRegistrationStatus(
+          error.message || 'An error occurred during registration.',
+        )
       } else {
-        setRegistrationStatus('An error occurred during registration.');
+        setRegistrationStatus('An error occurred during registration.')
       }
     }
-  };
+  }
 
   const handleReset = () => {
     setFormData({
@@ -115,11 +121,11 @@ const RegistrationForm: React.FC = () => {
       email: '',
       password: '',
       passwordConfirmation: '',
-    });
-    setRegistrationStatus('');
-    setEmailError('');
-    setPasswordError('');
-  };
+    })
+    setRegistrationStatus('')
+    setEmailError('')
+    setPasswordError('')
+  }
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -128,7 +134,12 @@ const RegistrationForm: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Username */}
           <div>
-            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900">Username</label>
+            <label
+              htmlFor="username"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Username
+            </label>
             <input
               id="username"
               type="text"
@@ -140,10 +151,15 @@ const RegistrationForm: React.FC = () => {
               required
             />
           </div>
-          
+
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Email
+            </label>
             <input
               id="email"
               type="email"
@@ -157,13 +173,23 @@ const RegistrationForm: React.FC = () => {
               required
             />
             {emailError && (
-              <p id="email-error" className="mt-1 text-xs font-medium text-red-600">{emailError}</p>
+              <p
+                id="email-error"
+                className="mt-1 text-xs font-medium text-red-600"
+              >
+                {emailError}
+              </p>
             )}
           </div>
-          
+
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Password
+            </label>
             <input
               id="password"
               type="password"
@@ -177,13 +203,23 @@ const RegistrationForm: React.FC = () => {
               required
             />
             {passwordError && (
-              <p id="password-error" className="mt-1 text-xs font-medium text-red-600">{passwordError}</p>
+              <p
+                id="password-error"
+                className="mt-1 text-xs font-medium text-red-600"
+              >
+                {passwordError}
+              </p>
             )}
           </div>
-          
+
           {/* Password Confirmation */}
           <div>
-            <label htmlFor="passwordConfirmation" className="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
+            <label
+              htmlFor="passwordConfirmation"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Confirm Password
+            </label>
             <input
               id="passwordConfirmation"
               type="password"
@@ -195,13 +231,20 @@ const RegistrationForm: React.FC = () => {
               required
             />
           </div>
-          
+
           {/* Buttons */}
           <div className="flex items-center justify-between">
-            <button type="button" onClick={handleReset} className="text-sm font-medium text-blue-600 hover:underline">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-sm font-medium text-blue-600 hover:underline"
+            >
               Reset
             </button>
-            <button type="submit" className="inline-block px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-200">
+            <button
+              type="submit"
+              className="inline-block px-6 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-200"
+            >
               Sign Up
             </button>
           </div>
@@ -215,7 +258,7 @@ const RegistrationForm: React.FC = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm
