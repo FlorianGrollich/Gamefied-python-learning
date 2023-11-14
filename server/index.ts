@@ -15,6 +15,7 @@ const app: Express = express()
 app.use(cors())
 app.use(bodyParser.json())
 
+// Content Security Policy (CSP) against Cross-Site Scripting (XSS)
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
@@ -31,12 +32,16 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 
+ // HTTP Strict Transport Security (HSTS) for 2 years
 app.use(helmet.hsts({ maxAge: 63072000 }));
 
+ // X-Frame-Options against clickjacking
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 
+// X-Content-Type-Options against MIME sniffing
 app.use(helmet.noSniff());
 
+// Server-side logging
 app.use(morgan('combined'));
 
 if (!process.env.JWT_SECRET) {
