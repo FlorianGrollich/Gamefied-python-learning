@@ -31,6 +31,8 @@ app.use(helmet.contentSecurityPolicy({
   }
 }));
 
+app.use(helmet.hsts({ maxAge: 63072000 }));
+
 app.use(morgan('combined'));
 
 if (!process.env.JWT_SECRET) {
