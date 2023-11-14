@@ -29,7 +29,7 @@ describe('RegistrationForm Component', () => {
       target: { value: 'weak' },
     });
     fireEvent.blur(passwordInput);
-    expect(screen.getByText('Password is too weak')).toBeInTheDocument();
+    expect(screen.getByText(/Password must be at least 8 characters long.|Password must include at least one uppercase letter.|Password must include at least one lowercase letter.|Password must include at least one number.|Password must include at least one special character (!@#$%^&*(),.?\":{}|<>)./    )).toBeInTheDocument();
   });
 
   test('allows the user to reset the form', () => {
