@@ -6,10 +6,10 @@ import { Routes } from './routes'
 import { createServer } from 'http'
 import { Server as WebSocketServer } from 'ws'
 import { PostgresDataSource } from './utils/data-source'
+import helmet from 'helmet';
+import morgan from 'morgan';
 
 dotenv.config()
-
-const helmet = require('helmet');
 
 const app: Express = express()
 app.use(cors())
@@ -30,6 +30,8 @@ app.use(helmet.contentSecurityPolicy({
     upgradeInsecureRequests: []
   }
 }));
+
+app.use(morgan('combined'));
 
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET is not set')
