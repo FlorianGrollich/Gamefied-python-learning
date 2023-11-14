@@ -32,7 +32,8 @@ app.use(helmet.contentSecurityPolicy({
     mediaSrc: ["'self'"],
     frameSrc: ["'self'"],
     reportUri: ["/csp-violation-report-endpoint"],
-    upgradeInsecureRequests: []
+    upgradeInsecureRequests: [],
+    blockAllMixedContent: []
   }
 }));
 
