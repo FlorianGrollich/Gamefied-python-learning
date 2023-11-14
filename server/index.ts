@@ -11,8 +11,12 @@ import morgan from 'morgan';
 
 dotenv.config()
 
+let corsOptions = {
+  origin: 'http://localhost:3000',
+};
+
 const app: Express = express()
-app.use(cors())
+app.use(cors(corsOptions));
 app.use(bodyParser.json())
 
 // Content Security Policy (CSP) against Cross-Site Scripting (XSS)
