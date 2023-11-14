@@ -33,7 +33,8 @@ app.use(helmet.contentSecurityPolicy({
     frameSrc: ["'self'"],
     reportUri: ["/csp-violation-report-endpoint"],
     upgradeInsecureRequests: [],
-    blockAllMixedContent: []
+    blockAllMixedContent: [],
+    frameAncestors: ["'self'"]
   }
 }));
 
