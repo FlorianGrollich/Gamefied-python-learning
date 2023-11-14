@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import grid from '../Grid'
 
 export const useStoreGrid = () => {
   const [response, setResponse] = useState(null)

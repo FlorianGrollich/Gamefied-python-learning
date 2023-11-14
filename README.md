@@ -14,8 +14,9 @@
    - [Run Both Backend and Frontend](#run-both-backend-and-frontend)
    - [Run Only the Backend](#run-only-the-backend)
    - [Run Only the Frontend](#run-only-the-frontend)
-5. [Unit, Integration, API Tests](#unit-integration-api-tests)
-   - [Run All Tests](#run-all-tests)
+5. [Unit, Integration, E2E, and API Tests](#unit-integration-e2e-and-api-tests)
+   - [Run All Jest Tests](#run-all-jest-tests)
+   - [Run Frontend Cypress Tests](#run-frontend-cypress-tests)
    - [Coverage Test](#coverage-test)
 6. [Code Quality and Security Tests](#code-quality-and-security-tests)
    - [Code Quality and Styling Tests (ESLint + Prettier)](#code-quality-and-styling-tests-eslint--prettier)
@@ -147,12 +148,18 @@ npm run server
 npm run frontend
 ```
 
-## Unit, Integration, API Tests
+## Unit, Integration, E2E, and API Tests
 
-### Run All Tests
-To run all tests across the unit, integration, and API layers, enter:
+### Run All Jest Tests
+To run all tests across the unit, integration, and API layers enter:
 ```bash
 npm test
+```
+
+### Run Frontend Cypress Tests
+To run the Cypress frontend E2E tests enter:
+```bash
+npm run cypress
 ```
 
 ### Coverage Test
