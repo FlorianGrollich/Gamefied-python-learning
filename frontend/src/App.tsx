@@ -5,12 +5,7 @@ import RegistrationPage from './RegistrationPage/RegistrationPage';
 import CodeEditor from './CodeEditor/CodeEditor';
 import Grid from "./GameGrid/Grid";
 import NavBar from "./NavBar/NavBar";
-
-interface User {
-    id: number;
-    email: string;
-    username: string;
-}
+import { User } from "./types/types";
 
 const App: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
