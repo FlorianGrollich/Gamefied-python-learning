@@ -10,6 +10,9 @@ describe('Code Editor', () => {
     // Set user data in local storage to simulate a logged-in user
     localStorage.setItem('user', JSON.stringify(user));
     cy.visit('http://localhost:3000/editor');
+  });
+
+  it('should display autocomplete suggestions', () => {
     cy.get('.monaco-editor').type('{enter}', { delay: 100 });
     cy.get('.monaco-editor').type('import ', { delay: 100 });
     cy.get('.monaco-editor').should('contain', 'import');
