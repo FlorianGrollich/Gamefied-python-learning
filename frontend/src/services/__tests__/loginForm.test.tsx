@@ -24,7 +24,7 @@ describe('LoginForm', () => {
     fireEvent.change(screen.getByPlaceholderText('Enter your password'), {
       target: { value: 'password123' },
     })
-    fireEvent.click(screen.getByRole('button', { name: 'Login' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 
     await screen.findByText('Login successful')
 

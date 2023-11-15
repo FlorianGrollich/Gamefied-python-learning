@@ -25,14 +25,14 @@ describe('RegistrationForm', () => {
     })
     fireEvent.change(screen.getByPlaceholderText('Password'), {
       target: { value: '1234Dd..' },
-    });
+    })
     fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
       target: { name: 'passwordConfirmation', value: '1234Dd..' },
-    });
-    fireEvent.click(screen.getByText('Sign Up'));
+    })
+    fireEvent.click(screen.getByText('Sign Up'))
 
-    await screen.findByText('Registration successful. Please log in.');
-  });
+    await screen.findByText('Registration successful. Please log in.')
+  })
 
   it('should handle registration with non-matching passwords', async () => {
     render(<RegistrationForm />)
@@ -45,11 +45,11 @@ describe('RegistrationForm', () => {
     })
     fireEvent.change(screen.getByPlaceholderText('Password'), {
       target: { value: '1234Dd..' },
-    });
+    })
     fireEvent.change(screen.getByPlaceholderText('Confirm Password'), {
       target: { name: 'passwordConfirmation', value: '1234Dd...' },
-    });
-    fireEvent.click(screen.getByText('Sign Up'));
+    })
+    fireEvent.click(screen.getByText('Sign Up'))
 
     await screen.findByText('Passwords do not match', { exact: false })
   })
