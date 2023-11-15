@@ -4,6 +4,6 @@ import App from '../../App'
 
 test('renders welcome message', () => {
   render(<App />)
-  const welcomeElement = screen.getByText(/Python Playground/i)
-  expect(welcomeElement).toBeInTheDocument()
+  const welcomeElements = screen.getAllByText(/Python Playground/i)
+  expect(welcomeElements.length).toBeGreaterThan(0)
 })

@@ -30,13 +30,11 @@ export class UserController {
       validatePasswordInput(password)
 
     if (!isUsernameValid || !isEmailValid || !isPasswordValid) {
-      return response
-        .status(400)
-        .json({
-          username: usernameErrors,
-          email: emailErrors,
-          password: passwordErrors,
-        })
+      return response.status(400).json({
+        username: usernameErrors,
+        email: emailErrors,
+        password: passwordErrors,
+      })
     }
 
     if (password !== passwordConfirmation) {
