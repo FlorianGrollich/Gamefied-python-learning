@@ -21,7 +21,7 @@
 6. [Code Quality and Security Tests](#code-quality-and-security-tests)
    - [Code Quality and Styling Tests (ESLint + Prettier)](#code-quality-and-styling-tests-eslint--prettier)
    - [SonarQube Security and Code Quality Tests](#sonarqube-security-and-code-quality-tests)
-7. [Dependencies Tests](#app-startup-and-dependencies-tests)
+7. [Dependencies Tests](#dependencies-tests)
    - [Dependencies and App Startup Tests](#dependencies-and-app-startup-tests)
    - [Dependencies Fix](#dependencies-fix)
    - [Dependabot Dependency Updates](#dependabot-dependency-updates)
@@ -122,7 +122,7 @@ Create `.env` files with the necessary environment variables. Use the following 
     sonar.login=[login]
     sonar.javascript.lcov.reportPaths=coverage/merged.lcov.info
     ```
-11) From now on, use the `sonar-scanner` command in the root of the file to scan the repository.
+11) From now on, use the `sonar-scanner` command in the root of the file to scan the repository. You may have to allow the execution of the file in your system security settings, when running the command for first time.
 
 ## Run the Project
 
