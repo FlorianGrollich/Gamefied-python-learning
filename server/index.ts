@@ -6,12 +6,41 @@ import { Routes } from './routes'
 import { createServer } from 'http'
 import { Server as WebSocketServer } from 'ws'
 import { PostgresDataSource } from './utils/data-source'
+import helmet from 'helmet'
+import morgan from 'morgan'
 
 dotenv.config()
 
+let corsOptions = {
+  origin: 'http://localhost:3000',
+}
+
 const app: Express = express()
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", 'https:/'],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'self'"],
+      reportUri: ['/csp-violation-report-endpoint'],
+      upgradeInsecureRequests: [],
+      blockAllMixedContent: [],
+      frameAncestors: ["'self'"],
+    },
+  }),
+)
+app.use(helmet.hsts({ maxAge: 63072000 }))
+app.use(helmet.frameguard({ action: 'sameorigin' }))
+app.use(helmet.noSniff())
+app.use(morgan('combined'))
 
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET is not set')
@@ -33,46 +62,31 @@ function safeStringify(obj: any) {
   return stringified
 }
 
+function handleRoute(route: any) {
+  const method = route.method as keyof Express
+  if (typeof app[method] === 'function') {
+    app[method](
+      route.route,
+      async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const controller = new (route.controller as any)()
+          const result = await controller[route.action](req, res, next)
+          if (result !== null && result !== undefined && !res.headersSent) {
+            res.send(safeStringify(result))
+          }
+        } catch (err) {
+          if (!res.headersSent) {
+            next(err)
+          }
+        }
+      },
+    )
+  }
+}
+
 PostgresDataSource.initialize()
-  .then(async () => {
-    Routes.forEach(route => {
-      const method = route.method as keyof Express
-      if (typeof app[method] === 'function') {
-        app[method](
-          route.route,
-          (req: Request, res: Response, next: NextFunction) => {
-            const result = new (route.controller as any)()[route.action](
-              req,
-              res,
-              next,
-            )
-            if (result instanceof Promise) {
-              result
-                .then(result => {
-                  if (
-                    result !== null &&
-                    result !== undefined &&
-                    !res.headersSent
-                  ) {
-                    res.send(safeStringify(result))
-                  }
-                })
-                .catch(err => {
-                  if (!res.headersSent) {
-                    next(err)
-                  }
-                })
-            } else if (
-              result !== null &&
-              result !== undefined &&
-              !res.headersSent
-            ) {
-              res.send(safeStringify(result))
-            }
-          },
-        )
-      }
-    })
+  .then(() => {
+    Routes.forEach(handleRoute)
 
     const server = createServer(app)
     const wss = new WebSocketServer({ noServer: true })
@@ -97,11 +111,14 @@ PostgresDataSource.initialize()
     const port = process.env.PORT || 3200
     server.listen(port, () => {
       console.log(`Server listening on port: ${port}`)
+      console.log(
+        `Express server has started on port 3200. Open http://localhost:${port}/users to see results`,
+      )
     })
-  console.log(`Express server has started on port 3200. Open http://localhost:${port}/users to see results`);
-
-}).catch(error => console.log('Error during Data Source initialization:', error));
-
+  })
+  .catch(error =>
+    console.log('Error during Data Source initialization:', error),
+  )
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack)
