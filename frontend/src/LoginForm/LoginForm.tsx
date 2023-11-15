@@ -9,27 +9,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-  })
-  const [loginStatus, setLoginStatus] = useState('')
+  });
+  const [loginStatus, setLoginStatus] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
-  const updateLoginStatus = (message: string, isSuccess: boolean) => {
-    setLoginStatus(message)
-    if (isSuccess) {
-      window.location.href = '/'
-    } else {
-      setFormData({ ...formData, email: '', password: '' })
-    }
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const performLogin = async () => {
     try {
       const response = await fetch('http://localhost:3200/api/login', {
         method: 'POST',
@@ -37,29 +30,30 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      if (!response.ok) {
-        throw new Error('Response not OK')
-      }
-      const data = await response.json()
-      if (!data.token) {
-        throw new Error(data.message || 'Login failed')
-      }
+      if (response.headers.get('Content-Length') === '0' || !response.ok) {
+        if (response.status === 401) {
+          setLoginStatus('Login failed: Invalid credentials');
+        } else {
+          throw new Error('No content or response not OK');
+        }
+      } else {
+        const data = await response.json();
 
-      localStorage.setItem('token', data.token)
-      onLogin(data.user)
-      updateLoginStatus('Login successful', true)
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          onLogin(data.user);
+          setLoginStatus('Login successful');
+        } else {
+          setLoginStatus('Login failed: ' + data.message);
+        }
+      }
     } catch (error) {
-      console.error('Login error:', error)
-      updateLoginStatus('An error occurred. Please try again later.', false)
+      console.error('Login error:', error);
+      setLoginStatus('An error occurred. Please try again later.');
     }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    await performLogin()
-  }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -68,10 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900"
-              htmlFor="email"
-            >
+            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="email">
               Email
             </label>
             <input
@@ -87,10 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           </div>
           {/* Password */}
           <div>
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900"
-              htmlFor="password"
-            >
+            <label className="block mb-2 text-sm font-medium text-gray-900" htmlFor="password">
               Password
             </label>
             <input
@@ -115,20 +103,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           </div>
           {/* Login Status */}
           {loginStatus && (
-            <div
-              className={`mt-4 text-center p-3 rounded-lg font-medium ${
-                loginStatus.startsWith('Login successful')
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
-            >
+            <div className={`mt-4 text-center p-3 rounded-lg font-medium ${loginStatus.startsWith('Login successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
               {loginStatus}
             </div>
           )}
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;
