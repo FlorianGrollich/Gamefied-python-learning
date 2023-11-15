@@ -1,7 +1,4 @@
-import {User} from "./User";
-import {Grid} from "./Grid";
+import { User } from './User'
+import { Grid } from './Grid'
 
-export const BananaEntities = [
-    User,
-    Grid
-]
+export const BananaEntities = [User, Grid]

@@ -10,12 +10,8 @@ if (!secretKey) {
 }
 
 export const generateToken = (userId: number, email: string): string => {
-    return jwt.sign(
-        { userId, email },
-        secretKey,
-        { expiresIn: '24h' }
-    );
-};
+  return jwt.sign({ userId, email }, secretKey, { expiresIn: '24h' })
+}
 
 export const verifyToken = (token: string): jwt.JwtPayload | string => {
   try {
