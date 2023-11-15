@@ -19,9 +19,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const updateLoginStatus = (message: string, isSuccess: boolean) => {
+    setLoginStatus(message)
+    if (isSuccess) {
+      window.location.href = '/'
+    } else {
+      setFormData({ ...formData, email: '', password: '' })
+    }
+  }
 
+  const performLogin = async () => {
     try {
       const response = await fetch('http://localhost:3200/api/login', {
         method: 'POST',
@@ -31,27 +38,26 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         body: JSON.stringify(formData),
       })
 
-      if (response.headers.get('Content-Length') === '0' || !response.ok) {
-        if (response.status === 401) {
-          setLoginStatus('Login failed: Invalid credentials')
-        } else {
-          throw new Error('No content or response not OK')
-        }
-      } else {
-        const data = await response.json()
-
-        if (data.token) {
-          localStorage.setItem('token', data.token)
-          onLogin(data.user)
-          setLoginStatus('Login successful')
-        } else {
-          setLoginStatus('Login failed: ' + data.message)
-        }
+      if (!response.ok) {
+        throw new Error('Response not OK')
       }
+      const data = await response.json()
+      if (!data.token) {
+        throw new Error(data.message || 'Login failed')
+      }
+
+      localStorage.setItem('token', data.token)
+      onLogin(data.user)
+      updateLoginStatus('Login successful', true)
     } catch (error) {
       console.error('Login error:', error)
-      setLoginStatus('An error occurred. Please try again later.')
+      updateLoginStatus('An error occurred. Please try again later.', false)
     }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await performLogin()
   }
 
   return (

@@ -60,7 +60,6 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({ user }) => {
           />
         </div>
       </div>
-
       <div className="h-screen flex flex-col md:flex-row justify-center items-center bg-gradient-to-b from-blue-200 to-white text-blue-900">
         <div className="md:w-1/2 p-8">
           <h2 className="text-4xl font-bold">{content.featureThirdTitle}</h2>

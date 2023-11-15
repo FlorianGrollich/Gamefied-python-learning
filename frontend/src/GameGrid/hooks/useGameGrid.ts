@@ -21,8 +21,8 @@ const useFetchGrid = (url: string) => {
         setGridData(JSON.parse(data))
         setLoading(false)
       })
-      .catch((error: Error) => {
-        setError(error)
+      .catch((fetchError: Error) => {
+        setError(fetchError)
         setLoading(false)
       })
   }, [url])

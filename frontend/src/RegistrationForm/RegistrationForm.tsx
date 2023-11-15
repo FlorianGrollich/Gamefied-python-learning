@@ -11,16 +11,7 @@ const RegistrationForm: React.FC = () => {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-
-    if (name === 'email') setEmailError('')
-    if (name === 'password') setPasswordError('')
-  }
+  const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email)
 
   const getPasswordStrengthError = (password: string) => {
     const minLength = 8
@@ -52,31 +43,37 @@ const RegistrationForm: React.FC = () => {
     return errors.length > 0 ? errors.join(' ') : ''
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
+
+    if (name === 'email') setEmailError('')
+    if (name === 'password') setPasswordError('')
+  }
+
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'email' && !validateEmail(value)) {
       setEmailError('Please enter a valid email address')
     } else if (name === 'password') {
-      const passwordError = getPasswordStrengthError(value)
-      setPasswordError(passwordError)
+      setPasswordError(getPasswordStrengthError(value))
     }
-  }
-
-  const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const emailError = validateEmail(formData.email)
+    const newEmailError = validateEmail(formData.email)
       ? ''
       : 'Please enter a valid email address'
-    const passwordError = getPasswordStrengthError(formData.password)
-    setEmailError(emailError)
-    setPasswordError(passwordError)
+    const newPasswordError = getPasswordStrengthError(formData.password)
+    setEmailError(newEmailError)
+    setPasswordError(newPasswordError)
 
-    if (emailError || passwordError) {
+    if (newEmailError || newPasswordError) {
       return
     }
 
@@ -88,30 +85,20 @@ const RegistrationForm: React.FC = () => {
     try {
       const response = await fetch('http://localhost:3200/api/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          passwordConfirmation: formData.passwordConfirmation,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       })
 
-      if (!response.ok) {
-        throw new Error('Registration failed')
-      }
+      if (!response.ok) throw new Error('Registration failed')
 
+      window.location.href = '/login'
       setRegistrationStatus('Registration successful. Please log in.')
     } catch (error) {
-      if (error instanceof Error) {
-        setRegistrationStatus(
-          error.message || 'An error occurred during registration.',
-        )
-      } else {
-        setRegistrationStatus('An error occurred during registration.')
-      }
+      setRegistrationStatus(
+        error instanceof Error
+          ? error.message
+          : 'An error occurred during registration.',
+      )
     }
   }
 

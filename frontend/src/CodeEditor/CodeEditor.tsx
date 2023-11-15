@@ -2,15 +2,15 @@ import React, { useEffect } from 'react'
 import { Editor } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 import Grid from './../GameGrid/Grid'
-import { useNavigate } from 'react-router-dom';
-import { User } from '../types/types';
+import { useNavigate } from 'react-router-dom'
+import { User } from '../types/types'
 
 const getAutocompleteSuggestions = (
   model: monaco.editor.ITextModel,
   position: monaco.Position,
 ) => {
   const word = model.getWordUntilPosition(position)
-  const range = new monaco.Range(
+  new monaco.Range(
     position.lineNumber,
     word.startColumn,
     position.lineNumber,
@@ -24,20 +24,19 @@ const getAutocompleteSuggestions = (
 }
 
 const CodeEditor: React.FC = () => {
+  const navigate = useNavigate()
+  let user: User | null = null
 
-  const navigate = useNavigate();
-  let user: User | null = null;
-
-  const userString = localStorage.getItem('user');
+  const userString = localStorage.getItem('user')
   if (userString) {
-      user = JSON.parse(userString) as User;
+    user = JSON.parse(userString) as User
   }
 
   useEffect(() => {
-      if (!user) {
-          navigate('/login');
-      }
-  }, [navigate, user]);
+    if (!user) {
+      navigate('/login')
+    }
+  }, [navigate, user])
 
   useEffect(() => {
     const provider = monaco.languages.registerCompletionItemProvider('python', {
