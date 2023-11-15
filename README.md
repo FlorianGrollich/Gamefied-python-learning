@@ -122,12 +122,7 @@ Create `.env` files with the necessary environment variables. Use the following 
     sonar.login=[login]
     sonar.javascript.lcov.reportPaths=coverage/merged.lcov.info
     ```
-11) Put SonarQube configuration file and scans into the `.gitignore` file:
-    ```bash
-    .scannerwork/
-    sonar-project.properties
-    ```
-12) From now on, use the `sonar-scanner` command in the root of the file to scan the repository.
+11) From now on, use the `sonar-scanner` command in the root of the file to scan the repository.
 
 ## Run the Project
 
