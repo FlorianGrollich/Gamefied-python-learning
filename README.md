@@ -229,17 +229,13 @@ The following steps need to be followed if Dependabot opens a pull request.
   git checkout dependabot/npm_and_yarn/your-dependency-version
   ```
 
-2. Run tests locally:
-To ensure that the update does not introduce issues:
-  ```bash
-  npm run check
-  ```
+2. Run tests locally to ensure that the update does not introduce issues.
 
 3. Test the application manually if needed.
 
 4. Go through the changelog of the updated dependency and check for breaking changes.
 
-5. Merge the PR
+5. Merge the PR.
 
 ## Version Control Workflow Guide
 
