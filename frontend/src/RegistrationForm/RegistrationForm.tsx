@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const RegistrationForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -6,126 +6,102 @@ const RegistrationForm: React.FC = () => {
     email: '',
     password: '',
     passwordConfirmation: '',
-  })
-  const [registrationStatus, setRegistrationStatus] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
+  });
+  const [registrationStatus, setRegistrationStatus] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-
-    if (name === 'email') setEmailError('')
-    if (name === 'password') setPasswordError('')
-  }
+  const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
 
   const getPasswordStrengthError = (password: string) => {
-    const minLength = 8
-    const hasUpperCase = /[A-Z]/
-    const hasLowerCase = /[a-z]/
-    const hasNumbers = /[0-9]/
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/
-
-    const errors = []
-
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/;
+    const hasLowerCase = /[a-z]/;
+    const hasNumbers = /[0-9]/;
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+  
+    const errors = [];
+  
     if (password.length < minLength) {
-      errors.push(`Password must be at least ${minLength} characters long.`)
+      errors.push(`Password must be at least ${minLength} characters long.`);
     }
     if (!hasUpperCase.test(password)) {
-      errors.push('Password must include at least one uppercase letter.')
+      errors.push('Password must include at least one uppercase letter.');
     }
     if (!hasLowerCase.test(password)) {
-      errors.push('Password must include at least one lowercase letter.')
+      errors.push('Password must include at least one lowercase letter.');
     }
     if (!hasNumbers.test(password)) {
-      errors.push('Password must include at least one number.')
+      errors.push('Password must include at least one number.');
     }
     if (!hasSpecialChar.test(password)) {
       errors.push(
         'Password must include at least one special character (!@#$%^&*(),.?":{}|<>).',
-      )
+      );
     }
+  
+    return errors.length > 0 ? errors.join(' ') : '';
+  };  
 
-    return errors.length > 0 ? errors.join(' ') : ''
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (name === 'email') setEmailError('');
+    if (name === 'password') setPasswordError('');
+  };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     if (name === 'email' && !validateEmail(value)) {
-      setEmailError('Please enter a valid email address')
+      setEmailError('Please enter a valid email address');
     } else if (name === 'password') {
-      const passwordError = getPasswordStrengthError(value)
-      setPasswordError(passwordError)
+      setPasswordError(getPasswordStrengthError(value));
     }
-  }
-
-  const validateEmail = (email: string) => {
-    return /\S+@\S+\.\S+/.test(email)
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const emailError = validateEmail(formData.email)
-      ? ''
-      : 'Please enter a valid email address'
-    const passwordError = getPasswordStrengthError(formData.password)
-    setEmailError(emailError)
-    setPasswordError(passwordError)
-
-    if (emailError || passwordError) {
-      return
+    e.preventDefault();
+  
+    const newEmailError = validateEmail(formData.email) ? '' : 'Please enter a valid email address';
+    const newPasswordError = getPasswordStrengthError(formData.password);
+    setEmailError(newEmailError);
+    setPasswordError(newPasswordError);
+  
+    if (newEmailError || newPasswordError) {
+      return;
     }
-
+  
     if (formData.password !== formData.passwordConfirmation) {
-      setRegistrationStatus('Passwords do not match.')
-      return
+      setRegistrationStatus('Passwords do not match.');
+      return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:3200/api/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          passwordConfirmation: formData.passwordConfirmation,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Registration failed')
-      }
-
-      setRegistrationStatus('Registration successful. Please log in.')
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) throw new Error('Registration failed');
+  
+      window.location.href = '/login';
+      setRegistrationStatus('Registration successful. Please log in.');
     } catch (error) {
-      if (error instanceof Error) {
-        setRegistrationStatus(
-          error.message || 'An error occurred during registration.',
-        )
-      } else {
-        setRegistrationStatus('An error occurred during registration.')
-      }
+      setRegistrationStatus(error instanceof Error ? error.message : 'An error occurred during registration.');
     }
-  }
+  };
 
   const handleReset = () => {
-    setFormData({
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-    })
-    setRegistrationStatus('')
-    setEmailError('')
-    setPasswordError('')
-  }
+    setFormData({ username: '', email: '', password: '', passwordConfirmation: '' });
+    setRegistrationStatus('');
+    setEmailError('');
+    setPasswordError('');
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
