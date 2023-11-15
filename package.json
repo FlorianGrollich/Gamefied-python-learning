@@ -9,7 +9,9 @@
     "server": "cd server && npm start",
     "frontend": "cd frontend && npm start",
     "check": "./scripts/full-check.sh",
-    "test": "cd frontend && npm test",
+    "test": "npm run test --prefix frontend && npm run test --prefix server",
+    "test:frontend": "cd frontend && npm test",
+    "test:server": "cd server && npm test",
     "type-check": "tsc --noEmit",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint-frontend": "cd frontend && eslint 'src/**/*.{ts,tsx}' --fix",
@@ -20,7 +22,11 @@
     "lint-format-server": "npm run lint-server && npm run format-server",
     "lint-all": "npm run lint-frontend && npm run lint-server",
     "format-all": "npm run format-frontend && npm run format-server",
-    "lint-format-all": "npm run lint-all && npm run format-all"
+    "lint-format-all": "npm run format-all && npm run lint-all",
+    "cypress": "cd frontend && npx cypress run",
+    "test:coverage-frontend": "npm run test:coverage --prefix frontend",
+    "test:coverage-server": "npm run test:coverage --prefix server",
+    "merge-coverage": "cat frontend/coverage/lcov.info server/coverage/lcov.info > coverage/merged.lcov.info"
   },
   "workspaces": [
     "server",
@@ -32,21 +38,24 @@
     "@types/express": "^4.17.20",
     "@types/jest": "^29.5.6",
     "@types/jsonwebtoken": "^9.0.4",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.8.4",
     "@types/node-fetch": "^2.6.7",
     "concurrently": "^8.2.1",
+    "eslint-plugin-security": "^1.7.1",
     "react-app-rewired": "^2.2.1",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
-
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "monaco-editor": "^0.43.0",
     "monaco-languageclient": "^7.0.0",
+    "morgan": "^1.10.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.0.0"
   }
