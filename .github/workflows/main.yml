@@ -1,0 +1,17 @@
+name: Security Check
+
+on: [push, pull_request]
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run CodeQL
+        uses: github/codeql-action/analyze@v1
+
+      - name: Run GitGuardian scan
+        uses: GitGuardian/ggshield-action@v1
