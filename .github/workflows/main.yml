@@ -15,3 +15,5 @@ jobs:
 
       - name: GitGuardian scan
         uses: GitGuardian/ggshield-action@v1.21.0
+        with:
+              api-key: ${{ secrets.GITGUARDIAN }}
