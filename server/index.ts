@@ -8,8 +8,9 @@ import {Server as WebSocketServer} from "ws";
 import {PostgresDataSource} from "./utils/data-source";
 import {rateLimit} from "express-rate-limit";
 import {headerValidationMiddleware} from "./middleware/headerValidation";
-import helmet from 'helmet'
 import morgan from 'morgan'
+import helmet from "helmet";
+
 dotenv.config()
 
 const limiter = rateLimit({
@@ -18,7 +19,6 @@ const limiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 })
-
 const app: Express = express();
 app.use(cors());
 app.use(bodyParser.json());
