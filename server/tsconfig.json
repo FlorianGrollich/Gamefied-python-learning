@@ -13,14 +13,9 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["./types", "./node_modules/@types"],
-    "types": ["express"],
+    "types": ["jest", "express"],
     "moduleResolution": "node"
   },
-  "include": [
-    "*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["**/*"],
+  "exclude": ["node_modules", "dist"]
 }

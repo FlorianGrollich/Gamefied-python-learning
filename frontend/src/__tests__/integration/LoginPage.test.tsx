@@ -1,24 +1,16 @@
-import '@testing-library/jest-dom';
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import LoginPage from '../../LoginPage/LoginPage';
-
-const LOGIN_BUTTON_TEXT = /login/i;
+import '@testing-library/jest-dom'
+import { render, screen } from '@testing-library/react'
+import LoginPage from '../../LoginPage/LoginPage'
 
 describe('LoginPage', () => {
-  let mockOnLogin;
-
-  const setupLoginPage = () => {
-    mockOnLogin = jest.fn();
-    render(<LoginPage onLogin={mockOnLogin} />);
-  };
+  const mockOnLogin = jest.fn()
 
   beforeEach(() => {
-    setupLoginPage();
-  });
+    render(<LoginPage onLogin={mockOnLogin} />)
+  })
 
-  it('renders the login button correctly', () => {
-    const loginButton = screen.getByRole('button', { name: LOGIN_BUTTON_TEXT });
-    expect(loginButton).toBeInTheDocument();
-  });
-});
+  it('should render the login button correctly', () => {
+    const loginButton = screen.getByRole('button', { name: /login/i })
+    expect(loginButton).toBeInTheDocument()
+  })
+})

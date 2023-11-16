@@ -12,6 +12,8 @@ node_modules/
 dist
 dist-ssr
 coverage
+coverage/*
+!coverage/.gitkeep
 *.local
 
 /cypress/videos/
@@ -28,5 +30,8 @@ coverage
 .vscode/
 .env
 /server/.env
+.scannerwork/
+sonar-project.properties
+frontend/cypress/screenshots
 
 package-lock.json
