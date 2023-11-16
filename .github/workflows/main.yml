@@ -14,4 +14,4 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
       - name: Run GitGuardian scan
-        uses: GitGuardian/ggshield-action@v1
+        uses: GitGuardian/ggshield-action@v1.21.01
