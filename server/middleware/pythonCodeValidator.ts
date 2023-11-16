@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 function validatePythonCode(req: Request, res: Response, next: NextFunction) {
     const pythonCode: string = req.body.pythonCode;
 
-    // Check for invalid imports
     const importRegex = /^from\s+[\w]+\s+import\s+[\w]+/gm;
     const validImport = 'from Player import player';
     const imports = pythonCode.match(importRegex) || [];
@@ -13,7 +12,6 @@ function validatePythonCode(req: Request, res: Response, next: NextFunction) {
         return res.status(400).send('Invalid import statement found.');
     }
 
-    // Check for eval or exec
     if (pythonCode.includes('eval(') || pythonCode.includes('exec(')) {
         return res.status(400).send('Usage of eval or exec is not allowed.');
     }
