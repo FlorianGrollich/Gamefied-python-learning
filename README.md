@@ -122,7 +122,7 @@ Create `.env` files with the necessary environment variables. Use the following 
     sonar.login=[login]
     sonar.javascript.lcov.reportPaths=coverage/merged.lcov.info
     ```
-11) From now on, use the `sonar-scanner` command in the root of the file to scan the repository. You may have to allow the execution of the file in your system security settings, when running the command for first time.
+11) From now on, use the `sonar-scanner` command in the root of the file to scan the repository. You may have to allow the execution of the file in your system security settings when running the command for the first time.
 
 ## Run the Project
 
@@ -242,7 +242,8 @@ The following steps need to be followed if Dependabot opens a pull request.
 **1) Clone Repository**<br>
 Begin by cloning the repository to your local machine.
 ```
-git clone [URL]; cd [Repo]
+git clone [URL]
+cd [Repo]
 ```
 
 **2) Create a Branch**<br>
@@ -252,16 +253,25 @@ git checkout -b [prefix/clear-branch-name]
 ```
 
 **3) Implement Changes**<br>
-Develop the required features or fixes, following project specifications and coding standards. Regularly pull from the main branch to minimize conflicts.
+Develop the required features or fixes, following a single focus principle, project specifications, and coding standards. Regularly pull from the prod branch to minimize conflicts.
 
 **4) Commit Changes**<br>
-Stage and commit your changes, ensuring that each commit message is clear, concise, and informative.
+Run tests before committing. Stage and commit your changes, ensuring that each commit is atomic, and the message concise, clear, and informative.
 ```
-git add [files]; git commit -m "[prefix: clear message]"
+git add [file]
+git commit -m "[prefix: clear message]"
 ```
 
 **5) Push Changes**<br>
-Push your changes to the remote repository. Run local tests before pushing.
+Pull the latest prod branch and merge.
+```
+git co prod
+git pull origin prod
+git co [branch-name]
+git merge prod
+```
+
+Push your changes to the remote repository. Run tests before pushing.
 ```
 git push origin [branch-name]
 ```
@@ -270,7 +280,7 @@ git push origin [branch-name]
 Update all relevant documentation and communicate the changes.
 
 **7) Open a Pull Request**<br>
-Open a Pull Request (PR), with a label if applicable, a synopsis of changes, key changes, and testing and review requests. If the PR is ready, request a review and assign it to the reviewer.
+Open a Pull Request (PR), with a label if applicable, a summary, key changes, and testing and review requests. If the PR is ready, request a review and assign it to the reviewer.
 
 **8) Code Review**<br>
 As the reviewer: Go through the files to approve or comment single lines and or whole files and the PR.
@@ -283,11 +293,12 @@ Upon receiving approval, the reviewer merges changes into the prod branch. After
 **10) Pull Latest Changes**<br>
 Sync your local prod branch with the remote.
 ```
-git checkout prod; git pull origin prod
+git checkout prod
+git pull origin prod
 ```
 
 **11) Repeat**<br>
-Repeat steps 2-11 for subsequent development cycles, ensuring a structured, clean, and efficient development and integration process.
+Repeat steps 2-10 for subsequent development cycles, ensuring a structured, clean, and efficient development and integration process.
 
 ## Contributions
 
