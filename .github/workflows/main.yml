@@ -9,9 +9,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
 
       - name: Run CodeQL
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v2
 
-      - name: Run GitGuardian scan
-        uses: GitGuardian/ggshield-action@v1.21.01
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield-action@v1.21.0
+        with:
+              api-key: ${{ secrets.GITGUARDIAN }}
