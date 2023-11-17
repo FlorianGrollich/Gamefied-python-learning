@@ -1,23 +1,33 @@
-import * as dotenv from 'dotenv'
-import cors from 'cors'
-import express, { Express, Request, Response, NextFunction } from 'express'
-import * as bodyParser from 'body-parser'
-import { Routes } from './routes'
-import { createServer } from 'http'
-import { Server as WebSocketServer } from 'ws'
-import { PostgresDataSource } from './utils/data-source'
-import helmet from 'helmet'
+import * as dotenv from 'dotenv';
+import cors from 'cors';
+import express, {Express, Request, Response, NextFunction} from 'express';
+import * as bodyParser from "body-parser";
+import {Routes} from "./routes";
+import {createServer} from "http";
+import {Server as WebSocketServer} from "ws";
+import {PostgresDataSource} from "./utils/data-source";
+import {rateLimit} from "express-rate-limit";
+import {headerValidationMiddleware} from "./middleware/headerValidation";
 import morgan from 'morgan'
+import helmet from "helmet";
 
 dotenv.config()
+
+const limiter = rateLimit({
+    windowMs: 60 * 1000,
+    limit: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+})
+const app: Express = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(limiter);
+app.use(headerValidationMiddleware);
 
 let corsOptions = {
   origin: 'http://localhost:3000',
 }
-
-const app: Express = express()
-app.use(cors(corsOptions))
-app.use(bodyParser.json())
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
