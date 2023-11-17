@@ -326,3 +326,12 @@ Repeat steps 2-10 for subsequent development cycles, ensuring a structured, clea
 | Benedikt Löffler | **Code Analysis and Testing**          | - SonarQube<br>- Unit, Integration, E2E, and API tests<br>- Test coverage analysis | Identifies security vulnerabilities and ensures code quality.                                          |
 | Benedikt Löffler | **Dependency Management**              | - Dependencies check scripts<br>- Dependabot automatic updates    | Keeps dependencies updated and checks for vulnerabilities in third-party packages.                    |
 | Benedikt Löffler | **HTTP Security Headers**              | - Helmet HSTS for enforcing HTTPS                                 | Enhances security by enforcing the use of HTTPS.                                                      |
+| Florian Grollich | **Middleware Python Code**             | - middlware to check python code for imports and certain methods  | Enhances security when running code from the user                   
+         |
+| Florian Grollich | **Middlware Content type**             | -check content type of request                                    | ensures right content type
+         |
+| Florian Grollich | **Typeorm**                            | - typeorm uses repositories instead of concatenating strings      | helps prevent SQL injections           
+         |
+| Florian Grollich | **CodeQL*                              | - checks for various security vulnerability                       | imporves security by automaically checking for vulnerability when pushing or during a PR             |
+| Florian Grollich | **GirGuradian**                        | - searches for Credentials when pushing or during a PR            | prevents credientials from accidentally being pushed to Github          
+                  
