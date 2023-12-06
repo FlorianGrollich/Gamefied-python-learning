@@ -330,5 +330,5 @@ Repeat steps 2-10 for subsequent development cycles, ensuring a structured, clea
 | Florian Grollich | Middleware Content type            | - check content type of request                                   | ensures right content type                                                                  |
 | Florian Grollich | TypeORM                           | - TypeORM uses repositories instead of concatenating strings     | helps prevent SQL injections                                                                |
 | Florian Grollich | CodeQL                           | - checks for various security vulnerability                      | improves security by automatically checking for vulnerabilities when pushing or during a PR    |
-| Florian Grollich | GitGuradian                       | - searches for credentials when pushing or during a PR           | prevents credentials from accidentally being pushed to GitHgub                              |     
-                  
+| Florian Grollich | GitGuradian                       | - searches for credentials when pushing or during a PR           | prevents credentials from accidentally being pushed to GitHub                              |     
+| Florian Grollich | Rate limiter                       | - enforces a limit on the amount of request from a client      | increases security against Dos/DDos attacks                         |                      
