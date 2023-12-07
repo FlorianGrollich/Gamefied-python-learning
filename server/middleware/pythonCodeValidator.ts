@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 function validatePythonCode(req: Request, res: Response, next: NextFunction) {
   const pythonCode: string = req.body.pythonCode
 
-  const importRegex = /^from\s+[\w]+\s+import\s+[\w]+/gm
+  const importRegex = /^import\s+[\w.]+|^from\s+[\w.]+\s+import\s+(\w+|\([\w\s,]*\))/gm;
   const validImport = 'from Player import player'
   const imports = pythonCode.match(importRegex) || []
   const hasInvalidImports = imports.some(imp => imp.trim() !== validImport)
