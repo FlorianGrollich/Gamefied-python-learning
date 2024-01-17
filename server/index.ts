@@ -4,12 +4,8 @@ import express, { Express, Request, Response, NextFunction } from 'express'
 import * as bodyParser from 'body-parser'
 import { Routes } from './routes'
 import { createServer } from 'http'
-import { Server as WebSocketServer } from 'ws'
 import { PostgresDataSource } from './utils/data-source'
 import { rateLimit } from 'express-rate-limit'
-import { headerValidationMiddleware } from './middleware/headerValidation'
-import morgan from 'morgan'
-import helmet from 'helmet'
 
 dotenv.config()
 
@@ -23,34 +19,11 @@ const app: Express = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(limiter)
-app.use(headerValidationMiddleware)
 
 let corsOptions = {
   origin: 'http://localhost:3000',
 }
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https:/'],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'self'"],
-      frameSrc: ["'self'"],
-      reportUri: ['/csp-violation-report-endpoint'],
-      upgradeInsecureRequests: [],
-      blockAllMixedContent: [],
-      frameAncestors: ["'self'"],
-    },
-  }),
-)
-app.use(helmet.hsts({ maxAge: 63072000 }))
-app.use(helmet.frameguard({ action: 'sameorigin' }))
-app.use(helmet.noSniff())
-app.use(morgan('combined'))
+
 
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET is not set')
