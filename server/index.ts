@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 import cors from 'cors'
 import express, { Express, Request, Response, NextFunction } from 'express'
 import * as bodyParser from 'body-parser'
-import { Routes } from './routes'
+import { Routes } from './routes/routes'
 import { createServer } from 'http'
 import { PostgresDataSource } from './utils/data-source'
 import { rateLimit } from 'express-rate-limit'
@@ -45,27 +45,7 @@ function safeStringify(obj: any) {
   return stringified
 }
 
-function handleRoute(route: any) {
-  const method = route.method as keyof Express
-  if (typeof app[method] === 'function') {
-    app[method](
-      route.route,
-      async (req: Request, res: Response, next: NextFunction) => {
-        try {
-          const controller = new (route.controller as any)()
-          const result = await controller[route.action](req, res, next)
-          if (result !== null && result !== undefined && !res.headersSent) {
-            res.send(safeStringify(result))
-          }
-        } catch (err) {
-          if (!res.headersSent) {
-            next(err)
-          }
-        }
-      },
-    )
-  }
-}
+
 
 PostgresDataSource.initialize()
   .then(() => {
