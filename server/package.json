@@ -4,6 +4,7 @@
   "main": "server.ts",
   "license": "MIT",
   "scripts": {
+    "prestart": "node ./swaggerConfig.ts",
     "start": "nodemon --watch 'server.ts' --exec ts-node server.ts",
     "build": "tsc",
     "test": "jest",
@@ -18,6 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
+    "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
