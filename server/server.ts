@@ -8,11 +8,19 @@ import routes from "./routes";
 import {PORT} from "./config";
 import {setupMiddleware} from "./middleware";
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerOptions from './swaggerOptions';
+import swaggerJSDoc from "swagger-jsdoc";
 
 if (!process.env.JWT_SECRET) {
     console.error('JWT_SECRET is not set')
 }
 const app: Express = express()
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 setupMiddleware(app)
 app.use('/api', routes)
