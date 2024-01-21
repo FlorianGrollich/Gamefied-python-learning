@@ -50,7 +50,7 @@ export const validateUsername = (username: string) => {
 }
 
 const validateEmail = (email: string): boolean => {
-  return /\S+@\S+\.\S+/.test(email)
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
 }
 
 export const validateEmailInput = (email: string) => {
