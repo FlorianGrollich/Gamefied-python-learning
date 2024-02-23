@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {User} from "types/types";
-import NavBar from "components/NavBar";
-import LoginPage from "pages/LoginRegistrationPage/LoginPage";
-import RegistrationPage from "pages/LoginRegistrationPage/RegistrationPage";
-import CodeEditor from "pages/MainPage/components/CodeEditor";
-import MainPage from "pages/MainPage/MainPage";
+import NavBar from "./components/NavBar";
+import LoginPage from "./pages/LoginRegistrationPage/LoginPage";
+import RegistrationPage from "./pages/LoginRegistrationPage/RegistrationPage";
+import CodeEditor from "./pages/MainPage/components/CodeEditor";
+import MainPage from "./pages/MainPage/MainPage";
 
 
 const App: React.FC = () => {
