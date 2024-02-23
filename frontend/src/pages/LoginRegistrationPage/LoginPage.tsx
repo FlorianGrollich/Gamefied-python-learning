@@ -1,6 +1,6 @@
 import React from 'react'
-import LoginForm from '../LoginForm/LoginForm'
-import { User } from '../types/types'
+import {User} from "types/types";
+import LoginForm from "pages/LoginRegistrationPage/components/LoginForm";
 
 interface LoginPageProps {
   onLogin: (user: User) => void
