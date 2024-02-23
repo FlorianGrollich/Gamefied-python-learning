@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import LoginPage from './LoginPage/LoginPage'
-import RegistrationPage from './RegistrationPage/RegistrationPage'
-import CodeEditor from './CodeEditor/CodeEditor'
+import {User} from "types/types";
+import NavBar from "components/NavBar";
+import LoginPage from "pages/LoginRegistrationPage/LoginPage";
+import RegistrationPage from "pages/LoginRegistrationPage/RegistrationPage";
+import CodeEditor from "pages/MainPage/components/CodeEditor";
+import MainPage from "pages/MainPage/MainPage";
 
-import NavBar from './NavBar/NavBar'
-import { User } from './types/types.d'
-import MainPage from './MainPage/MainPage'
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null)
