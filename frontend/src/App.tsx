@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LoginPage from './LoginPage/LoginPage'
 import RegistrationPage from './RegistrationPage/RegistrationPage'
 import CodeEditor from './CodeEditor/CodeEditor'
-import Grid from './GameGrid/Grid'
+
 import NavBar from './NavBar/NavBar'
 import { User } from './types/types.d'
-import WelcomeSection from './WelcomeSection/WelcomeSection'
+import MainPage from './MainPage/MainPage'
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -34,14 +34,13 @@ const App: React.FC = () => {
         <NavBar user={user} onLogout={handleLogout} />
         <main className="pt-16">
           <Routes>
-            <Route path="/home" element={<Grid />} />
             <Route
               path="/login"
               element={<LoginPage onLogin={handleLogin} />}
             />
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/editor" element={<CodeEditor />} />
-            <Route path="/" element={<WelcomeSection user={user} />} />
+            <Route path="/" element={<MainPage />} />
           </Routes>
         </main>
       </Router>
