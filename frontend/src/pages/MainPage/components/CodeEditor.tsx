@@ -1,9 +1,5 @@
-import React, { useEffect } from 'react'
 import { Editor } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
-import Grid from './../GameGrid/Grid'
-import { useNavigate } from 'react-router-dom'
-import { User } from '../types/types'
 
 const getAutocompleteSuggestions = (
   model: monaco.editor.ITextModel,
@@ -24,29 +20,6 @@ const getAutocompleteSuggestions = (
 }
 
 const CodeEditor: React.FC = () => {
-  const navigate = useNavigate()
-  let user: User | null = null
-
-  const userString = localStorage.getItem('user')
-  if (userString) {
-    user = JSON.parse(userString) as User
-  }
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login')
-    }
-  }, [navigate, user])
-
-  useEffect(() => {
-    const provider = monaco.languages.registerCompletionItemProvider('python', {
-      provideCompletionItems: getAutocompleteSuggestions,
-    })
-
-    return () => {
-      provider.dispose()
-    }
-  }, [])
 
   return (
     <div className="flex justify-center items-stretch h-screen bg-blue-200 space-x-10">
@@ -63,7 +36,6 @@ const CodeEditor: React.FC = () => {
         />
       </div>
       <div className="flex-1 max-w-[45vw] my-9 bg-indigo-100 rounded-lg shadow-xl overflow-hidden">
-        <Grid />
       </div>
     </div>
   )
