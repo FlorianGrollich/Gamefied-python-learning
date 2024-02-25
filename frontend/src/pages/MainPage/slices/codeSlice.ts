@@ -6,7 +6,7 @@ interface CodeState {
 }
 
 const initialState: CodeState = {
-    code: '',
+    code: '#some comment',
 };
 
 export const codeSlice = createSlice({

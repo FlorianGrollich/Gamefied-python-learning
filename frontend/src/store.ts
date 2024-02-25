@@ -1,7 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
+import {configureStore} from '@reduxjs/toolkit'
+import codeReducer from './pages/MainPage/slices/codeSlice'
 
 const store = configureStore({
     reducer: {
+        code: codeReducer,
 
     },
 })
