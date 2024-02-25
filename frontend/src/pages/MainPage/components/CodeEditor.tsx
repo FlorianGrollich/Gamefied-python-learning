@@ -19,7 +19,7 @@ const CodeEditor: React.FC = () => {
     return (
         <div className="bg-slate-800 p-4 rounded-2xl">
             <Editor
-                height="85vh"
+                height="100vh"
                 width="100%"
                 defaultLanguage="python"
                 beforeMount={(monaco) => {
