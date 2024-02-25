@@ -34,12 +34,8 @@ const App: React.FC = () => {
         <NavBar user={user} onLogout={handleLogout} />
         <main className="pt-16">
           <Routes>
-            <Route
-              path="/login"
-              element={<LoginPage onLogin={handleLogin} />}
-            />
+            <Route path="/login" element={<LoginPage onLogin={handleLogin} />}/>
             <Route path="/register" element={<RegistrationPage />} />
-            <Route path="/editor" element={<CodeEditor />} />
             <Route path="/" element={<MainPage />} />
           </Routes>
         </main>
