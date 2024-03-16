@@ -4,10 +4,11 @@ import {PostgresDataSource} from './utils/data-source'
 import routes from "./routes";
 import {PORT} from "./config";
 import {setupMiddleware} from "./middleware";
+import dotenv from 'dotenv';
 
 import swaggerUi from 'swagger-ui-express';
 
-
+dotenv.config();
 
 if (!process.env.JWT_SECRET) {
     console.error('JWT_SECRET is not set')
