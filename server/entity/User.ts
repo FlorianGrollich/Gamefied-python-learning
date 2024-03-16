@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import * as bcrypt from 'bcrypt'
-import { generateToken } from './../utils/token'
 
 @Entity()
 export class User {
@@ -15,16 +14,4 @@ export class User {
 
   @Column()
   hashedPassword: string
-
-  setPassword(password: string) {
-    this.hashedPassword = bcrypt.hashSync(password, 12)
-  }
-
-  validatePassword(password: string): boolean {
-    return bcrypt.compareSync(password, this.hashedPassword)
-  }
-
-  generateToken(): string {
-    return generateToken(this.id, this.username)
-  }
 }
