@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit'
 import codeReducer from './pages/MainPage/slices/codeSlice'
+import authReducer from './slices/authSlice';
 
 const store = configureStore({
     reducer: {
         code: codeReducer,
+        auth: authReducer
 
     },
 })
