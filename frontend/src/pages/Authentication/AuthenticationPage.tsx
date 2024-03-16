@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {login} from "slices/authSlice";
+import {login} from "../../slices/authSlice";
 import {AppDispatch} from "store";
 
 
@@ -39,3 +39,5 @@ const AuthenticationPage: React.FC = () => {
         </form>
     )
 }
+
+export default AuthenticationPage;

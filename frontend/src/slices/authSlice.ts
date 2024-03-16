@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
-import axios from "axios/index";
-
+import axios from 'axios';
 interface AuthState {
     token: string | null;
     status: 'idle' | 'loading' | 'failed';

@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {User} from "types/types";
 import NavBar from "./components/NavBar";
-import CodeEditor from "./pages/MainPage/components/CodeEditor";
 import MainPage from "./pages/MainPage/MainPage";
-
+import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -24,7 +23,8 @@ const App: React.FC = () => {
         <NavBar />
         <main className="pt-16">
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route path="/gh" element={<MainPage />} />
+            <Route path="/" element={<AuthenticationPage />} />
           </Routes>
         </main>
       </Router>
