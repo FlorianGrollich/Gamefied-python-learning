@@ -28,6 +28,26 @@ class UserController {
     async register(req: Request, res: Response, next: NextFunction) {
         const {username, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, 12);
+        const userUsername = await this.userRepository.findOne({
+            where: [
+                {username: username},
+            ]
+        });
+        const userEmail = await this.userRepository.findOne({
+            where: [
+                {email: email},
+            ]
+        });
+        if(userEmail !== null) {
+            res.status(400).send('Email already exists');
+            return;
+        }
+        if(userUsername !== null) {
+            res.status(400).send('Username already exists');
+            return;
+        }
+
+
         try {
             const user = this.userRepository.create({
                 username,
