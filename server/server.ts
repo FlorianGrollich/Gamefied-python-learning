@@ -8,22 +8,21 @@ import dotenv from 'dotenv';
 
 import swaggerUi from 'swagger-ui-express';
 
-dotenv.config();
-
-if (!process.env.JWT_SECRET) {
-    console.error('JWT_SECRET is not set')
-}
 const app: Express = express()
-const swaggerDocument = require('./swagger-output.json');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-setupMiddleware(app)
-app.use('/api', routes)
-
-
 
 
 PostgresDataSource.initialize().then(() => {
+
+    dotenv.config();
+
+    if (!process.env.JWT_SECRET) {
+        console.error('JWT_SECRET is not set')
+    }
+    const swaggerDocument = require('./swagger-output.json');
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+    setupMiddleware(app)
+    app.use('/api', routes)
     const server = createServer(app);
 
     server.listen(PORT, () => {

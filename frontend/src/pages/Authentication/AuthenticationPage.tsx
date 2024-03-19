@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {login} from "../../slices/authSlice";
+import {login, register} from "../../slices/authSlice";
 import {AppDispatch} from "store";
 
 
 const AuthenticationPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(login({ username, password })); // Dispatch the login action
+        dispatch(register({ username, email, password }));
     };
 
 
@@ -24,6 +25,15 @@ const AuthenticationPage: React.FC = () => {
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+            <div>
+                <label htmlFor="email">Username:</label>
+                <input
+                    type="text"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
             <div>

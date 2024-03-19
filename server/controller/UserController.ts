@@ -7,13 +7,27 @@ import * as jwt from "jsonwebtoken";
 
 
 class UserController {
-    private userRepository = PostgresDataSource.getRepository(User)
+
+    constructor() {
+        this.register = this.register.bind(this);
+        this.login = this.login.bind(this);
+    }
+
+    private get userRepository() {
+        try {
+            const repository = PostgresDataSource.getRepository(User);
+            console.log('User repository:', repository);
+            return repository;
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 
 
     async register(req: Request, res: Response, next: NextFunction) {
         const {username, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, 12);
-
         try {
             const user = this.userRepository.create({
                 username,
@@ -26,7 +40,8 @@ class UserController {
             const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET!, {expiresIn: '1h'});
             res.json({token});
         } catch (err) {
-            res.status(500).send('Error during user registration. Please try again later.');
+            console.error(err);
+            res.status(500).send(`Error during user registration. Please try again later.`, );
         }
     }
 
