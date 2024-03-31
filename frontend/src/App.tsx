@@ -23,8 +23,8 @@ const App: React.FC = () => {
         <NavBar />
         <main className="pt-16">
           <Routes>
-            <Route path="/gh" element={<MainPage />} />
-            <Route path="/" element={<AuthenticationPage />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/auth" element={<AuthenticationPage />} />
           </Routes>
         </main>
       </Router>

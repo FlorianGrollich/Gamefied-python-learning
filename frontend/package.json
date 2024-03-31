@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.0",
     "@reduxjs/toolkit": "^2.2.1",
     "@testing-library/react": "^14.0.0",

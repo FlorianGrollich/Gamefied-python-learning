@@ -1,22 +1,30 @@
 import React from 'react';
 import BananaSVG from "assets/svg_component";
+import {Canvas, useLoader} from "@react-three/fiber";
+import {GradientTexture, OrbitControls, RoundedBox, useTexture} from "@react-three/drei";
+import {TextureLoader} from "three";
+import groundTexture from "../../../assets/angryimg.jpg";
 
 const GameGrid: React.FC = () => {
-    const rows = Array.from({length: 16});
 
+    const colorMap = useLoader(TextureLoader, groundTexture)
     return (
-        <div className="bg-slate-800  p-4 rounded-2xl">
-            <div className="grid grid-cols-16 grid-rows-16 bg-slate-800 w-full h-screen">
-                {rows.map((_, rowIndex) => (
-                    <div key={rowIndex} className="flex">
-                        {rows.map((_, colIndex) => (
-                            <div key={colIndex} className="bg-gray-800 border border-gray-700 h-full w-full"></div>
-                        ))}
-                    </div>
-                ))}
-            </div>
+        <div className="bg-red-400 h-screen">
+            <Canvas camera={{position: [0,0,30]}}>
+                <ambientLight intensity={0.5}/>
+                <directionalLight position={[0, 5, 0]}/>
+                <mesh>
+                    <boxGeometry args={[20, 0.5, 20]}/>
+                    <meshBasicMaterial>
+                        <GradientTexture
+                            stops={[0, 1]} // As many stops as you want
+                            colors={['#ff9c00', '#ffdd33']} // Colors need to match the number of stops
+                        />
+                    </meshBasicMaterial>
+                </mesh>
+                <OrbitControls/>
+            </Canvas>
         </div>
-
     );
 };
 
