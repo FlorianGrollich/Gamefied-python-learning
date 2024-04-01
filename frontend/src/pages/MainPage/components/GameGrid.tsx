@@ -1,24 +1,29 @@
 import React from 'react';
 import BananaSVG from "assets/svg_component";
 import {Canvas, useLoader} from "@react-three/fiber";
-import {GradientTexture, OrbitControls, RoundedBox, useTexture} from "@react-three/drei";
-import {TextureLoader} from "three";
-import groundTexture from "../../../assets/angryimg.jpg";
+import {GradientTexture, Grid, OrbitControls, RoundedBox, useTexture} from "@react-three/drei";
+import {GridHelper, } from "three";
 
 const GameGrid: React.FC = () => {
 
-    const colorMap = useLoader(TextureLoader, groundTexture)
+    const gridHelper = new GridHelper(400, 20, '#EBB22F', '#EBB22F');
+
     return (
-        <div className="bg-red-400 h-screen">
-            <Canvas camera={{position: [0,0,30]}}>
+        <div className="bg-black h-screen">
+            <Canvas camera={{position: [0,0,500]}}>
                 <ambientLight intensity={0.5}/>
-                <directionalLight position={[0, 5, 0]}/>
+                <directionalLight position={[0, 20, 0]}/>
                 <mesh>
-                    <boxGeometry args={[20, 0.5, 20]}/>
+                    <sphereGeometry args={[10, 10, 20]}/>
+                </mesh>
+
+
+                <mesh position={[0, -20, 0]}>
+                    <boxGeometry args={[400, 10, 400]}/>
                     <meshBasicMaterial>
                         <GradientTexture
-                            stops={[0, 1]} // As many stops as you want
-                            colors={['#ff9c00', '#ffdd33']} // Colors need to match the number of stops
+                            stops={[0, 1]}
+                            colors={['#ff9c00', '#ffdd33']}
                         />
                     </meshBasicMaterial>
                 </mesh>
