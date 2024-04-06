@@ -6,7 +6,6 @@ import {GridHelper, } from "three";
 
 const GameGrid: React.FC = () => {
 
-    const gridHelper = new GridHelper(400, 20, '#EBB22F', '#EBB22F');
 
     return (
         <div className="bg-black h-screen">

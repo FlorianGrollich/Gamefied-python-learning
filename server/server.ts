@@ -5,7 +5,7 @@ import routes from "./routes";
 import {PORT} from "./config";
 import {setupMiddleware} from "./middleware";
 import dotenv from 'dotenv';
-
+import WebSocket from "ws";
 import swaggerUi from 'swagger-ui-express';
 
 const app: Express = express()
@@ -28,8 +28,23 @@ PostgresDataSource.initialize().then(() => {
     server.listen(PORT, () => {
         console.log(`Server listening on port: ${PORT}`);
     });
+
+
+
 }).catch(error => {
     console.error('Error during Data Source initialization. \n 1.Does docker run?\n Error:', error);
+});
+
+
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', ws => {
+    ws.on('message', message => {
+        console.log('received: %s', message);
+    });
+
+    ws.send('Hello from backend!');
 });
 
 export default app;
