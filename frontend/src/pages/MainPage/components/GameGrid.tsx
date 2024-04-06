@@ -13,7 +13,7 @@ const GameGrid: React.FC = () => {
             <Canvas camera={{position: [0,0,500]}}>
                 <ambientLight intensity={0.5}/>
                 <directionalLight position={[0, 20, 0]}/>
-                <mesh>
+                <mesh position={[180, 0, 180]}>
                     <sphereGeometry args={[10, 10, 20]}/>
                 </mesh>
 
