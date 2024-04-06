@@ -18,8 +18,8 @@ function setEditorTheme(monaco: any) {
 const CodeEditor: React.FC = () => {
     const code = useSelector((state: any) => state.code.code);
 
-    return (
-        <div className="bg-slate-800 p-4 rounded-2xl">
+     return (
+        <div className="bg-white p-4 rounded-2xl">
             <Editor
                 height="100vh"
                 width="100%"

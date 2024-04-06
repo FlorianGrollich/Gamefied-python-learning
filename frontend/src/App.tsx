@@ -18,13 +18,13 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="App min-h-screen bg-slate-900 text-gray-200">
+    <div className="App min-h-screen bg-black text-gray-200">
       <Router>
         <NavBar />
         <main className="pt-16">
           <Routes>
-            <Route path="/gh" element={<MainPage />} />
-            <Route path="/" element={<AuthenticationPage />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/auth" element={<AuthenticationPage />} />
           </Routes>
         </main>
       </Router>
