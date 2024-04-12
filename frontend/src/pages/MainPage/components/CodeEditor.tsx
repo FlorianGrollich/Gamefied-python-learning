@@ -21,7 +21,7 @@ const CodeEditor: React.FC = () => {
      return (
         <div className="bg-white p-4 rounded-2xl">
             <Editor
-                height="100vh"
+                height="80vh"
                 width="100%"
                 defaultValue={code}
                 defaultLanguage="python"

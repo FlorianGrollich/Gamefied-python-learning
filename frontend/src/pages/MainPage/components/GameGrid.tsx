@@ -8,7 +8,8 @@ const GameGrid: React.FC = () => {
 
 
     return (
-        <div className="bg-black h-screen">
+        <div className="bg-black h-[90vh]">
+
             <Canvas camera={{position: [0,0,500]}}>
                 <ambientLight intensity={0.5}/>
                 <directionalLight position={[0, 20, 0]}/>
