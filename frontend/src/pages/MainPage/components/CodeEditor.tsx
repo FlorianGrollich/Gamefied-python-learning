@@ -1,7 +1,8 @@
 import {Editor} from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 import React, {useEffect} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setCode} from "pages/MainPage/slices/codeSlice";
 
 function setEditorTheme(monaco: any) {
     monaco.editor.defineTheme('onedark', {
@@ -17,10 +18,13 @@ function setEditorTheme(monaco: any) {
 
 const CodeEditor: React.FC = () => {
     const code = useSelector((state: any) => state.code.code);
+    const dispatch = useDispatch();
+
 
      return (
         <div className="bg-white p-4 rounded-2xl">
             <Editor
+                onChange={(value) => dispatch(setCode(value as string))}
                 height="80vh"
                 width="100%"
                 defaultValue={code}
