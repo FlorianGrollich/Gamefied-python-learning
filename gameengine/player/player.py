@@ -8,7 +8,7 @@ class Player:
         self.backpack = []
 
     def move(self):
-        pass
+       print(PlayerActions.Move.value)
 
     def turnRight(self):
         pass
