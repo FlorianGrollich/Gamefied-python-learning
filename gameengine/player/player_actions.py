@@ -3,6 +3,7 @@ from enum import Enum
 
 class PlayerActions(Enum):
     Move = "Move"
-    Turn = "Turn"
+    TurnLeft = "TurnLeft"
+    TurnRight = "TurnRight"
     Inspect = "Inspect"
     Take = "Check"
