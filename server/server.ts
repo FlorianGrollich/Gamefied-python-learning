@@ -64,6 +64,7 @@ wss.on('connection', ws => {
             // Execute the modified script
             PythonShell.run("main.py", options).then((output) => {
                 console.log(output);
+                ws.send(output.toString());
             }).catch(err => {
                 console.error('Failed to run Python script:', err);
             });
