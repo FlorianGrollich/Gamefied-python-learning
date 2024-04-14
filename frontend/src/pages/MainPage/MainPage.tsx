@@ -6,7 +6,7 @@ import {selectCode} from "./slices/codeSlice";
 
 const MainPage: React.FC = () => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
-
+    const [cubePosition, setCubePosition] = useState([180, 0, 180]);
     const code = useSelector(selectCode);
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8080');
@@ -16,6 +16,9 @@ const MainPage: React.FC = () => {
 
         socket.addEventListener('message', function (event) {
             console.log('Message from server: ', event.data);
+            if (event.data === 'Move') {
+                setCubePosition(prevPosition => [prevPosition[0]-20, prevPosition[1], prevPosition[2]]);
+            }
         });
 
         setSocket(socket);
@@ -31,11 +34,12 @@ const MainPage: React.FC = () => {
                         console.log(code)
                         socket.send(code);
                     }
-                }}>Play</button>
+                }}>Play
+                </button>
                 <CodeEditor/>
             </div>
             <div className="col-start-2 col-end-3 p-4">
-                <GameGrid/>
+                <GameGrid cubePositions={cubePosition as [number, number, number]}/>
 
             </div>
         </div>

@@ -6,7 +6,7 @@ interface CodeState {
 }
 
 const initialState: CodeState = {
-    code: '#some comment',
+    code: 'from player import Player\nplayer = Player()\nplayer.move()',
 };
 
 export const codeSlice = createSlice({
