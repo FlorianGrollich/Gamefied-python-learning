@@ -2,7 +2,7 @@ import {Editor} from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setCode} from "pages/MainPage/slices/codeSlice";
+import {setCode} from "../slices/codeSlice";
 
 function setEditorTheme(monaco: any) {
     monaco.editor.defineTheme('onedark', {

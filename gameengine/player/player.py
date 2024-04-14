@@ -11,7 +11,7 @@ class Player:
        print(PlayerActions.Move.value)
 
     def turnRight(self):
-        pass
+       print(PlayerActions.TurnRight.value)
 
     def turnLeft(self):
         pass
