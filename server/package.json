@@ -19,13 +19,14 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
+    "python-shell": "^5.0.0",
     "reflect-metadata": "^0.1.13",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.17",
-    "ws": "^8.14.2"
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
