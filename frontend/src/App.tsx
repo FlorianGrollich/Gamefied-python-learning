@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {User} from "types/types";
 import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage/MainPage";
-import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 import ConstructionPage from "./pages/Construction/ConstructionPage";
 import LoginPage from "./pages/Authentication/LoginPage";
 import RegisterPage from "./pages/Authentication/RegistrationPage";
+import AuthRedirect from "./components/AuthRedirect";
 
 const App: React.FC = () => {
 
@@ -14,6 +14,7 @@ const App: React.FC = () => {
   return (
     <div className="App min-h-screen bg-black text-gray-200">
       <Router>
+        <AuthRedirect/>
         <NavBar />
         <main className="pt-16">
           <Routes>
