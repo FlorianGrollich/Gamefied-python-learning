@@ -5,6 +5,8 @@ import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage/MainPage";
 import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 import ConstructionPage from "./pages/Construction/ConstructionPage";
+import LoginPage from "./pages/Authentication/LoginPage";
+import RegisterPage from "./pages/Authentication/RegistrationPage";
 
 const App: React.FC = () => {
 
@@ -18,6 +20,8 @@ const App: React.FC = () => {
             <Route path="/" element={<MainPage />} />
             <Route path="/auth" element={<AuthenticationPage />} />
             <Route path="/construction" element={<ConstructionPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </main>
       </Router>

@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
-import { login } from "../../slices/authSlice";
-import { AppDispatch } from "../../store";
+import React, {useState} from 'react';
+import {useDispatch} from "react-redux";
+import {register} from "../../slices/authSlice";
+import {AppDispatch} from "../../store";
+import {useNavigate} from "react-router-dom";
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch<AppDispatch>();
 
-    const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(login({username, password}));
+        dispatch(register({username, email, password}));
     };
+
 
     const navigate = useNavigate();
     const handleNavigate = () => {
-        navigate('/register');
+        navigate('/login');
     };
-
     return (
         <div className="min-h-screen flex items-center justify-center bg-black">
             <div className="bg-white p-8 rounded-2xl shadow-lg">
-                <form onSubmit={handleLogin} className="space-y-4">
+                <form onSubmit={handleRegister} className="space-y-4">
                     <div>
                         <label htmlFor="username" className="block text-sm font-medium text-gray-900">Username</label>
                         <input
@@ -31,6 +32,16 @@ const LoginPage: React.FC = () => {
                             className="input-field w-full px-4 py-2 border rounded-lg"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-900">Email</label>
+                        <input
+                            type="text"
+                            id="email"
+                            className="input-field w-full px-4 py-2 border rounded-lg"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
@@ -43,12 +54,12 @@ const LoginPage: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="text-black text-xs cursor-pointer hover:underline" onClick={handleNavigate}>No Account Yet?</div>
-                    <button type="submit" className="bg-blue-500 text-white rounded-lg py-2 px-4">Login</button>
+                    <div className="text-black text-xs cursor-pointer hover:underline" onClick={handleNavigate}>Have an Account?</div>
+                    <button type="submit" className="bg-blue-500 text-white rounded-lg py-2 px-4">Register</button>
                 </form>
             </div>
         </div>
     );
 };
 
-export default LoginPage;
+export default RegisterPage;
