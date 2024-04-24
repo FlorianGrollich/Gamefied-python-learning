@@ -19,7 +19,7 @@ const AuthenticationPage: React.FC = () => {
     return (
         <div className="grid grid-cols-3">
             <div></div>
-            <div className="flex justify-center bg-slate-600 p-4 rounded-2xl">
+            <div className="flex justify-center bg-white p-4 rounded-2xl">
                 <form onSubmit={handleSubmit}>
                         <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                         <input
@@ -34,7 +34,7 @@ const AuthenticationPage: React.FC = () => {
 
                         <input
                             type="text"
-                            className="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="input-field"
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

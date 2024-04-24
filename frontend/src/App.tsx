@@ -7,15 +7,6 @@ import AuthenticationPage from "./pages/Authentication/AuthenticationPage";
 import ConstructionPage from "./pages/Construction/ConstructionPage";
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null)
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
-    }
-  }, [])
-
 
 
   return (
