@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react'
-import {Link, NavLink, useLocation} from 'react-router-dom'
+import React from 'react'
+import {Link} from 'react-router-dom'
 
 
 interface NavBarItemProps {
