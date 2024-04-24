@@ -19,7 +19,6 @@ const App: React.FC = () => {
         <main className="pt-16">
           <Routes>
             <Route path="/" element={<MainPage />} />
-            <Route path="/auth" element={<AuthenticationPage />} />
             <Route path="/construction" element={<ConstructionPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>

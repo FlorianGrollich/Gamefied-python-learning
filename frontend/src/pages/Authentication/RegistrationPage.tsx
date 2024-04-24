@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {register} from "../../slices/authSlice";
-import {AppDispatch} from "../../store";
+import {AppDispatch, RootState} from "../../store";
 import {useNavigate} from "react-router-dom";
 
 const RegisterPage: React.FC = () => {
@@ -14,9 +14,18 @@ const RegisterPage: React.FC = () => {
         e.preventDefault();
         dispatch(register({username, email, password}));
     };
-
-
     const navigate = useNavigate();
+
+    const authStatus = useSelector((state: RootState) => state.auth.status);
+    const token = useSelector((state : RootState) => state.auth.token);
+
+    useEffect(() => {
+        if (authStatus === 'idle' && token) {
+            navigate('/');
+        }
+    }, [authStatus, token, navigate]);
+
+
     const handleNavigate = () => {
         navigate('/login');
     };
