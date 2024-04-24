@@ -15,12 +15,13 @@ const GameGrid: React.FC<GameGridProps> = ({cubePositions}) => {
     const groupRef = useRef()
     const gltf = useGLTF("/mars-rover-4.glb",);
 
+
     return (
         <div className="bg-black h-[90vh]">
 
             <Canvas camera={{position: [0, 0, 500]}}>
                 <ambientLight intensity={0.5}/>
-                <directionalLight position={[0, 30, 0]}/>
+                <directionalLight position={[0, 50, 0]}/>
                 <primitive object={gltf.scene} scale={10} rotation={[0,4.75,0]} position={cubePositions} />
 
 
