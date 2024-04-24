@@ -4,8 +4,6 @@ import {Canvas, useLoader} from "@react-three/fiber";
 import {GradientTexture, Grid, OrbitControls, RoundedBox, useFBX, useTexture} from "@react-three/drei";
 import {GridHelper,} from "three";
 import { useGLTF} from "@react-three/drei";
-import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 
 
 interface GameGridProps {
@@ -13,7 +11,7 @@ interface GameGridProps {
 }
 const GameGrid: React.FC<GameGridProps> = ({cubePositions}) => {
     const groupRef = useRef()
-    const gltf = useGLTF("/mars-rover-4.glb",);
+    const gltf = useGLTF("/asset/mars-rover-4.glb",);
 
 
     return (
