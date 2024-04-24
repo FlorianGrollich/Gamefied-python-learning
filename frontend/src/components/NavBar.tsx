@@ -20,6 +20,8 @@ const NavBarItem: React.FC<NavBarItemProps> = ({title, to}) => {
 
 
 const NavBar: React.FC = () => {
+
+
     return (
         <nav className="bg-black py-6 fixed top-0 w-full z-30 shadow">
             <NavBarItem title={"Playground"} to={"/"}/>
