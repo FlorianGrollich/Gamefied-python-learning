@@ -53,6 +53,7 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.token = action.payload;
+                localStorage.setItem('token', action.payload);
             })
             .addCase(login.rejected, (state) => {
                 state.status = 'failed';
@@ -61,6 +62,7 @@ export const authSlice = createSlice({
         }).addCase(register.fulfilled, (state, action) => {
             state.status = 'idle';
             state.token = action.payload;
+            localStorage.setItem('token', action.payload);
         }).addCase(register.rejected, (state) => {
             state.status = 'failed';
         });
