@@ -1,10 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, {Express, Request, Response, NextFunction} from 'express'
 import {createServer} from 'http'
 import {PostgresDataSource} from './utils/data-source'
 import routes from "./routes";
 import {PORT} from "./config";
 import {setupMiddleware} from "./middleware";
-import dotenv from 'dotenv';
+
 import WebSocket from "ws";
 import swaggerUi from 'swagger-ui-express';
 import {PythonShell, Options} from "python-shell";
@@ -15,7 +18,7 @@ const app: Express = express()
 
 PostgresDataSource.initialize().then(() => {
 
-    dotenv.config();
+
 
     if (!process.env.JWT_SECRET) {
         console.error('JWT_SECRET is not set')
