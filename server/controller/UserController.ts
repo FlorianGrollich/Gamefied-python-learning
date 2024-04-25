@@ -6,6 +6,11 @@ import * as bcrypt from 'bcrypt'
 import * as jwt from "jsonwebtoken";
 
 
+interface LoginRequestBody {
+    username: string;
+    password: string;
+}
+
 class UserController {
 
     constructor() {
@@ -65,22 +70,40 @@ class UserController {
         }
     }
 
-    async login(req: Request, res: Response, next: NextFunction) {
-        const {usernameOrEmail, password} = req.body;
-        const user = await this.userRepository.findOne({
-            where: [
-                {username: usernameOrEmail},
-                {email: usernameOrEmail}
-            ]
-        });
 
-        if (user === null || !await bcrypt.compare(password, user.hashedPassword)) {
-            res.status(401).send('Credentials are incorrect');
-            return;
+
+    async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
+        console.log(req.body)
+        const {username, password} = req.body;
+        try {
+            console.log("username:", req.body.username)
+            const user = await this.userRepository.findOne({
+            where: {
+                username:username
+            }
+            })
+
+            console.log("user:", user)
+
+            if (!user) {
+                console.log('No user found');
+                res.status(404).send('No user found with the given username or email.');
+                return;
+            }
+
+            const isValidPassword = await bcrypt.compare(req.body.password, user.hashedPassword);
+            console.log(isValidPassword);
+            if (!isValidPassword) {
+                res.status(401).send('Credentials are incorrect');
+                return;
+            }
+
+            const token = jwt.sign({ userId: user.id }, 'yourSecretKey', { expiresIn: '1h' });
+            res.json({ token });
+        } catch (error) {
+            console.error('Error during login:', error);
+            res.status(500).send('Internal server error');
         }
-
-        const token = jwt.sign({userId: user.id}, 'yourSecretKey', {expiresIn: '1h'});
-        res.json({token});
     }
 }
 
