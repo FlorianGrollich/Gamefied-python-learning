@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import {User} from "types/types";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import NavBar from "./components/NavBar";
 import MainPage from "./pages/MainPage/MainPage";
 import ConstructionPage from "./pages/Construction/ConstructionPage";
@@ -9,13 +8,22 @@ import RegisterPage from "./pages/Authentication/RegistrationPage";
 import AuthRedirect from "./components/AuthRedirect";
 
 const App: React.FC = () => {
+  return (
+      <Router>
+        <AppContent />
+      </Router>
+  );
+}
 
+const AppContent: React.FC = () => {
+  const location = useLocation();
+
+  const showNavBar = !['/login', '/register'].includes(location.pathname);
 
   return (
-    <div className="App min-h-screen bg-black text-gray-200">
-      <Router>
+      <div className="App min-h-screen bg-black text-gray-200">
         <AuthRedirect/>
-        <NavBar />
+        {showNavBar && <NavBar />}
         <main className="pt-16">
           <Routes>
             <Route path="/" element={<MainPage />} />
@@ -24,9 +32,8 @@ const App: React.FC = () => {
             <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </main>
-      </Router>
-    </div>
-  )
+      </div>
+  );
 }
 
-export default App
+export default App;
