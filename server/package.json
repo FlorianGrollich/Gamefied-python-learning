@@ -1,14 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "server.ts",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "prestart": "node ./swaggerConfig.ts",
-    "start": "nodemon --watch 'server.ts' --exec ts-node server.ts",
+    "start": "node dist/index.js",
     "build": "tsc",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
