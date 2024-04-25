@@ -62,7 +62,7 @@ class UserController {
 
             await this.userRepository.save(user);
 
-            const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET!, {expiresIn: '1h'});
+            const token = jwt.sign({userName: user.username}, process.env.JWT_SECRET!, {expiresIn: '1h'});
             res.json({token});
         } catch (err) {
             console.error(err);
@@ -98,7 +98,7 @@ class UserController {
                 return;
             }
 
-            const token = jwt.sign({ userId: user.id }, 'yourSecretKey', { expiresIn: '1h' });
+            const token = jwt.sign({ userName: user.username }, 'yourSecretKey', { expiresIn: '1h' });
             res.json({ token });
         } catch (error) {
             console.error('Error during login:', error);

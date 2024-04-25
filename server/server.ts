@@ -57,9 +57,9 @@ wss.on('connection', ws => {
             console.log("Run code")
             let options: Options = {
                 mode: 'text',
-                pythonOptions: ['-u'], // unbuffered, direct output
-                scriptPath: '../gameengine/player/', // Adjust the path as necessary
-                pythonPath: 'C:\\Users\\F-Gro\\AppData\\Local\\Programs\\Python\\Python312\\python.exe' // Path without quotes
+                pythonOptions: ['-u'],
+                scriptPath: '../gameengine/player/',
+                pythonPath: 'C:\\Users\\F-Gro\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
             };
             // Execute the modified script
             PythonShell.run("main.py", options).then((output) => {

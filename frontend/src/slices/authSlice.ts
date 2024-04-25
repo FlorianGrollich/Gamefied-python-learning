@@ -1,13 +1,16 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import axios from 'axios';
+import {Simulate} from "react-dom/test-utils";
+import load = Simulate.load;
 
 interface AuthState {
     token: string | null;
     status: 'idle' | 'loading' | 'failed';
 }
+const loadToken = () => localStorage.getItem('token');
 
 const initialState: AuthState = {
-    token: null,
+    token: loadToken(),
     status: 'idle',
 }
 
