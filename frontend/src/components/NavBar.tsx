@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {useDispatch} from "react-redux";
+import {logout} from "../slices/authSlice"
 
 
 interface NavBarItemProps {
@@ -21,16 +23,21 @@ const NavBarItem: React.FC<NavBarItemProps> = ({title, to}) => {
 
 const NavBar: React.FC = () => {
 
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+    };
 
     return (
         <div className="flex justify-between  bg-black py-6 fixed top-0 w-full z-30 shadow">
-            <div className="text-white text-2xl font-bold ml-4">Hi, Florian</div>
+            <div className="text-white text-2xl font-bold ml-4">Learn, Python!</div>
             <nav>
                 <NavBarItem title={"Playground"} to={"/"}/>
                 <NavBarItem title={"Challenges"} to={"/construction"}/>
                 <NavBarItem title={"Learn"} to={"/construction"}/>
             </nav>
-            <button className="bg-white rounded-lg p-2 text-black font-bold mr-2">Logout</button>
+            <button className="bg-white rounded-lg p-2 text-black font-bold mr-4" onClick={handleLogout}>Logout</button>
         </div>
 
     )
