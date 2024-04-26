@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {PlayerAction} from "pages/MainPage/utils/enums";
 
 interface PlayerState {
     position: [number, number, number]
@@ -15,7 +16,7 @@ export const playerSlice = createSlice({
     reducers: {
         doActions: (state, action: PayloadAction<string[]>) => {
             action.payload.forEach((action) => {
-                if (action === 'Move') {
+                if (action === PlayerAction.MOVE) {
                     state.position[0] -= 20
                 }
             })
