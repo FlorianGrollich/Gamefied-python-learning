@@ -17,7 +17,9 @@ const MainPage: React.FC = () => {
 
     socket.addEventListener('message', function (event) {
       console.log('Message from server: ', event.data)
-      if (event.data === 'Move') {
+      const moves = (event.data as string).split(",");
+
+      if (moves[0] === 'Move') {
         dispatch(move())
       }
     })
