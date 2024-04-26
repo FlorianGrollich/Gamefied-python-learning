@@ -1,49 +1,55 @@
-import React, {useEffect, useState} from "react";
-import CodeEditor from "./components/CodeEditor";
-import GameGrid from "./components/GameGrid";
-import {useSelector} from "react-redux";
-import {selectCode} from "./slices/codeSlice";
+import React, { useEffect, useState } from 'react'
+import CodeEditor from './components/CodeEditor'
+import GameGrid from './components/GameGrid'
+import { useSelector } from 'react-redux'
+import { selectCode } from './slices/codeSlice'
 
 const MainPage: React.FC = () => {
-    const [socket, setSocket] = useState<WebSocket | null>(null);
-    const [cubePosition, setCubePosition] = useState([180, 0, 180]);
-    const code = useSelector(selectCode);
-    useEffect(() => {
-        const socket = new WebSocket(`${process.env.REACT_APP_WS_URL}`);
+  const [socket, setSocket] = useState<WebSocket | null>(null)
+  const [cubePosition, setCubePosition] = useState([180, 0, 180])
+  const code = useSelector(selectCode)
+  useEffect(() => {
+    const socket = new WebSocket(`${process.env.REACT_APP_WS_URL}`)
 
-        socket.addEventListener('open', function (event) {
-        });
+    socket.addEventListener('open', function (event) {})
 
-        socket.addEventListener('message', function (event) {
-            console.log('Message from server: ', event.data);
-            if (event.data === 'Move') {
-                setCubePosition(prevPosition => [prevPosition[0]-20, prevPosition[1], prevPosition[2]]);
+    socket.addEventListener('message', function (event) {
+      console.log('Message from server: ', event.data)
+      if (event.data === 'Move') {
+        setCubePosition(prevPosition => [
+          prevPosition[0] - 20,
+          prevPosition[1],
+          prevPosition[2],
+        ])
+      }
+    })
+
+    setSocket(socket)
+
+    return () => socket.close()
+  }, [])
+
+  return (
+    <div className="grid grid-cols-2">
+      <div className="col-start-1 col-end-2 p-4">
+        <button
+          className="h-20 w-20 bg-white text-black hover:text-white hover:bg-black"
+          onClick={() => {
+            if (socket) {
+              console.log(code)
+              socket.send(code)
             }
-        });
-
-        setSocket(socket);
-
-        return () => socket.close();
-    }, []);
-
-    return (
-        <div className="grid grid-cols-2">
-            <div className="col-start-1 col-end-2 p-4">
-                <button className="h-20 w-20 bg-white text-black hover:text-white hover:bg-black" onClick={() => {
-                    if (socket) {
-                        console.log(code)
-                        socket.send(code);
-                    }
-                }}>Play
-                </button>
-                <CodeEditor/>
-            </div>
-            <div className="col-start-2 col-end-3 p-4">
-                <GameGrid cubePositions={cubePosition as [number, number, number]}/>
-
-            </div>
-        </div>
-    )
+          }}
+        >
+          Play
+        </button>
+        <CodeEditor />
+      </div>
+      <div className="col-start-2 col-end-3 p-4">
+        <GameGrid cubePositions={cubePosition as [number, number, number]} />
+      </div>
+    </div>
+  )
 }
 
-export default MainPage;
+export default MainPage
