@@ -23,8 +23,6 @@ PostgresDataSource.initialize().then(() => {
     if (!process.env.JWT_SECRET) {
         console.error('JWT_SECRET is not set')
     }
-    const swaggerDocument = require('./swagger-output.json');
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
     setupMiddleware(app)
     app.use('/api', routes)
