@@ -3,7 +3,7 @@ import CodeEditor from './components/CodeEditor'
 import GameGrid from './components/GameGrid'
 import {useDispatch, useSelector} from 'react-redux'
 import { selectCode } from './slices/codeSlice'
-import {move, selectPlayerPosition} from "./slices/playerSlice";
+import {doActions, selectPlayerPosition} from "./slices/playerSlice";
 
 const MainPage: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null)
@@ -20,7 +20,7 @@ const MainPage: React.FC = () => {
       const moves = (event.data as string).split(",");
 
       if (moves[0] === 'Move') {
-        dispatch(move())
+        dispatch(doActions(moves));
       }
     })
 

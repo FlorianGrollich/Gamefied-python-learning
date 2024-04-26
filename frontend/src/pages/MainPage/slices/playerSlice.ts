@@ -13,14 +13,18 @@ export const playerSlice = createSlice({
     name: 'player',
     initialState,
     reducers: {
-        move: (state, action: PayloadAction) => {
-            state.position[0] -= 20
-        },
+        doActions: (state, action: PayloadAction<string[]>) => {
+            action.payload.forEach((action) => {
+                if (action === 'Move') {
+                    state.position[0] -= 20
+                }
+            })
+        }
     },
 })
 
 
-export const { move } = playerSlice.actions;
+export const { doActions } = playerSlice.actions;
 
 export const selectPlayerPosition = (state: { player: PlayerState }) => state.player.position;
 
