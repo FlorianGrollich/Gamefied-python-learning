@@ -17,7 +17,7 @@ const initialState: AuthState = {
 export const register = createAsyncThunk(
     'auth/register',
     ({username, email, password}: { username: string; password: string, email: string }, {rejectWithValue}) => {
-        return axios.post('https://banana-backend-hcsacywj4-flos-projects-7df6fe2d.vercel.app/api/register', {username, email, password})
+        return axios.post('https://tranquil-wildwood-44813-824cd9c16627.herokuapp.com/api/register', {username, email, password})
             .then(response => {
                 return response.data.token;
             })
@@ -32,7 +32,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
     'auth/login',
     ({username, password}: { username: string; password: string }, {rejectWithValue}) => {
-        return axios.post('https://banana-backend-hcsacywj4-flos-projects-7df6fe2d.vercel.app/api/login', {username, password})
+        return axios.post('https://tranquil-wildwood-44813-824cd9c16627.herokuapp.com/api/login', {username, password})
             .then(response => {
                 return response.data.token;
             })
