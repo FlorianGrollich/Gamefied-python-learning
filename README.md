@@ -31,6 +31,8 @@ Create `.env` files with the necessary environment variables. Use the following 
   POSTGRES_PASSWORD=<postgres-password>
   POSTGRES_DB=<postgres-db>
   ```
+  
+
 
 - Server directory `.env` template:
   ```env

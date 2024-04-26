@@ -1,7 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
 import axios from 'axios';
-import {Simulate} from "react-dom/test-utils";
-import load = Simulate.load;
 
 interface AuthState {
     token: string | null;
@@ -17,7 +15,8 @@ const initialState: AuthState = {
 export const register = createAsyncThunk(
     'auth/register',
     ({username, email, password}: { username: string; password: string, email: string }, {rejectWithValue}) => {
-        return axios.post('https://tranquil-wildwood-44813-824cd9c16627.herokuapp.com/api/register', {username, email, password})
+        console.log(process.env.API_URL);
+        return axios.post(`${process.env.REACT_APP_API_URL}/register`, {username, email, password})
             .then(response => {
                 return response.data.token;
             })
@@ -32,7 +31,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
     'auth/login',
     ({username, password}: { username: string; password: string }, {rejectWithValue}) => {
-        return axios.post('https://tranquil-wildwood-44813-824cd9c16627.herokuapp.com/api/login', {username, password})
+        return axios.post(`${process.env.REACT_APP_API_URL}/login`, {username, password})
             .then(response => {
                 return response.data.token;
             })

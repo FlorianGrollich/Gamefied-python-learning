@@ -30,6 +30,7 @@ coverage/*
 .vscode/
 .env
 /server/.env
+/frontend/.env
 .scannerwork/
 sonar-project.properties
 frontend/cypress/screenshots
