@@ -4,6 +4,7 @@ import GameGrid from './components/GameGrid'
 import {useDispatch, useSelector} from 'react-redux'
 import { selectCode } from './slices/codeSlice'
 import {doActions, selectPlayerPosition} from "./slices/playerSlice";
+import {PlayerAction} from "pages/MainPage/utils/enums";
 
 const MainPage: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null)
@@ -19,7 +20,7 @@ const MainPage: React.FC = () => {
       console.log('Message from server: ', event.data)
       const moves = (event.data as string).split(",");
 
-      if (moves[0] === 'Move') {
+      if (moves[0] in  PlayerAction) {
         dispatch(doActions(moves));
       }
     })
