@@ -52,7 +52,7 @@ PostgresDataSource.initialize().then(() => {
                     mode: 'text',
                     pythonOptions: ['-u'],
                     scriptPath: 'gameengine/player/',
-                    pythonPath: 'gameengine/python.exe'
+                    pythonPath: 'python'
                 };
                 // Execute the modified script
                 PythonShell.run("main.py", options).then((output) => {
