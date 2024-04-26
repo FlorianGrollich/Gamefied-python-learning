@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import CodeEditor from './components/CodeEditor'
 import GameGrid from './components/GameGrid'
-import { useSelector } from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { selectCode } from './slices/codeSlice'
+import {move, selectPlayerPosition} from "./slices/playerSlice";
 
 const MainPage: React.FC = () => {
   const [socket, setSocket] = useState<WebSocket | null>(null)
-  const [cubePosition, setCubePosition] = useState([180, 0, 180])
+  const playerPosition = useSelector(selectPlayerPosition);
+  const dispatch = useDispatch();
   const code = useSelector(selectCode)
   useEffect(() => {
     const socket = new WebSocket(`${process.env.REACT_APP_WS_URL}`)
@@ -16,11 +18,7 @@ const MainPage: React.FC = () => {
     socket.addEventListener('message', function (event) {
       console.log('Message from server: ', event.data)
       if (event.data === 'Move') {
-        setCubePosition(prevPosition => [
-          prevPosition[0] - 20,
-          prevPosition[1],
-          prevPosition[2],
-        ])
+        dispatch(move())
       }
     })
 
@@ -46,7 +44,7 @@ const MainPage: React.FC = () => {
         <CodeEditor />
       </div>
       <div className="col-start-2 col-end-3 p-4">
-        <GameGrid cubePositions={cubePosition as [number, number, number]} />
+        <GameGrid cubePositions={playerPosition} />
       </div>
     </div>
   )
