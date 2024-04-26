@@ -35,3 +35,4 @@ sonar-project.properties
 frontend/cypress/screenshots
 
 package-lock.json
+.vercel
