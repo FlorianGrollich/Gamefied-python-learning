@@ -97,3 +97,15 @@ npm run frontend
 - ```bash
     npm run format-server
     ```
+## Clean code principles
+- Follow proper and consistent naming convention -> shows intention
+- self-documented
+- DRY
+- don't use magic numbers
+- no commented out code
+- clear seperation of concerns
+- few arguments
+- error handling
+- no overuse, no unnecessary nesting of if else statements
+- clear error identification
+- static analysis tools (esling, prettier)
