@@ -32,7 +32,7 @@ PostgresDataSource.initialize().then(() => {
         console.log(`Server listening on port: ${PORT}`);
     });
 
-    const wss = new WebSocket.Server(server);
+    const wss = new WebSocket.Server({server});
 
     wss.on('connection', ws => {
         ws.on('message', message => {
