@@ -18,3 +18,10 @@ export const playerSlice = createSlice({
         },
     },
 })
+
+
+export const { move } = playerSlice.actions;
+
+export const selectPlayerPosition = (state: { player: PlayerState }) => state.player.position;
+
+export default playerSlice.reducer;
