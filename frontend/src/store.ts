@@ -1,7 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore  } from '@reduxjs/toolkit'
 import codeReducer from './pages/MainPage/slices/codeSlice'
 import authReducer from './slices/authSlice'
 import playerReducer from './pages/MainPage/slices/playerSlice'
+import { webSocketMiddleware} from "./middleware/websocketMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -9,6 +10,7 @@ const store = configureStore({
     auth: authReducer,
     player: playerReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(webSocketMiddleware),
 })
 
 export default store;

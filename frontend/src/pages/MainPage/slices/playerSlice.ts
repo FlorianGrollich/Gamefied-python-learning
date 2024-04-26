@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {PlayerAction} from "pages/MainPage/utils/enums";
+import {PlayerAction} from "../../../pages/MainPage/utils/enums";
 
 interface PlayerState {
     position: [number, number, number]
