@@ -51,8 +51,8 @@ PostgresDataSource.initialize().then(() => {
                 let options: Options = {
                     mode: 'text',
                     pythonOptions: ['-u'],
-                    scriptPath: '../gameengine/player/',
-                    pythonPath: 'C:\\Users\\F-Gro\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
+                    scriptPath: 'gameengine/player/',
+                    pythonPath: 'gameengine/python.exe'
                 };
                 // Execute the modified script
                 PythonShell.run("main.py", options).then((output) => {
