@@ -50,7 +50,7 @@ wss.on('connection', ws => {
             pythonOptions: ['-c'], // Execute code as a command line argument
         };
 
-        writeFile('../gameengine/player/main.py', message.toString(), (err) => {
+        writeFile('gameengine/player/main.py', message.toString(), (err) => {
             if (err) {
                 console.error('Failed to write to main.py:', err);
                 return;
