@@ -7,8 +7,6 @@ export const sendMessage = (message: string) => ({ type: "WEBSOCKET_SEND_MESSAGE
 export const receiveMessage = (message: string) => ({ type: "WEBSOCKET_RECEIVE_MESSAGE", payload: message });
 
 
-// middleware/webSocketMiddleware.ts
-
 export const webSocketMiddleware = (function () {
     let socket: WebSocket | null = null;
 
