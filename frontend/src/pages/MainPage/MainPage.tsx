@@ -9,7 +9,7 @@ const MainPage: React.FC = () => {
     const [cubePosition, setCubePosition] = useState([180, 0, 180]);
     const code = useSelector(selectCode);
     useEffect(() => {
-        const socket = new WebSocket('wss://damp-eyrie-58469-bc291bcd4cb4.herokuapp.com/');
+        const socket = new WebSocket('wss://tranquil-wildwood-44813-824cd9c16627.herokuapp.com/');
 
         socket.addEventListener('open', function (event) {
         });

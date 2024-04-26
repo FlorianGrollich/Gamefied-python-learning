@@ -40,7 +40,7 @@ PostgresDataSource.initialize().then(() => {
 
 
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server( );
 
 wss.on('connection', ws => {
     ws.on('message', message => {
