@@ -4,6 +4,6 @@
 
 @layer components {
   .input-field {
-    @apply mb-4 border-4 border-black bg-white text-black;
+    @apply mb-4 border-4 border-black bg-white text-black w-full px-4 py-2 border rounded-lg;
   }
 }

@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
             <input
               type="text"
               id="username"
-              className="input-field w-full px-4 py-2 border rounded-lg"
+              className="input-field"
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
             <input
               type="password"
               id="password"
-              className="input-field w-full px-4 py-2 border rounded-lg"
+              className="input-field"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
