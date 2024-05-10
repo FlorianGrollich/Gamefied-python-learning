@@ -36,7 +36,6 @@ const RegisterPage: React.FC = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
-    // Regular expression for email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(inputEmail)) {
       setEmailError('Please enter a valid email address');
