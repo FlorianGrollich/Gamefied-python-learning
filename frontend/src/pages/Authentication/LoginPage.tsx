@@ -7,11 +7,15 @@ import { AppDispatch, RootState } from '../../store'
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [credError, setCredError] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(login({ username, password }))
+    const errorMsg = await dispatch(login({username, password}))
+    if (errorMsg) {
+     setCredError(true);
+    }
   }
   const navigate = useNavigate()
 
