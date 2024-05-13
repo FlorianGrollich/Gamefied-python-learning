@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
             <input
               type="password"
               id="password"
-              className="input-field"
+              className="input-field-error"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
