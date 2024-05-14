@@ -105,6 +105,21 @@ class UserController {
             res.status(500).send('Internal server error');
         }
     }
+
+    async userExists(req: Request, res: Response, next: NextFunction) {
+        const {username} = req.body;
+        const user = await this.userRepository.findOne({
+            where: {
+                username: username
+            }
+        });
+
+        if (user) {
+            res.status(200).send('User exists');
+        } else {
+            res.status(404).send('User does not exist');
+        }
+    }
 }
 
 export default new UserController();

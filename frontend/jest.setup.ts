@@ -1,16 +1,16 @@
 const localStorageMock = (function() {
-    let store = {};
+    let store: { [key: string]: string } = {};
     return {
-        getItem(key) {
+        getItem: function(key: string) {
             return store[key] || null;
         },
-        setItem(key, value) {
+        setItem: function(key: string, value: string) {
             store[key] = value.toString();
         },
-        removeItem(key) {
+        removeItem: function(key: string) {
             delete store[key];
         },
-        clear() {
+        clear: function() {
             store = {};
         }
     };
@@ -19,3 +19,5 @@ const localStorageMock = (function() {
 Object.defineProperty(window, 'localStorage', {
     value: localStorageMock
 });
+
+export {};
