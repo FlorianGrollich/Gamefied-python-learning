@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
                         label="Username"
                         type="text"
                         value={username}
-                        error={credError ? 'Invalid Credentials' : ''}
+                        error={credError ? '' : ''}
                         onChange={e => setUsername(e.target.value)}
                     />
                     <InputField

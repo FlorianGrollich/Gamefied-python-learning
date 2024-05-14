@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../slices/authSlice';
 import { AppDispatch, RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import InputField from "pages/Authentication/components/InputField";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const dispatch = useDispatch<AppDispatch>();
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,56 +51,30 @@ const RegisterPage: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="bg-white p-8 rounded-2xl shadow-lg">
           <form onSubmit={handleRegister} className="space-y-4">
-            <div>
-              <label
-                  htmlFor="username"
-                  className="block text-sm font-medium text-gray-900"
-              >
-                Username
-              </label>
-              <input
-                  type="text"
-                  id="username"
-                  className="input-field"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-900"
-              >
-                Email
-              </label>
-              <input
-                  type="text"
-                  id="email"
-                  className={`input-field w-full px-4 py-2 border rounded-lg ${
-                      emailError ? 'border-red-500' : ''
-                  }`}
-                  value={email}
-                  onChange={handleEmailChange}
-              />
-              {emailError && (
-                  <p className="text-red-500 text-xs">{emailError}</p>
-              )}
-            </div>
-            <div>
-              <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-900"
-              >
-                Password
-              </label>
-              <input
-                  type="password"
-                  id="password"
-                  className="input-field"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+            <InputField
+                label="Username"
+                type="text"
+                id="username"
+                error={usernameError}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+            <InputField
+                label="Email"
+                type="text"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                error={emailError}
+            />
+            <InputField
+                label="Password"
+                type="password"
+                id="password"
+                error={passwordError}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
             <div
                 className="text-black text-xs cursor-pointer hover:underline"
                 onClick={handleNavigate}
