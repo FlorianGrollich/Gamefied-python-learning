@@ -33,11 +33,12 @@ export const register = createAsyncThunk(
         return response.data.token
       })
       .catch(error => {
+        console.log("error", error.response.data)
         const message =
           error.response && error.response.data.message
             ? error.response.data.message
             : 'Could not log in'
-        return rejectWithValue(message)
+        return rejectWithValue(error.response.data)
       })
   },
 )
