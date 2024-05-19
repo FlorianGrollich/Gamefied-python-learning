@@ -6,12 +6,6 @@ export const WEBSOCKET_CONNECT = "WEBSOCKET_CONNECT";
 export const WEBSOCKET_DISCONNECT = "WEBSOCKET_DISCONNECT";
 export const WEBSOCKET_SEND_MESSAGE = "WEBSOCKET_SEND_MESSAGE";
 export const WEBSOCKET_RECEIVE_MESSAGE = "WEBSOCKET_RECEIVE_MESSAGE";
-
-export const connectWebSocket = () => ({ type: WEBSOCKET_CONNECT });
-export const disconnectWebSocket = () => ({ type: WEBSOCKET_DISCONNECT });
-export const sendMessage = (message: string) => ({ type: WEBSOCKET_SEND_MESSAGE, payload: message });
-export const receiveMessage = (message: string) => ({ type: WEBSOCKET_RECEIVE_MESSAGE, payload: message });
-
 const onOpen = (dispatch: Dispatch) => () => {
     console.log('WebSocket Connected');
 };
