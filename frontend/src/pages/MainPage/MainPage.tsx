@@ -10,6 +10,8 @@ import PlayButton from "../MainPage/components/PlayButton";
 
 
 const MainPage: React.FC = () => {
+    useWebSocketConnection();
+
     const playerPosition = useSelector(selectPlayerPosition);
     const dispatch = useDispatch();
     const code = useSelector(selectCode)
@@ -19,7 +21,6 @@ const MainPage: React.FC = () => {
         dispatch(sendMessage(code));
     }
 
-    useWebSocketConnection();
 
     return (
         <div className="grid grid-cols-2">
