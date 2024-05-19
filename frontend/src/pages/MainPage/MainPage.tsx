@@ -4,22 +4,17 @@ import GameGrid from './components/GameGrid'
 import {useDispatch, useSelector} from 'react-redux'
 import {selectCode} from './slices/codeSlice'
 import {doActions, selectPlayerPosition} from "./slices/playerSlice";
-import {PlayerAction} from "pages/MainPage/utils/enums";
-import {connectWebSocket, disconnectWebSocket, sendMessage} from "../../middleware/websocketMiddleware";
+import useWebSocketConnection from "./hooks/useWebsocketConnection";
+import {sendMessage} from "../../middleware/websocketMiddleware";
+
+
 
 const MainPage: React.FC = () => {
-    const [socket, setSocket] = useState<WebSocket | null>(null)
     const playerPosition = useSelector(selectPlayerPosition);
     const dispatch = useDispatch();
     const code = useSelector(selectCode)
-    useEffect(() => {
-        dispatch(connectWebSocket());
 
-        return () => {
-            dispatch(disconnectWebSocket());
-        };
-    }, [dispatch]);
-
+    useWebSocketConnection();
 
     return (
         <div className="grid grid-cols-2">
