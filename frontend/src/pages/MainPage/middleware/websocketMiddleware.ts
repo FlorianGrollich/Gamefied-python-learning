@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
-import { isEnumValue, PlayerAction } from "../pages/MainPage/utils/enums";
-import { doActions } from "../pages/MainPage/slices/playerSlice";
+import { isEnumValue, PlayerAction } from "../utils/enums";
+import { doActions } from "../slices/playerSlice";
 
 export const WEBSOCKET_CONNECT = "WEBSOCKET_CONNECT";
 export const WEBSOCKET_DISCONNECT = "WEBSOCKET_DISCONNECT";
