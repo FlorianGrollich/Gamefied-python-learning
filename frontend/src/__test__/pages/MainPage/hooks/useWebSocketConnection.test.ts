@@ -1,7 +1,7 @@
 import {renderHook} from '@testing-library/react-hooks';
 import {useDispatch} from 'react-redux';
 import useWebSocketConnection from "../../../../pages/MainPage/hooks/useWebsocketConnection";
-import {connectWebSocket, disconnectWebSocket} from "../../../../middleware/websocketMiddleware";
+import {connectWebSocket, disconnectWebSocket} from "../../../../pages/MainPage/middleware/websocketMiddleware";
 
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),

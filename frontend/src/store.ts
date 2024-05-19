@@ -2,7 +2,7 @@ import { configureStore  } from '@reduxjs/toolkit'
 import codeReducer from './pages/MainPage/slices/codeSlice'
 import authReducer from './slices/authSlice'
 import playerReducer from './pages/MainPage/slices/playerSlice'
-import { webSocketMiddleware} from "./middleware/websocketMiddleware";
+import { webSocketMiddleware} from "../src/pages/MainPage/middleware/websocketMiddleware";
 
 const store = configureStore({
   reducer: {
