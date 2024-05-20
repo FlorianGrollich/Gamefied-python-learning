@@ -1,8 +1,8 @@
 const websocketDisconnect = (socket: WebSocket | null) => {
   if (socket !== null) {
-    socket.close()
+    socket.close();
   }
-  socket = null
-}
+  socket = null;
+};
 
-export default websocketDisconnect
+export default websocketDisconnect;

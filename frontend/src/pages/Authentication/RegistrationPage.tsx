@@ -1,57 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../slices/authSlice'
-import { AppDispatch, RootState } from '../../store'
-import { useNavigate } from 'react-router-dom'
-import InputField from '../Authentication/components/InputField'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../slices/authSlice';
+import { AppDispatch, RootState } from '../../store';
+import { useNavigate } from 'react-router-dom';
+import InputField from '../Authentication/components/InputField';
 
 const RegisterPage: React.FC = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [usernameError, setUsernameError] = useState('')
-  const dispatch = useDispatch<AppDispatch>()
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!emailError) {
-      const error = await dispatch(register({ username, email, password }))
+      const error = await dispatch(register({ username, email, password }));
       if (error.payload.toString().includes('Username')) {
-        setUsernameError(error.payload)
+        setUsernameError(error.payload);
       }
       if (error.payload.toString().includes('Email')) {
-        setEmailError(error.payload)
+        setEmailError(error.payload);
       }
     }
-  }
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const authStatus = useSelector((state: RootState) => state.auth.status)
-  const token = useSelector((state: RootState) => state.auth.token)
+  const authStatus = useSelector((state: RootState) => state.auth.status);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     if (authStatus === 'idle' && token) {
-      navigate('/')
+      navigate('/');
     }
-  }, [authStatus, token, navigate])
+  }, [authStatus, token, navigate]);
 
   const handleNavigate = () => {
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputEmail = e.target.value
-    setEmail(inputEmail)
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(inputEmail)) {
-      setEmailError('Please enter a valid email address')
+      setEmailError('Please enter a valid email address');
     } else {
-      setEmailError('')
+      setEmailError('');
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
@@ -96,7 +96,7 @@ const RegisterPage: React.FC = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

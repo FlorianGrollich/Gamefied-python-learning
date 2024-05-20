@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const PlayButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <button
@@ -7,6 +7,6 @@ const PlayButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   >
     Play
   </button>
-)
+);
 
-export default PlayButton
+export default PlayButton;

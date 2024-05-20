@@ -1,8 +1,8 @@
-import { Editor } from '@monaco-editor/react'
-import * as monaco from 'monaco-editor'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setCode } from '../slices/codeSlice'
+import { Editor } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCode } from '../slices/codeSlice';
 
 function setEditorTheme(monaco: any) {
   monaco.editor.defineTheme('onedark', {
@@ -10,13 +10,13 @@ function setEditorTheme(monaco: any) {
     inherit: true,
     rules: [{}],
     colors: {},
-  })
-  monaco.editor.setTheme('onedark')
+  });
+  monaco.editor.setTheme('onedark');
 }
 
 const CodeEditor: React.FC = () => {
-  const code = useSelector((state: any) => state.code.code)
-  const dispatch = useDispatch()
+  const code = useSelector((state: any) => state.code.code);
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-white p-4 rounded-2xl">
@@ -27,7 +27,7 @@ const CodeEditor: React.FC = () => {
         defaultValue={code}
         defaultLanguage="python"
         beforeMount={monaco => {
-          setEditorTheme(monaco)
+          setEditorTheme(monaco);
         }}
         options={{
           automaticLayout: true,
@@ -35,7 +35,7 @@ const CodeEditor: React.FC = () => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default CodeEditor
+export default CodeEditor;

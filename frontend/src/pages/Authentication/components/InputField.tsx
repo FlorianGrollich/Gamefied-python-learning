@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 interface InputFieldProps {
-  id: string
-  label: string
-  type: string
-  value: string
-  error: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  error: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -30,6 +30,6 @@ const InputField: React.FC<InputFieldProps> = ({
     />
     {error && <div className="text-red-500 text-xs">{error}</div>}
   </div>
-)
+);
 
-export default InputField
+export default InputField;

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import CodeEditor from './components/CodeEditor'
-import GameGrid from './components/GameGrid'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectCode } from './slices/codeSlice'
-import { doActions, selectPlayerPosition } from './slices/playerSlice'
-import useWebSocketConnection from './hooks/useWebsocketConnection'
-import { sendMessage } from '../MainPage/middleware/websocketMiddleware'
-import PlayButton from '../MainPage/components/PlayButton'
+import React, { useEffect, useState } from 'react';
+import CodeEditor from './components/CodeEditor';
+import GameGrid from './components/GameGrid';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCode } from './slices/codeSlice';
+import { doActions, selectPlayerPosition } from './slices/playerSlice';
+import useWebSocketConnection from './hooks/useWebsocketConnection';
+import { sendMessage } from '../MainPage/middleware/websocketMiddleware';
+import PlayButton from '../MainPage/components/PlayButton';
 
 const MainPage: React.FC = () => {
-  useWebSocketConnection()
+  useWebSocketConnection();
 
-  const playerPosition = useSelector(selectPlayerPosition)
-  const dispatch = useDispatch()
-  const code = useSelector(selectCode)
+  const playerPosition = useSelector(selectPlayerPosition);
+  const dispatch = useDispatch();
+  const code = useSelector(selectCode);
 
   const handlePlayClick = () => {
-    console.log(code)
-    dispatch(sendMessage(code))
-  }
+    console.log(code);
+    dispatch(sendMessage(code));
+  };
 
   return (
     <div className="grid grid-cols-2">
@@ -30,7 +30,7 @@ const MainPage: React.FC = () => {
         <GameGrid cubePositions={playerPosition} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;

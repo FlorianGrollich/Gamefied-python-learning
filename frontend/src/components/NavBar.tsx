@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { logout } from '../slices/authSlice'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../slices/authSlice';
 
 interface NavBarItemProps {
-  title: string
-  to: string
+  title: string;
+  to: string;
 }
 
 const NavBarItem: React.FC<NavBarItemProps> = ({ title, to }) => {
@@ -16,15 +16,15 @@ const NavBarItem: React.FC<NavBarItemProps> = ({ title, to }) => {
     >
       {title}
     </Link>
-  )
-}
+  );
+};
 
 const NavBar: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   return (
     <div className="flex justify-between  bg-black py-6 fixed top-0 w-full z-30 shadow">
@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
         Logout
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

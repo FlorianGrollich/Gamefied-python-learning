@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const BananaSVG: React.FC = () => {
   return (
@@ -57,7 +57,7 @@ const BananaSVG: React.FC = () => {
         fill=""
       />
     </svg>
-  )
-}
+  );
+};
 
-export default BananaSVG
+export default BananaSVG;

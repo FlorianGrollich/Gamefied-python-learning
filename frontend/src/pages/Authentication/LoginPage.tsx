@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { login } from '../../slices/authSlice'
-import { AppDispatch, RootState } from '../../store'
-import InputField from '../Authentication/components/InputField'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../slices/authSlice';
+import { AppDispatch, RootState } from '../../store';
+import InputField from '../Authentication/components/InputField';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [credError, setCredError] = useState(false)
-  const dispatch = useDispatch<AppDispatch>()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [credError, setCredError] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const errorMsg = await dispatch(login({ username, password }))
+    e.preventDefault();
+    const errorMsg = await dispatch(login({ username, password }));
     if (errorMsg) {
-      setCredError(true)
+      setCredError(true);
     }
-  }
-  const navigate = useNavigate()
+  };
+  const navigate = useNavigate();
 
-  const authStatus = useSelector((state: RootState) => state.auth.status)
-  const token = useSelector((state: RootState) => state.auth.token)
+  const authStatus = useSelector((state: RootState) => state.auth.status);
+  const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     if (authStatus === 'idle' && token) {
-      navigate('/')
+      navigate('/');
     }
-  }, [authStatus, token, navigate])
+  }, [authStatus, token, navigate]);
   const handleNavigate = () => {
-    navigate('/register')
-  }
+    navigate('/register');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
@@ -67,7 +67,7 @@ const LoginPage: React.FC = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

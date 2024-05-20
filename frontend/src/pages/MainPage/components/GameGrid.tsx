@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
+import React, { useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
 import {
   GradientTexture,
   Grid,
@@ -7,15 +7,15 @@ import {
   RoundedBox,
   useFBX,
   useTexture,
-} from '@react-three/drei'
-import { useGLTF } from '@react-three/drei'
+} from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 
 interface GameGridProps {
-  cubePositions: [number, number, number]
+  cubePositions: [number, number, number];
 }
 const GameGrid: React.FC<GameGridProps> = ({ cubePositions }) => {
-  const groupRef = useRef()
-  const gltf = useGLTF('/asset/mars-rover-4.glb')
+  const groupRef = useRef();
+  const gltf = useGLTF('/asset/mars-rover-4.glb');
 
   return (
     <div className="bg-black h-[90vh]">
@@ -38,7 +38,7 @@ const GameGrid: React.FC<GameGridProps> = ({ cubePositions }) => {
         <OrbitControls />
       </Canvas>
     </div>
-  )
-}
+  );
+};
 
-export default GameGrid
+export default GameGrid;
