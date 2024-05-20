@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { isEnumValue, PlayerAction } from "pages/MainPage/utils/enums";
-import { doActions } from "pages/MainPage/slices/playerSlice";
+import { doActions } from "../../slices/playerSlice";
+import { onMessage } from './messageHandler';
 
 const onOpen = (dispatch: Dispatch) => () => {
   console.log("WebSocket Connected");
@@ -10,13 +10,6 @@ const onClose = (dispatch: Dispatch) => () => {
   console.log("WebSocket Disconnected");
 };
 
-const onMessage = (dispatch: Dispatch) => (event: MessageEvent) => {
-  console.log("Message from server ", event.data);
-  const moves = event.data.split(",");
-  if (isEnumValue(moves[0], PlayerAction)) {
-    dispatch(doActions(moves));
-  }
-};
 
 interface websocketConnectProps {
   store: any;
@@ -31,6 +24,7 @@ const websocketConnect = ({ store, socket }: websocketConnectProps) => {
   socket.onopen = onOpen(store.dispatch);
   socket.onclose = onClose(store.dispatch);
   socket.onmessage = onMessage(store.dispatch);
+  return socket;
 
 };
 

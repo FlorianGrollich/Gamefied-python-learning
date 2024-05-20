@@ -1,6 +1,7 @@
-import { WebSocketActionTypes } from "pages/MainPage/middleware/utils/ActionTypes";
-import websocketConnect from "pages/MainPage/middleware/utils/websocketConnect";
-import websocketDisconnect from "pages/MainPage/middleware/utils/websocketDisconnect";
+import { WebSocketActionTypes } from "./utils/ActionTypes";
+import websocketConnect from "./utils/websocketConnect";
+import websocketDisconnect from "./utils/websocketDisconnect";
+import websocketSendMessage from "./utils/websocketSendMessage";
 
 
 export const connectWebSocket = () => ({ type: WebSocketActionTypes.WEBSOCKET_CONNECT });
@@ -22,13 +23,15 @@ export const webSocketMiddleware = (() => {
   return (store: any) => (next: any) => (action: any) => {
     switch (action.type) {
       case WebSocketActionTypes.WEBSOCKET_CONNECT:
-        websocketConnect({ store, socket });
+        socket = websocketConnect({ store, socket });
+        console.log("socket: ",socket)
         break;
       case WebSocketActionTypes.WEBSOCKET_DISCONNECT:
         websocketDisconnect(socket);
         break;
       case WebSocketActionTypes.WEBSOCKET_SEND_MESSAGE:
-        socket?.send(action.payload);
+        console.log("sendMessage")
+        websocketSendMessage(socket, action.payload);
         break;
       default:
         return next(action);
