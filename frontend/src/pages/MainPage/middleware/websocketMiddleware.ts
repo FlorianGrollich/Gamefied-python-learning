@@ -3,6 +3,7 @@ import { isEnumValue, PlayerAction } from "../utils/enums";
 import { doActions } from "../slices/playerSlice";
 import { WebSocketActionTypes } from "pages/MainPage/middleware/utils/ActionTypes";
 import websocketConnect from "pages/MainPage/middleware/utils/websocketConnect";
+import websocketDisconnect from "pages/MainPage/middleware/utils/websocketDisconnect";
 
 
 export const connectWebSocket = () => ({ type: WebSocketActionTypes.WEBSOCKET_CONNECT });
@@ -27,10 +28,7 @@ export const webSocketMiddleware = (() => {
         websocketConnect({ store, socket });
         break;
       case WebSocketActionTypes.WEBSOCKET_DISCONNECT:
-        if (socket !== null) {
-          socket.close();
-        }
-        socket = null;
+        websocketDisconnect(socket);
         break;
       case WebSocketActionTypes.WEBSOCKET_SEND_MESSAGE:
         socket?.send(action.payload);
