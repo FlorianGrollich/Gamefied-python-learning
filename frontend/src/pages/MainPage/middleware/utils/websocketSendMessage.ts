@@ -1,6 +1,5 @@
+const websocketSendMessage = (socket: WebSocket | null, message: string) => {
+  socket?.send(message)
+}
 
-const websocketSendMessage = (socket:WebSocket | null, message: string) => {
-  socket?.send(message);
-};
-
-export default websocketSendMessage;
+export default websocketSendMessage

@@ -1,6 +1,6 @@
 export enum InputFieldState {
-    default,
-    loading,
-    success,
-    error,
+  default,
+  loading,
+  success,
+  error,
 }

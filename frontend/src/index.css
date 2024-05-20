@@ -9,5 +9,4 @@
   .input-field-error {
     @apply mb-4 border-red-500 bg-white text-black w-full px-4 py-2 border rounded-lg  focus:outline-none;
   }
-
 }

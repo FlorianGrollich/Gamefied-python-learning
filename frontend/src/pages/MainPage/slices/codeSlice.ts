@@ -22,4 +22,4 @@ export const { setCode } = codeSlice.actions
 
 export const selectCode = (state: { code: CodeState }) => state.code.code
 
-export default codeSlice.reducer;
+export default codeSlice.reducer
