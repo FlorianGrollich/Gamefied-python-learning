@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 import * as jwt from 'jsonwebtoken';
 import { IUser, User } from '../models/userModel';
+import { generateToken } from '../utils/token';
 
 
 interface LoginRequestBody {
@@ -22,31 +23,38 @@ class UserController {
     return bcrypt.hash(password, 12);
   }
 
+  private async findExistingUser(email: string): Promise<IUser | null> {
+    return User.findOne({ email: email });
+  }
+
 
   async register(req: Request, res: Response, next: NextFunction) {
     const { displayName, email, password } = req.body;
-    console.log('req.body:', req.body);
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const existingUser = await User.findOne({ email: email });
-    if (existingUser) {
-      console.log('user found');
-      res.status(409).send('Email address already exists');
-      return;
-    }
     try {
 
+      if (!displayName || !email || !password) {
+        return res.status(400).send('Please provide all required fields');
+
+      }
+
+      const existingUser = await this.findExistingUser(email);
+      if (existingUser) {
+        return res.status(409).send('Email address already exists');
+      }
+
+
+      const hashedPassword = await this.hashPassword(password);
       const user = new User({ displayName: displayName, email: email, password: hashedPassword });
       await user.save();
-      if (process.env.JWT_SECRET === undefined) {
-        throw new Error('JWT_SECRET is not set');
-      }
-      const token = jwt.sign({ displayName: user?.displayName }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token });
+
+      const token = generateToken(user);
+      return res.json({ token });
+
+
     } catch (err) {
       console.error(err);
       res.status(500).send(`Error during user registration. Please try again later.`);
-      return;
     }
 
   }
