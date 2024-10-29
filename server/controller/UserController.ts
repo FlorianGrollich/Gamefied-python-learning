@@ -1,125 +1,80 @@
-import {NextFunction, Request, Response} from 'express'
-import {PostgresDataSource} from '../utils/data-source'
-import {User} from '../entity/User'
-import * as bcrypt from 'bcrypt'
+import { NextFunction, Request, Response } from 'express';
+import { PostgresDataSource } from '../utils/data-source';
+import * as bcrypt from 'bcrypt';
 
-import * as jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
+import { IUser, User } from '../models/userModel';
 
 
 interface LoginRequestBody {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
 class UserController {
 
-    constructor() {
-        this.register = this.register.bind(this);
-        this.login = this.login.bind(this);
+  constructor() {
+    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, 12);
+  }
+
+
+  async register(req: Request, res: Response, next: NextFunction) {
+    const { displayName, email, password } = req.body;
+    console.log('req.body:', req.body);
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      console.log('user found');
+      res.status(409).send('Email address already exists');
+      return;
+    }
+    try {
+
+      const user = new User({ displayName: displayName, email: email, password: hashedPassword });
+      await user.save();
+      if (process.env.JWT_SECRET === undefined) {
+        throw new Error('JWT_SECRET is not set');
+      }
+      const token = jwt.sign({ displayName: user?.displayName }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      res.json({ token });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send(`Error during user registration. Please try again later.`);
+      return;
     }
 
-    private get userRepository() {
-        try {
-            const repository = PostgresDataSource.getRepository(User);
-            console.log('User repository:', repository);
-            return repository;
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
+  }
+
+
+  async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
+    console.log(req.body);
+    const { username, password } = req.body;
+    try {
+      console.log('username:', req.body.username);
+
+
+      const isValidPassword = await bcrypt.compare(req.body.password, 'TODO');
+
+      console.log(isValidPassword);
+      if (!isValidPassword) {
+        res.status(401).send('Credentials are incorrect');
+        return;
+      }
+
+      const token = jwt.sign({ userName: 'TODO' }, 'yourSecretKey', { expiresIn: '1h' });
+      res.json({ token });
+    } catch (error) {
+      console.error('Error during login:', error);
+      res.status(500).send('Internal server error');
     }
+  }
 
-
-    async register(req: Request, res: Response, next: NextFunction) {
-        const {username, email, password} = req.body;
-        const hashedPassword = await bcrypt.hash(password, 12);
-        const userUsername = await this.userRepository.findOne({
-            where: [
-                {username: username},
-            ]
-        });
-        const userEmail = await this.userRepository.findOne({
-            where: [
-                {email: email},
-            ]
-        });
-        if(userEmail !== null) {
-            res.status(400).send('Email already exists');
-            return;
-        }
-        if(userUsername !== null) {
-            res.status(400).send('Username already exists');
-            return;
-        }
-
-
-        try {
-            const user = this.userRepository.create({
-                username,
-                email,
-                hashedPassword
-            })
-
-            await this.userRepository.save(user);
-
-            const token = jwt.sign({userName: user.username}, process.env.JWT_SECRET!, {expiresIn: '1h'});
-            res.json({token});
-        } catch (err) {
-            console.error(err);
-            res.status(500).send(`Error during user registration. Please try again later.`, );
-        }
-    }
-
-
-
-    async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
-        console.log(req.body)
-        const {username, password} = req.body;
-        try {
-            console.log("username:", req.body.username)
-            const user = await this.userRepository.findOne({
-            where: {
-                username:username
-            }
-            })
-
-            console.log("user:", user)
-
-            if (!user) {
-                console.log('No user found');
-                res.status(404).send('No user found with the given username or email.');
-                return;
-            }
-
-            const isValidPassword = await bcrypt.compare(req.body.password, user.hashedPassword);
-            console.log(isValidPassword);
-            if (!isValidPassword) {
-                res.status(401).send('Credentials are incorrect');
-                return;
-            }
-
-            const token = jwt.sign({ userName: user.username }, 'yourSecretKey', { expiresIn: '1h' });
-            res.json({ token });
-        } catch (error) {
-            console.error('Error during login:', error);
-            res.status(500).send('Internal server error');
-        }
-    }
-
-    async userExists(req: Request, res: Response, next: NextFunction) {
-        const {username} = req.body;
-        const user = await this.userRepository.findOne({
-            where: {
-                username: username
-            }
-        });
-
-        if (user) {
-            res.status(200).send('User exists');
-        } else {
-            res.status(404).send('User does not exist');
-        }
-    }
 }
 
 export default new UserController();
