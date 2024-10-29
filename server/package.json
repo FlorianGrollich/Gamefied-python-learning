@@ -17,6 +17,7 @@
     "express-rate-limit": "^7.1.4",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.3",
     "pg": "^8.11.3",
     "python-shell": "^5.0.0",
     "reflect-metadata": "^0.1.13",
