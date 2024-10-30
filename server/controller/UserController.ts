@@ -1,125 +1,91 @@
-import {NextFunction, Request, Response} from 'express'
-import {PostgresDataSource} from '../utils/data-source'
-import {User} from '../entity/User'
-import * as bcrypt from 'bcrypt'
+import { NextFunction, Request, Response } from 'express';
+import * as bcrypt from 'bcrypt';
 
-import * as jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
+import { IUser, User } from '../models/userModel';
+import { generateToken } from '../utils/token';
 
 
 interface LoginRequestBody {
-    username: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 class UserController {
 
-    constructor() {
-        this.register = this.register.bind(this);
-        this.login = this.login.bind(this);
+  constructor() {
+    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, 12);
+  }
+
+  private async findExistingUser(email: string): Promise<IUser | null> {
+    return User.findOne({ email: email });
+  }
+
+
+  async register(req: Request, res: Response, next: NextFunction) {
+    const { displayName, email, password } = req.body;
+
+    try {
+
+      if (!displayName || !email || !password) {
+        return res.status(400).send('Please provide all required fields');
+
+      }
+
+      const existingUser = await this.findExistingUser(email);
+      if (existingUser) {
+        return res.status(409).send('Email address already exists');
+      }
+
+
+      const hashedPassword = await this.hashPassword(password);
+      const user = new User({ displayName: displayName, email: email, password: hashedPassword });
+      await user.save();
+
+      const token = generateToken(user);
+      return res.json({ token });
+
+
+    } catch (err) {
+      next(err);
     }
 
-    private get userRepository() {
-        try {
-            const repository = PostgresDataSource.getRepository(User);
-            console.log('User repository:', repository);
-            return repository;
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
+  }
+
+
+  async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
+    console.log(req.body);
+    const { email, password } = req.body;
+    try {
+      if (!email || !password) {
+        return res.status(400).send('Please provide all required fields');
+      }
+      const foundUser = await this.findExistingUser(email);
+      if (!foundUser) {
+        return res.status(401).send('Credentials are incorrect');
+      }
+
+
+
+      const isValidPassword = await bcrypt.compare(req.body.password, foundUser.password);
+
+      if (!isValidPassword) {
+        return res.status(401).send('Credentials are incorrect');
+      }
+
+      const token = generateToken(foundUser);
+      return res.json({ token });
+
+    } catch (error) {
+     next(error);
     }
+  }
 
-
-    async register(req: Request, res: Response, next: NextFunction) {
-        const {username, email, password} = req.body;
-        const hashedPassword = await bcrypt.hash(password, 12);
-        const userUsername = await this.userRepository.findOne({
-            where: [
-                {username: username},
-            ]
-        });
-        const userEmail = await this.userRepository.findOne({
-            where: [
-                {email: email},
-            ]
-        });
-        if(userEmail !== null) {
-            res.status(400).send('Email already exists');
-            return;
-        }
-        if(userUsername !== null) {
-            res.status(400).send('Username already exists');
-            return;
-        }
-
-
-        try {
-            const user = this.userRepository.create({
-                username,
-                email,
-                hashedPassword
-            })
-
-            await this.userRepository.save(user);
-
-            const token = jwt.sign({userName: user.username}, process.env.JWT_SECRET!, {expiresIn: '1h'});
-            res.json({token});
-        } catch (err) {
-            console.error(err);
-            res.status(500).send(`Error during user registration. Please try again later.`, );
-        }
-    }
-
-
-
-    async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
-        console.log(req.body)
-        const {username, password} = req.body;
-        try {
-            console.log("username:", req.body.username)
-            const user = await this.userRepository.findOne({
-            where: {
-                username:username
-            }
-            })
-
-            console.log("user:", user)
-
-            if (!user) {
-                console.log('No user found');
-                res.status(404).send('No user found with the given username or email.');
-                return;
-            }
-
-            const isValidPassword = await bcrypt.compare(req.body.password, user.hashedPassword);
-            console.log(isValidPassword);
-            if (!isValidPassword) {
-                res.status(401).send('Credentials are incorrect');
-                return;
-            }
-
-            const token = jwt.sign({ userName: user.username }, 'yourSecretKey', { expiresIn: '1h' });
-            res.json({ token });
-        } catch (error) {
-            console.error('Error during login:', error);
-            res.status(500).send('Internal server error');
-        }
-    }
-
-    async userExists(req: Request, res: Response, next: NextFunction) {
-        const {username} = req.body;
-        const user = await this.userRepository.findOne({
-            where: {
-                username: username
-            }
-        });
-
-        if (user) {
-            res.status(200).send('User exists');
-        } else {
-            res.status(404).send('User does not exist');
-        }
-    }
 }
 
 export default new UserController();
