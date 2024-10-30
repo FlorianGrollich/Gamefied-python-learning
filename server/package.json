@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
-    "dev": "nodemon --watch 'server.ts' --exec ts-node server.ts",
+    "dev": "nodemon --watch '**/*.ts' --exec ts-node server.ts",
     "test": "jest"
   },
   "dependencies": {

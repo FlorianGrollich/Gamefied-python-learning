@@ -27,6 +27,7 @@ connectMongo().catch(err => {console.error(err)});
 
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log("Error handler:");
   console.error(err.stack); // Logs error stack for debugging
   res.status(500).json({ message: "Internal Server Error" });
 });

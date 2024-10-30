@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { PostgresDataSource } from '../utils/data-source';
 import * as bcrypt from 'bcrypt';
 
 import * as jwt from 'jsonwebtoken';
@@ -8,7 +7,7 @@ import { generateToken } from '../utils/token';
 
 
 interface LoginRequestBody {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -53,8 +52,7 @@ class UserController {
 
 
     } catch (err) {
-      console.error(err);
-      res.status(500).send(`Error during user registration. Please try again later.`);
+      next(err);
     }
 
   }
@@ -62,24 +60,29 @@ class UserController {
 
   async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
     console.log(req.body);
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      console.log('username:', req.body.username);
-
-
-      const isValidPassword = await bcrypt.compare(req.body.password, 'TODO');
-
-      console.log(isValidPassword);
-      if (!isValidPassword) {
-        res.status(401).send('Credentials are incorrect');
-        return;
+      if (!email || !password) {
+        return res.status(400).send('Please provide all required fields');
+      }
+      const foundUser = await this.findExistingUser(email);
+      if (!foundUser) {
+        return res.status(401).send('Credentials are incorrect');
       }
 
-      const token = jwt.sign({ userName: 'TODO' }, 'yourSecretKey', { expiresIn: '1h' });
-      res.json({ token });
+
+
+      const isValidPassword = await bcrypt.compare(req.body.password, foundUser.password);
+
+      if (!isValidPassword) {
+        return res.status(401).send('Credentials are incorrect');
+      }
+
+      const token = generateToken(foundUser);
+      return res.json({ token });
+
     } catch (error) {
-      console.error('Error during login:', error);
-      res.status(500).send('Internal server error');
+     next(error);
     }
   }
 
