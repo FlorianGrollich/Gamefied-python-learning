@@ -4,7 +4,6 @@ dotenv.config();
 
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { createServer } from 'http';
-import { PostgresDataSource } from './utils/data-source';
 import routes from './routes';
 import { PORT } from './config';
 import { setupMiddleware } from './middleware';
