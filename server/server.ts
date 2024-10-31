@@ -41,38 +41,6 @@ server.listen(PORT, () => {
 
 const wss = new WebSocket.Server({ server });
 
-wss.on('connection', ws => {
-  ws.on('message', message => {
-    console.log('received: %s', message);
-    let options = {
-      mode: 'text',
-      pythonOptions: ['-c'], // Execute code as a command line argument
-    };
 
-    writeFile('gameengine/player/main.py', message.toString(), (err) => {
-      if (err) {
-        console.error('Failed to write to main.py:', err);
-        return;
-      }
-      console.log('Run code');
-      let options: Options = {
-        mode: 'text',
-        pythonOptions: ['-u'],
-        scriptPath: 'gameengine/player/',
-        pythonPath: 'python',
-      };
-      // Execute the modified script
-      PythonShell.run('main.py', options).then((output) => {
-        console.log(output);
-        ws.send(output.toString());
-      }).catch(err => {
-        console.error('Failed to run Python script:', err);
-      });
-    });
-
-  });
-
-  ws.send('Hello from backend!');
-});
 
 export default app;
