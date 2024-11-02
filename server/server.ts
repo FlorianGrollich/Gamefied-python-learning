@@ -15,8 +15,10 @@ const app: Express = express();
 expressWs(app);
 
 import webSocketRoutes from './routes/webSocketRoutes';
+import { verifyEnvVar } from './config/env';
+
 app.use('/api', routes);
-app.use("/api/ws", webSocketRoutes);
+app.use('/api/ws', webSocketRoutes);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log('Error handler:');
   console.error(err.stack); // Logs error stack for debugging
@@ -24,17 +26,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 
-
-
-if (!process.env.JWT_SECRET) {
-  console.error('JWT_SECRET is not set');
-}
-
-connectMongo().catch(err => {
-  console.error(err);
-});
-
-
+verifyEnvVar();
+connectMongo();
 
 
 setupMiddleware(app);
