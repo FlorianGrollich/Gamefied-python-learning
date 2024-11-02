@@ -1,60 +1,50 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import * as http from 'node:http';
 import { CodeMessage, WebSocketMessage } from '../types/WebSocketMessages';
 import { writeFile } from 'node:fs';
 import { Options, PythonShell } from 'python-shell';
 
 
 class WebSocketController {
-  private wss: WebSocketServer;
+  private clients: Set<WebSocket>;
 
-  constructor(server: http.Server) {
-    this.wss = new WebSocketServer({server});
-
+  constructor() {
+    this.clients = new Set();
   }
 
-  private initialize() {
-    this.wss.on('connection', this.onConnection.bind(this))
-  }
-
-  private onConnection(ws: WebSocket) {
-    console.log("new websocket connection");
+  public handleConnection(ws: WebSocket) {
+    console.log('New WebSocket connection');
+    this.clients.add(ws);
 
     ws.on('message', (message: string) => {
       this.handleMessage(ws, message);
     });
 
     ws.on('close', () => {
-      console.log("WEbsocket connection closed");
+      console.log('WebSocket connection closed');
+      this.clients.delete(ws);
     });
   }
 
-  private handleMessage(ws: WebSocket, msg: string) {
+  private handleMessage(ws: WebSocket, message: string) {
     let parsedMessage: WebSocketMessage;
 
     try {
-      parsedMessage = JSON.parse(msg);
-    } catch (err) {
-      console.error("Failed to parse websocket message:", msg);
+      parsedMessage = JSON.parse(message);
+    } catch (error) {
+      console.error('Failed to parse message:', message);
       return;
     }
-
-
     switch (parsedMessage.type) {
       case "code":
-        this.handleCodeMessage(ws, parsedMessage as CodeMessage);
+        this.handleCodeMessage(ws, parsedMessage);
         break;
       default:
-        console.error("Unknown Websocket msg type")
+        console.log("Unknown message type:", parsedMessage);
     }
   }
 
-  private handleCodeMessage(ws: WebSocket, msg: CodeMessage) {
-    let options = {
-      mode: 'text',
-      pythonOptions: ['-c'], // Execute code as a command line argument
-    };
 
+  private handleCodeMessage(ws: WebSocket, msg: CodeMessage) {
     writeFile('gameengine/player/main.py', msg.code, (err) => {
       if (err) {
         console.error('Failed to write to main.py:', err);
@@ -78,3 +68,5 @@ class WebSocketController {
 
   }
 }
+
+export default WebSocketController;
