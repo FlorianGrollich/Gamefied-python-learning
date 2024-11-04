@@ -4,8 +4,6 @@ import GameGrid from './components/GameGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCode } from './slices/codeSlice';
 import { doActions, selectPlayerPosition } from './slices/playerSlice';
-import useWebSocketConnection from './hooks/useWebsocketConnection';
-import { sendMessage } from '../MainPage/middleware/websocketMiddleware';
 import PlayButton from '../MainPage/components/PlayButton';
 
 const MainPage: React.FC = () => {
