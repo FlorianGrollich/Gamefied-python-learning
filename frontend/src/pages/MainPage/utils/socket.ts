@@ -29,3 +29,5 @@ class CustomSocket {
   }
 
 }
+
+export default CustomSocket;
