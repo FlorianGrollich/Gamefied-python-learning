@@ -27,7 +27,6 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="App min-h-screen bg-black text-gray-200">
-      <AuthRedirect />
       {showNavBar && <NavBar />}
       <main className="pt-16">
         <Routes>

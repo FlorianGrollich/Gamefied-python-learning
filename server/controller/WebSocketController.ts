@@ -1,19 +1,27 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import { CodeMessage, WebSocketMessage } from '../types/WebSocketMessages';
 import { writeFile } from 'node:fs';
 import { Options, PythonShell } from 'python-shell';
+import WebSocketMessageDTO, {
+  WebSocketActionMessageDTO,
+  WebSocketCodeMessageDTO,
+} from '../types/DTO/WebSocketMessageDTO';
 
 
 class WebSocketController {
   private clients: Set<WebSocket>;
+  private server: WebSocketServer
 
-  constructor() {
+  constructor(server: WebSocketServer) {
     this.clients = new Set();
+    this.server = server
   }
 
   public handleConnection(ws: WebSocket) {
     console.log('New WebSocket connection');
     this.clients.add(ws);
+
+    ws.send("Hello from Backend!")
+
 
     ws.on('message', (message: string) => {
       this.handleMessage(ws, message);
@@ -26,7 +34,7 @@ class WebSocketController {
   }
 
   private handleMessage(ws: WebSocket, message: string) {
-    let parsedMessage: WebSocketMessage;
+    let parsedMessage: WebSocketMessageDTO;
 
     try {
       parsedMessage = JSON.parse(message);
@@ -44,7 +52,9 @@ class WebSocketController {
   }
 
 
-  private handleCodeMessage(ws: WebSocket, msg: CodeMessage) {
+  private handleCodeMessage(ws: WebSocket, msg: WebSocketCodeMessageDTO) {
+    console.log("handle Code: ", msg.code);
+
     writeFile('gameengine/player/main.py', msg.code, (err) => {
       if (err) {
         console.error('Failed to write to main.py:', err);
@@ -60,7 +70,9 @@ class WebSocketController {
       // Execute the modified script
       PythonShell.run('main.py', options).then((output) => {
         console.log(output);
-        ws.send(output.toString());
+        const outputDTO: WebSocketActionMessageDTO = {type: "action", actions:output}
+
+        ws.send(JSON.stringify(outputDTO));
       }).catch(err => {
         console.error('Failed to run Python script:', err);
       });
