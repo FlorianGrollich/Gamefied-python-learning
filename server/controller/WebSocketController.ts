@@ -6,14 +6,19 @@ import { Options, PythonShell } from 'python-shell';
 
 class WebSocketController {
   private clients: Set<WebSocket>;
+  private server: WebSocketServer
 
-  constructor() {
+  constructor(server: WebSocketServer) {
     this.clients = new Set();
+    this.server = server
   }
 
   public handleConnection(ws: WebSocket) {
     console.log('New WebSocket connection');
     this.clients.add(ws);
+
+    ws.send("Hello from Backend!")
+
 
     ws.on('message', (message: string) => {
       this.handleMessage(ws, message);

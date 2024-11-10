@@ -5,17 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCode } from './slices/codeSlice';
 import { doActions, selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
+import { WebSocketActionType, WebSocketEventType } from './utils/enums';
 
 const MainPage: React.FC = () => {
-  useWebSocketConnection();
-
   const playerPosition = useSelector(selectPlayerPosition);
   const dispatch = useDispatch();
   const code = useSelector(selectCode);
 
+  useEffect(() => {
+    dispatch({type: WebSocketActionType.SOCKET_CONNECT});
+  }, []);
+
   const handlePlayClick = () => {
     console.log(code);
-    dispatch(sendMessage(code));
   };
 
   return (

@@ -8,8 +8,7 @@ expressWs(app);
 
 setupMiddleware(app);
 
-import webSocketRoutes from '../routes/webSocketRoutes';
 app.use('/api', routes);
-app.use('/api/ws', webSocketRoutes);
+
 
 export default app;

@@ -2,19 +2,18 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import codeReducer from './pages/MainPage/slices/codeSlice';
 import authReducer from './slices/authSlice';
 import playerReducer from './pages/MainPage/slices/playerSlice';
-import socketReducer from './pages/MainPage/slices/socketSlice';
-import { socketMiddleware } from 'pages/MainPage/slices/middleware';
+import { socketMiddleware } from './pages/MainPage/slices/middleware';
+import CustomSocket from './pages/MainPage/utils/socket';
 
 const rootReducer = combineReducers({
   code: codeReducer,
   auth: authReducer,
   player: playerReducer,
-  socket: socketReducer
 });
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(socketMiddleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(socketMiddleware(new CustomSocket())),
 
 });
 
