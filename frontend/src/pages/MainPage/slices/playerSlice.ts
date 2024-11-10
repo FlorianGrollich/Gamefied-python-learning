@@ -14,6 +14,7 @@ export const playerSlice = createSlice({
   initialState,
   reducers: {
     doActions: (state, action: PayloadAction<string[]>) => {
+      console.log("asdfasdfsadfPlayerSlice actions: ", action);
       action.payload.forEach(action => {
         if (action === PlayerAction.MOVE) {
           state.position[0] -= 20;

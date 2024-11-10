@@ -1,4 +1,5 @@
 import { WebSocketEventType } from './enums';
+import WebSocketMessageDTO from 'model/DTO/WebSocketMessageDTO';
 
 class CustomSocket {
   private socket: WebSocket | null;
@@ -29,7 +30,7 @@ class CustomSocket {
     }
   }
 
-  send(message: JSON) {
+  send(message: WebSocketMessageDTO) {
     if (this.socket !== null) {
       try {
         this.socket.send(JSON.stringify(message));

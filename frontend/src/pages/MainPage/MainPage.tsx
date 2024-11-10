@@ -6,6 +6,7 @@ import { selectCode } from './slices/codeSlice';
 import { doActions, selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
 import { WebSocketActionType, WebSocketEventType } from './utils/enums';
+import { WebSocketCodeMessageDTO } from 'model/DTO/WebSocketMessageDTO';
 
 const MainPage: React.FC = () => {
   const playerPosition = useSelector(selectPlayerPosition);
@@ -13,11 +14,12 @@ const MainPage: React.FC = () => {
   const code = useSelector(selectCode);
 
   useEffect(() => {
-    dispatch({type: WebSocketActionType.SOCKET_CONNECT});
+    dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
   }, []);
 
   const handlePlayClick = () => {
     console.log(code);
+    dispatch({ type: WebSocketActionType.SOCKET_SEND, socketMsg: { type: 'code', code: code } });
   };
 
   return (

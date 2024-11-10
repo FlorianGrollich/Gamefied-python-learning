@@ -2,27 +2,28 @@ import CustomSocket from 'pages/MainPage/utils/socket';
 import { Middleware } from '@reduxjs/toolkit';
 import { RootState } from 'store';
 import { WebSocketActionType, WebSocketEventType } from '../utils/enums';
+import { handleSocketMessage } from '../utils/socketHandlers';
+import WebSocketMessageDTO from 'model/DTO/WebSocketMessageDTO';
 
 export const socketMiddleware = (socket: CustomSocket): Middleware<{}, any> =>
   ({ dispatch, getState }) =>
     (next) =>
       (action) => {
 
-        const { type } = action as { type: string };
+        const state: RootState = getState();
+        const { type, socketMsg } = action as { type: string, socketMsg: WebSocketMessageDTO };
         switch (type) {
 
-
           case WebSocketActionType.SOCKET_CONNECT:
-            socket.connect("ws://localhost:8080/");
+            socket.connect('ws://localhost:8080/');
 
 
             socket.on(WebSocketEventType.OPEN, () => {
               console.log('Websocket connection created');
-              socket.send(JSON.parse('{ "type": "test", "msg": "Hello from frontend"}'));
-              console.log("")
             });
             socket.on(WebSocketEventType.MESSAGE, (data) => {
-              console.log('Message from server:', data);
+              handleSocketMessage(dispatch, data, state);
+
             });
             socket.on(WebSocketEventType.CLOSE, () => {
               console.log('Websocket connection closed');
@@ -31,8 +32,14 @@ export const socketMiddleware = (socket: CustomSocket): Middleware<{}, any> =>
           case WebSocketActionType.SOCKET_DISCONNECT:
             socket.disconnect();
             break;
+          case WebSocketActionType.SOCKET_SEND:
+            console.log('Send msg: ', socketMsg);
+            socket.send(socketMsg);
+
           default:
-            console.error('Socket Middleware Error Type not found: ', type);
+            next(action);
+            console.log('Action: ', type);
+
         }
 
 
