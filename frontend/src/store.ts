@@ -4,11 +4,13 @@ import authReducer from './slices/authSlice';
 import playerReducer from './pages/MainPage/slices/playerSlice';
 import { socketMiddleware } from './pages/MainPage/slices/middleware';
 import CustomSocket from './pages/MainPage/utils/socket';
+import sessionReducer from './pages/MainPage/slices/sessionSlice';
 
 const rootReducer = combineReducers({
   code: codeReducer,
   auth: authReducer,
   player: playerReducer,
+  session: sessionReducer,
 });
 
 const store = configureStore({

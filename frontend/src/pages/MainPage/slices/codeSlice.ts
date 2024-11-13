@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CodeState {
   code: string;
+  isLoading: boolean;
 }
 
 const initialState: CodeState = {
   code: 'from player import Player\nplayer = Player()\nplayer.move()',
+  isLoading: false,
 };
 
 export const codeSlice = createSlice({
@@ -16,6 +18,7 @@ export const codeSlice = createSlice({
       state.code = action.payload;
     },
   },
+
 });
 
 export const { setCode } = codeSlice.actions;
