@@ -20,10 +20,10 @@ const MainPage: React.FC = () => {
 
 
   useEffect(() => {
+    dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
     if (id === undefined) {
       dispatch(createNewSession());
     }
-    dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const MainPage: React.FC = () => {
     <div className="grid grid-cols-2">
       <div className="col-start-1 col-end-2 p-4">
         <PlayButton onClick={handlePlayClick} />
-        <CodeEditor />
+        <CodeEditor sessionId={id} />
       </div>
       <div className="col-start-2 col-end-3 p-4">
         <GameGrid cubePositions={playerPosition} />

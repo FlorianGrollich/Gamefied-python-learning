@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from 'store';
 import WebSocketMessageDTO from 'model/DTO/WebSocketMessageDTO';
 import { doActions } from '../slices/playerSlice';
+import { setCode } from '../slices/sessionSlice';
 
 
 export const handleSocketMessage = (dispatch: AppDispatch, event: Event | MessageEvent<any> | CloseEvent, state: RootState) => {
@@ -15,6 +16,9 @@ export const handleSocketMessage = (dispatch: AppDispatch, event: Event | Messag
         break;
       case 'code':
         console.log('Code change received: ', data.code);
+        break;
+      case 'codeChange':
+        dispatch(setCode(data.code));
         break;
       default:
         console.error('Unknown WebSocketMessageDTO type received: ', event);
