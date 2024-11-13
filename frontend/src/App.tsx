@@ -10,7 +10,7 @@ import MainPage from './pages/MainPage/MainPage';
 import ConstructionPage from './pages/Construction/ConstructionPage';
 import LoginPage from './pages/Authentication/LoginPage';
 import RegisterPage from './pages/Authentication/RegistrationPage';
-import AuthRedirect from './components/AuthRedirect';
+import MenuPage from './pages/Menu/MenuPage';
 
 const App: React.FC = () => {
   return (
@@ -23,14 +23,15 @@ const App: React.FC = () => {
 const AppContent: React.FC = () => {
   const location = useLocation();
 
-  const showNavBar = !['/login', '/register'].includes(location.pathname);
+  const showNavBar = !['/login', '/register', "/"].includes(location.pathname);
 
   return (
     <div className="App min-h-screen bg-black text-gray-200">
-      {showNavBar && <NavBar />}
-      <main className="pt-16">
+      {showNavBar ? <NavBar /> : null}
+      <main>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/game" element={<MainPage />} />
+          <Route path="/" element={<MenuPage/>}/>
           <Route path="/construction" element={<ConstructionPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
