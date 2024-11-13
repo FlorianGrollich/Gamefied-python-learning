@@ -9,6 +9,6 @@ class SessionController {
 
 
   async createSession(req: Request, res: Response, next: NextFunction) {
-
+    
   }
 }
