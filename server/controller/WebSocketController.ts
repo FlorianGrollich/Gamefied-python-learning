@@ -10,10 +10,12 @@ import WebSocketMessageDTO, {
 class WebSocketController {
   private clients: Set<WebSocket>;
   private server: WebSocketServer
+  private redisClient;
 
-  constructor(server: WebSocketServer) {
+  constructor(server: WebSocketServer, redisClient: any) {
     this.clients = new Set();
-    this.server = server
+    this.server = server;
+    this.redisClient = redisClient;
   }
 
   public handleConnection(ws: WebSocket) {
