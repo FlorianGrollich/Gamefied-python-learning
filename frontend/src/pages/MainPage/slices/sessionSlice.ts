@@ -14,14 +14,18 @@ const initialState: SessionState = {
 };
 
 
-const createNewSession = createAsyncThunk('session/create', () => {
-
-  return axios.post(`${process.env.REACT_APP_API_URL}/createSession`,
-    {},
-    { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-
-
-});
+export const createNewSession = createAsyncThunk(
+  'session/create',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/createSession`, {}, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      });
+      return { type: 'session/create', payload: response.data };
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  });
 
 
 export const sessionSlice = createSlice({
@@ -40,10 +44,10 @@ export const sessionSlice = createSlice({
       .addCase(createNewSession.fulfilled, state => {
         state.isLoading = false;
       }).addCase(createNewSession.rejected, state => {
-        state.isLoading = false;
-        console.log('error when creating new session');
+      state.isLoading = false;
+      console.log('error when creating new session');
     });
-  }
+  },
 
 });
 

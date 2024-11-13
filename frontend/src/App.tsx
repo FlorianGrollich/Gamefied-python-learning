@@ -11,6 +11,7 @@ import ConstructionPage from './pages/Construction/ConstructionPage';
 import LoginPage from './pages/Authentication/LoginPage';
 import RegisterPage from './pages/Authentication/RegistrationPage';
 import MenuPage from './pages/Menu/MenuPage';
+import AuthRedirect from './components/AuthRedirect';
 
 const App: React.FC = () => {
   return (
@@ -28,9 +29,10 @@ const AppContent: React.FC = () => {
   return (
     <div className="App min-h-screen bg-black text-gray-200">
       {showNavBar ? <NavBar /> : null}
+      <AuthRedirect/>
       <main>
         <Routes>
-          <Route path="/game" element={<MainPage />} />
+          <Route path="/game/:id?" element={<MainPage />} />
           <Route path="/" element={<MenuPage/>}/>
           <Route path="/construction" element={<ConstructionPage />} />
           <Route path="/login" element={<LoginPage />} />

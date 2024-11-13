@@ -28,6 +28,8 @@ class UserController {
   async register(req: Request, res: Response, next: NextFunction) {
     const { displayName, email, password } = req.body;
 
+    console.log(req.body);
+
     try {
 
       if (!displayName || !email || !password) {

@@ -17,7 +17,7 @@ class WebSocketController {
   }
 
   public handleConnection(ws: WebSocket) {
-    console.log('New WebSocket connection');
+
     this.clients.add(ws);
 
     ws.send("Hello from Backend!")
@@ -28,7 +28,6 @@ class WebSocketController {
     });
 
     ws.on('close', () => {
-      console.log('WebSocket connection closed');
       this.clients.delete(ws);
     });
   }

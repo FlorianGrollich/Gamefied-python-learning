@@ -25,7 +25,7 @@ export const register = createAsyncThunk(
     console.log(process.env.API_URL);
     return axios
       .post(`${process.env.REACT_APP_API_URL}/register`, {
-        username,
+        displayName: username,
         email,
         password,
       })

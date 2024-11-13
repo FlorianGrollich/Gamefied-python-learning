@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CodeEditor from './components/CodeEditor';
 import GameGrid from './components/GameGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCode } from './slices/codeSlice';
-import { doActions, selectPlayerPosition } from './slices/playerSlice';
+import { selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
-import { WebSocketActionType, WebSocketEventType } from './utils/enums';
-import { WebSocketCodeMessageDTO } from 'model/DTO/WebSocketMessageDTO';
+import { WebSocketActionType } from './utils/enums';
+import { createNewSession } from './slices/sessionSlice';
+import { AppDispatch } from 'store';
+import { useParams } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
   const playerPosition = useSelector(selectPlayerPosition);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const code = useSelector(selectCode);
+  const { id } = useParams<{ id?: string }>();
+
 
   useEffect(() => {
+    if (id === undefined) {
+      dispatch(createNewSession());
+    } else {
+    }
+
     dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
   }, []);
 

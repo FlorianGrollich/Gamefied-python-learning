@@ -1,12 +1,12 @@
 import { model, Schema } from 'mongoose';
 
 interface ISession {
-  usersIds: string[];
+  userEmails: string[];
   code: string;
 }
 
 const sessionSchema = new Schema<ISession>({
-  usersIds: { type: [String], required: true },
+  userEmails: { type: [String], required: true },
   code: { type: String, required: true },
 }, { timestamps: true });
 
