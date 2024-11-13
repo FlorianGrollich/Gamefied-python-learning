@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import CodeEditor from './components/CodeEditor';
 import GameGrid from './components/GameGrid';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCode } from './slices/codeSlice';
+import { selectCode } from './slices/sessionSlice';
 import { selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
 import { WebSocketActionType } from './utils/enums';

@@ -3,6 +3,7 @@ import * as monaco from 'monaco-editor';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCode } from '../slices/codeSlice';
+import { selectCode } from '../slices/sessionSlice';
 
 function setEditorTheme(monaco: any) {
   monaco.editor.defineTheme('onedark', {
@@ -15,8 +16,8 @@ function setEditorTheme(monaco: any) {
 }
 
 const CodeEditor: React.FC = () => {
-  const code = useSelector((state: any) => state.code.code);
   const dispatch = useDispatch();
+  const code = useSelector(selectCode)
 
   return (
     <div className="bg-white p-4 rounded-2xl">

@@ -24,7 +24,7 @@ class SessionController {
 
     try {
       const { email } = jwt.verify(token, process.env.JWT_SECRET!) as { email: string };
-      const session = new Session({ usersIds: [email], code: 'from player import Player\nplayer = Player()\nplayer.move()' });
+      const session = new Session({ usersIds: [email], code: 'from player import Player' });
       await session.save();
       res.status(201).json( {
         code: session.code,

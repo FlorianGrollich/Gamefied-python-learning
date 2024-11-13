@@ -13,7 +13,7 @@ interface SessionResponse {
 }
 
 const initialState: SessionState = {
-  code: 'from player import Player\nplayer = Player()\nplayer.move()',
+  code: '',
   isLoading: false,
 };
 
@@ -47,6 +47,7 @@ export const sessionSlice = createSlice({
       .addCase(createNewSession.fulfilled, (state, action) => {
         state.isLoading = false;
         state.id = action.payload.id;
+        console.log("new code", action.payload.code);
         state.code = action.payload.code;
       })
       .addCase(createNewSession.rejected, state => {
