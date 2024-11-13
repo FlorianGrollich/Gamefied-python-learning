@@ -21,13 +21,15 @@ class SessionController {
 
     //get token from authHeader
     const token = authHeader.split(' ')[1];
-    console.log(authHeader);
-    console.log(token);
+
     try {
       const { email } = jwt.verify(token, process.env.JWT_SECRET!) as { email: string };
-      const session = new Session({ usersIds: [email], code: '1234' });
+      const session = new Session({ usersIds: [email], code: 'from player import Player\nplayer = Player()\nplayer.move()' });
       await session.save();
-      res.status(201).json(session);
+      res.status(201).json( {
+        code: session.code,
+        id: session._id
+      });
     } catch (err) {
         res.status(401).send('Unauthorized');
     }

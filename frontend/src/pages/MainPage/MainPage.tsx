@@ -6,25 +6,34 @@ import { selectCode } from './slices/codeSlice';
 import { selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
 import { WebSocketActionType } from './utils/enums';
-import { createNewSession } from './slices/sessionSlice';
+import { createNewSession, selectId } from './slices/sessionSlice';
 import { AppDispatch } from 'store';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
   const playerPosition = useSelector(selectPlayerPosition);
   const dispatch = useDispatch<AppDispatch>();
-  const code = useSelector(selectCode);
   const { id } = useParams<{ id?: string }>();
+  const sessionId = useSelector(selectId);
+  const code = useSelector(selectCode);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
     if (id === undefined) {
       dispatch(createNewSession());
-    } else {
     }
-
     dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
-  }, []);
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (sessionId && id === undefined) {
+      // Navigate to the URL with the new session ID
+      navigate(`/game/${sessionId}`);
+    }
+  }, [sessionId, id, navigate]);
+
+
 
   const handlePlayClick = () => {
     console.log(code);
