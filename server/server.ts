@@ -1,17 +1,29 @@
+import * as Sentry from '@sentry/node';
+
 import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { PORT } from './config';
 import { setupMiddleware } from './middleware';
 import { connectMongo } from './config/mongo';
-import { verifyEnvVar } from './config/env';
 import app from './config/app';
 import { WebSocketServer } from 'ws';
 import WebSocketController from './controller/WebSocketController';
 import redisclient from './config/redisclient';
+import { rewriteFramesIntegration } from '@sentry/node';
 
 dotenv.config();
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  tracesSampleRate: 1.0,
+  integrations: [
+    rewriteFramesIntegration({
+      root: global.__dirname,
+    }),
+  ],
+});
 
-verifyEnvVar();
+
+
 connectMongo();
 
 
