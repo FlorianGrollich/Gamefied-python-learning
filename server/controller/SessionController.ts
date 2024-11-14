@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import redisClient from '../config/redisclient';
 
 
-
-
 class SessionController {
 
   constructor() {
@@ -28,17 +26,18 @@ class SessionController {
       const session = new Session({ usersIds: [email], code: 'from player import Player' });
       await session.save();
 
-      redisClient.hSet(`gameSession:${session._id}`, {
+      await redisClient.hSet(`gameSession:${session._id}`, {
         userEmails: JSON.stringify([email]),
-        code: session.code
+        userSockets: JSON.stringify([email]),
+        code: session.code,
       });
 
-      res.status(201).json( {
+      res.status(201).json({
         code: session.code,
-        id: session._id
+        id: session._id,
       });
     } catch (err) {
-        res.status(401).send('Unauthorized');
+      res.status(401).send('Unauthorized');
     }
   }
 }

@@ -3,10 +3,11 @@ import { writeFile } from 'node:fs';
 import { Options, PythonShell } from 'python-shell';
 import WebSocketMessageDTO, {
   WebSocketActionMessageDTO, WebSocketCodeChangeMessageDTO,
-  WebSocketCodeMessageDTO,
+  WebSocketCodeMessageDTO, WebSocketLoadGameMessageDTO,
 } from '../types/DTO/WebSocketMessageDTO';
 import redisclient from '../config/redisclient';
 import WebSocketSessionModel from '../models/webSocketSessionModel';
+import { ISession, Session } from '../models/sessionModel';
 
 class WebSocketController {
   private clients: Set<WebSocket>;
@@ -22,7 +23,7 @@ class WebSocketController {
   public handleConnection(ws: WebSocket) {
     this.clients.add(ws);
 
-    console.log("new websocket connection")
+    console.log('new websocket connection');
     ws.send('Hello from Backend!');
 
     ws.on('message', (message: string) => {
@@ -51,32 +52,66 @@ class WebSocketController {
       case 'codeChange':
         this.handleCodeChangeMessage(ws, parsedMessage);
         break;
-
+      case 'loadGame':
+        this.handleLoadGameMessage(ws, parsedMessage);
+        break;
       default:
         console.log('Unknown message type:', parsedMessage);
     }
   }
 
+  private async handleLoadGameMessage(ws: WebSocket, msg: WebSocketLoadGameMessageDTO) {
+    const session = await redisclient.hGetAll(`gameSession:${msg.sessionId}`);
+    if (Object.keys(session).length === 0) {
+      const storedSession: ISession | null = await Session.findOne({ _id: msg.sessionId });
+      if (storedSession === null) {
+        ws.send(JSON.stringify({ type: 'error', message: 'Session not found' }));
+        return;
+      }
+
+      await this.redisClient.hSet(`gameSession:${msg.sessionId}`, {
+        userSockets: JSON.stringify([ws]),
+        code: storedSession.code,
+        userEmails: JSON.stringify(storedSession.userEmails),
+      }).then(() => {
+        console.log('Session data successfully stored in Redis');
+      }).catch((err: any) => {
+        console.error('Failed to store session data in Redis:', err);
+        ws.send(JSON.stringify({ type: 'error', message: 'Failed to store session data' }));
+        return;
+      });
+
+
+      ws.send(JSON.stringify({ type: 'code', code: storedSession.code }));
+
+    } else {
+      const sessionObj: WebSocketSessionModel = WebSocketSessionModel.createFromRedis(session);
+
+      this.redisClient.hSet(`gameSession:${msg.sessionId}`, {
+        userSockets: JSON.stringify([...sessionObj.userSockets, ws]),
+        code: sessionObj.code,
+        userEmails: JSON.stringify(sessionObj.userEmails),
+      });
+
+      ws.send(JSON.stringify({ type: 'code', code: sessionObj.code }));
+    }
+
+
+  }
+
   private async handleCodeChangeMessage(ws: WebSocket, msg: WebSocketCodeChangeMessageDTO) {
-    console.log('looking for session', msg.sessionId);
     const session = await redisclient.hGetAll(`gameSession:${msg.sessionId}`);
 
-    const sessionObj: WebSocketSessionModel = Object.assign(new WebSocketSessionModel(), session);
-    console.log("session found");
     if (session === null) {
       console.error('Session not found');
       return;
     }
-
-
-
-
-
+    const sessionObj: WebSocketSessionModel = WebSocketSessionModel.createFromRedis(session);
 
     this.redisClient.hSet(`gameSession:${msg.sessionId}`, {
-      usersSockets: JSON.stringify(sessionObj.userSockets),
+      userSockets: JSON.stringify(sessionObj.userSockets),
       code: msg.code,
-      userEmails: sessionObj.userEmails
+      userEmails: JSON.stringify(sessionObj.userEmails),
     });
 
     this.clients.forEach((client) => {

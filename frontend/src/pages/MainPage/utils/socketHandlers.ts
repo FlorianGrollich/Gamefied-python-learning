@@ -15,6 +15,7 @@ export const handleSocketMessage = (dispatch: AppDispatch, event: Event | Messag
         dispatch(doActions(data.actions));
         break;
       case 'code':
+        dispatch(setCode(data.code));
         console.log('Code change received: ', data.code);
         break;
       case 'codeChange':

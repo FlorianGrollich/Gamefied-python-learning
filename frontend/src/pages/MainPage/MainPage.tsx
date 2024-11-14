@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CodeEditor from './components/CodeEditor';
 import GameGrid from './components/GameGrid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,14 +17,24 @@ const MainPage: React.FC = () => {
   const sessionId = useSelector(selectId);
   const code = useSelector(selectCode);
   const navigate = useNavigate();
-
+  const [isWebSocketConnected, setIsWebSocketConnected] = useState(false);
 
   useEffect(() => {
     dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
-    if (id === undefined) {
-      dispatch(createNewSession());
+    setIsWebSocketConnected(true);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isWebSocketConnected) {
+      if (id === undefined) {
+        dispatch(createNewSession());
+      } else {
+        setTimeout(() => {
+          dispatch({ type: WebSocketActionType.SOCKET_SEND, socketMsg: { type: 'loadGame', sessionId: id } });
+        }, 1000);
+      }
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, isWebSocketConnected]);
 
   useEffect(() => {
     if (sessionId && id === undefined) {
