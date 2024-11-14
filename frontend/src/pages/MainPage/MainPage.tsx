@@ -2,20 +2,48 @@ import React, { useEffect, useState } from 'react';
 import CodeEditor from './components/CodeEditor';
 import GameGrid from './components/GameGrid';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCode } from './slices/codeSlice';
-import { doActions, selectPlayerPosition } from './slices/playerSlice';
+import { selectCode } from './slices/sessionSlice';
+import { selectPlayerPosition } from './slices/playerSlice';
 import PlayButton from '../MainPage/components/PlayButton';
-import { WebSocketActionType, WebSocketEventType } from './utils/enums';
-import { WebSocketCodeMessageDTO } from 'model/DTO/WebSocketMessageDTO';
+import { WebSocketActionType } from './utils/enums';
+import { createNewSession, selectId } from './slices/sessionSlice';
+import { AppDispatch } from 'store';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MainPage: React.FC = () => {
   const playerPosition = useSelector(selectPlayerPosition);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const { id } = useParams<{ id?: string }>();
+  const sessionId = useSelector(selectId);
   const code = useSelector(selectCode);
+  const navigate = useNavigate();
+  const [isWebSocketConnected, setIsWebSocketConnected] = useState(false);
 
   useEffect(() => {
     dispatch({ type: WebSocketActionType.SOCKET_CONNECT });
-  }, []);
+    setIsWebSocketConnected(true);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isWebSocketConnected) {
+      if (id === undefined) {
+        dispatch(createNewSession());
+      } else {
+        setTimeout(() => {
+          dispatch({ type: WebSocketActionType.SOCKET_SEND, socketMsg: { type: 'loadGame', sessionId: id } });
+        }, 1000);
+      }
+    }
+  }, [dispatch, id, isWebSocketConnected]);
+
+  useEffect(() => {
+    if (sessionId && id === undefined) {
+      // Navigate to the URL with the new session ID
+      navigate(`/game/${sessionId}`);
+    }
+  }, [sessionId, id, navigate]);
+
+
 
   const handlePlayClick = () => {
     console.log(code);
@@ -26,7 +54,7 @@ const MainPage: React.FC = () => {
     <div className="grid grid-cols-2">
       <div className="col-start-1 col-end-2 p-4">
         <PlayButton onClick={handlePlayClick} />
-        <CodeEditor />
+        <CodeEditor sessionId={id} />
       </div>
       <div className="col-start-2 col-end-3 p-4">
         <GameGrid cubePositions={playerPosition} />

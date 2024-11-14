@@ -35,6 +35,7 @@ export const socketMiddleware = (socket: CustomSocket): Middleware<{}, any> =>
           case WebSocketActionType.SOCKET_SEND:
             console.log('Send msg: ', socketMsg);
             socket.send(socketMsg);
+            break;
 
           default:
             next(action);

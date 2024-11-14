@@ -8,6 +8,28 @@ export interface WebSocketCodeMessageDTO {
   code: string;
 }
 
-type WebSocketMessageDTO = WebSocketActionMessageDTO | WebSocketCodeMessageDTO;
+export interface WebSocketCodeChangeMessageDTO {
+  type: 'codeChange',
+  sessionId: string
+  code: string;
+}
+
+export interface WebSocketLoadGameMessageDTO {
+  type: 'loadGame',
+  sessionId: string;
+}
+
+export interface WebSocketErrorMessageDTO {
+  type: 'error',
+  message: string;
+}
+
+type WebSocketMessageDTO =
+  WebSocketActionMessageDTO
+  | WebSocketCodeMessageDTO
+  | WebSocketCodeChangeMessageDTO
+  | WebSocketLoadGameMessageDTO
+  | WebSocketErrorMessageDTO;
+
 
 export default WebSocketMessageDTO;
