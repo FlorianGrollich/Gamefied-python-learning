@@ -5,11 +5,16 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/server.js",
-    "build": "tsc",
+    "build": "tsc && npm run sentry:sourcemaps",
     "dev": "nodemon --watch '**/*.ts' --exec ts-node server.ts",
-    "test": "jest"
+    "test": "jest",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org florian-grollich --project node-express ./dist && sentry-cli sourcemaps upload --org florian-grollich --project node-express ./dist"
   },
   "dependencies": {
+    "@sentry/cli": "^2.38.2",
+    "@sentry/integrations": "^7.114.0",
+    "@sentry/node": "^8.38.0",
+    "@sentry/profiling-node": "^8.38.0",
     "@types/express-ws": "^3.0.5",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

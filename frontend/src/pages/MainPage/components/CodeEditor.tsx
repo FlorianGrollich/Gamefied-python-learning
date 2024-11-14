@@ -1,5 +1,4 @@
 import { Editor } from '@monaco-editor/react';
-import * as monaco from 'monaco-editor';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCode, setCode } from '../slices/sessionSlice';

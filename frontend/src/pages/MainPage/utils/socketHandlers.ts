@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from 'store';
 import WebSocketMessageDTO from 'model/DTO/WebSocketMessageDTO';
 import { doActions } from '../slices/playerSlice';
 import { setCode } from '../slices/sessionSlice';
-
+import * as Sentry from '@sentry/node';
 
 export const handleSocketMessage = (dispatch: AppDispatch, event: Event | MessageEvent<any> | CloseEvent, state: RootState) => {
 
@@ -23,8 +23,10 @@ export const handleSocketMessage = (dispatch: AppDispatch, event: Event | Messag
         break;
       default:
         console.error('Unknown WebSocketMessageDTO type received: ', event);
+        Sentry.captureException(new Error('Unknown WebSocketMessageDTO type received'));
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error('Error parsing WebSocket message:', error, 'Event data:', (event as MessageEvent).data);
   }
 };

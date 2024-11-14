@@ -7,6 +7,7 @@ import WebSocketMessageDTO, {
 } from '../types/DTO/WebSocketMessageDTO';
 import WebSocketSessionModel from '../models/webSocketSessionModel';
 import { ISession, Session } from '../models/sessionModel';
+import * as Sentry from '@sentry/node';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,7 +35,7 @@ class WebSocketController {
 
     ws.on('close', () => {
       this.clients.delete(wsId);
-       this.removeWebSocketIdFromRedis(wsId);
+      this.removeWebSocketIdFromRedis(wsId);
     });
   }
 
@@ -57,7 +58,9 @@ class WebSocketController {
     try {
       parsedMessage = JSON.parse(message);
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Failed to parse message:', message);
+
       return;
     }
     switch (parsedMessage.type) {
@@ -71,6 +74,7 @@ class WebSocketController {
         this.handleLoadGameMessage(wsId, parsedMessage);
         break;
       default:
+        Sentry.captureMessage('Unknown message type in WebSocketController');
         console.log('Unknown message type:', parsedMessage);
     }
   }
@@ -91,7 +95,7 @@ class WebSocketController {
       }).then(() => {
         console.log('Session data successfully stored in Redis');
       }).catch((err: any) => {
-        console.error('Failed to store session data in Redis:', err);
+        Sentry.captureException(err);
         this.clients.get(wsId)?.send(JSON.stringify({ type: 'error', message: 'Failed to store session data' }));
         return;
       });
@@ -138,6 +142,7 @@ class WebSocketController {
 
     writeFile('gameengine/player/main.py', msg.code, (err) => {
       if (err) {
+        Sentry.captureException(err);
         console.error('Failed to write to main.py:', err);
         return;
       }
@@ -155,6 +160,7 @@ class WebSocketController {
 
         this.clients.get(wsId)?.send(JSON.stringify(outputDTO));
       }).catch(err => {
+        Sentry.captureException(err);
         console.error('Failed to run Python script:', err);
       });
     });
