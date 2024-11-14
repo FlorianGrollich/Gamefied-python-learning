@@ -5,10 +5,9 @@ import WebSocketMessageDTO, {
   WebSocketActionMessageDTO, WebSocketCodeChangeMessageDTO,
   WebSocketCodeMessageDTO, WebSocketLoadGameMessageDTO,
 } from '../types/DTO/WebSocketMessageDTO';
-import redisclient from '../config/redisclient';
 import WebSocketSessionModel from '../models/webSocketSessionModel';
 import { ISession, Session } from '../models/sessionModel';
-// server/controller/WebSocketController.ts
+
 import { v4 as uuidv4 } from 'uuid';
 
 class WebSocketController {
