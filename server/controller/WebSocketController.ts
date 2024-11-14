@@ -102,6 +102,9 @@ class WebSocketController {
   private async handleCodeChangeMessage(ws: WebSocket, msg: WebSocketCodeChangeMessageDTO) {
     const session = await redisclient.hGetAll(`gameSession:${msg.sessionId}`);
 
+    console.log("code: ", session["code"]);
+    console.log("userSockets: ", session["userSockets"]);
+
     if (session === null) {
       console.error('Session not found');
       return;
