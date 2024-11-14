@@ -1,6 +1,5 @@
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { rateLimit } from 'express-rate-limit';
 import { Express } from 'express';
 import { rateLimiter } from './rateLimiter';
 

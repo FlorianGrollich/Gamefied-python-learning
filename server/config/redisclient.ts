@@ -1,11 +1,11 @@
 import {createClient} from 'redis';
 
-const rediclient = createClient();
+const redisclient = createClient();
 
-rediclient.on('error', (err) => {
-  console.log('Error ' + err);
+redisclient.on('error', (err) => {
+  console.error('Error ' + err.toString());
 });
 
-rediclient.connect();
+redisclient.connect();
 
-export default rediclient;
+export default redisclient;

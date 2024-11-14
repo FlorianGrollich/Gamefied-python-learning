@@ -8,6 +8,12 @@ export interface WebSocketCodeMessageDTO {
   code: string;
 }
 
-type WebSocketMessageDTO = WebSocketActionMessageDTO | WebSocketCodeMessageDTO;
+export interface WebSocketCodeChangeMessageDTO {
+  type: 'codeChange',
+  sessionId: string
+  code: string;
+}
+
+type WebSocketMessageDTO = WebSocketActionMessageDTO | WebSocketCodeMessageDTO | WebSocketCodeChangeMessageDTO;
 
 export default WebSocketMessageDTO;

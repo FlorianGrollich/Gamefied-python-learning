@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Session } from '../models/sessionModel';
 import jwt from 'jsonwebtoken';
+import redisClient from '../config/redisclient';
 
 
 
@@ -26,6 +27,12 @@ class SessionController {
       const { email } = jwt.verify(token, process.env.JWT_SECRET!) as { email: string };
       const session = new Session({ usersIds: [email], code: 'from player import Player' });
       await session.save();
+
+      redisClient.hSet(`gameSession:${session._id}`, {
+        userEmails: JSON.stringify([email]),
+        code: session.code
+      });
+
       res.status(201).json( {
         code: session.code,
         id: session._id

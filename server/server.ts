@@ -7,17 +7,13 @@ import { verifyEnvVar } from './config/env';
 import app from './config/app';
 import { WebSocketServer } from 'ws';
 import WebSocketController from './controller/WebSocketController';
-import { createClient } from 'redis';
-import rediclient from './config/rediclient';
+import redisclient from './config/redisclient';
 
 dotenv.config();
 
 verifyEnvVar();
 connectMongo();
 
-
-const client = createClient();
-client.connect();
 
 app.use((req, res, next) => {
   console.log(`Request: ${req.method} ${req.url}`);
@@ -27,7 +23,7 @@ setupMiddleware(app);
 
 
 const wss = new WebSocketServer({ port: 8080 });
-const wsscon = new WebSocketController(wss, rediclient);
+const wsscon = new WebSocketController(wss, redisclient);
 
 wss.on('connection', function connection(ws) {
   wsscon.handleConnection(ws);
