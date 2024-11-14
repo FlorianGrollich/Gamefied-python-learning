@@ -27,7 +27,7 @@ class SessionController {
       await session.save();
 
       await redisClient.hSet(`gameSession:${session._id}`, {
-        userSockets: JSON.stringify([]),
+        userSocketIds: JSON.stringify([]),
         code: session.code,
         userEmails: JSON.stringify([email]),
       });
