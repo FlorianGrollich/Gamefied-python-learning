@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/node';
 import { v4 as uuidv4 } from 'uuid';
 
 class WebSocketController {
-  private clients: Map<string, WebSocket>;
+  public clients: Map<string, WebSocket>;
   private server: WebSocketServer;
   private redisClient;
 

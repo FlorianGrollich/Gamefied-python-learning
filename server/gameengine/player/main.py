@@ -1,5 +1,1 @@
-from player import Player
-
-
-player = Player()
-player.move()
+print("Hello World")

@@ -35,8 +35,7 @@
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.1",
     "typeorm": "^0.3.17",
-    "uuid": "^11.0.3",
-    "ws": "^8.16.0"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
@@ -64,6 +63,7 @@
     "jest-mock-extended": "^4.0.0-beta1",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "ws": "^8.18.0"
   }
 }
