@@ -1,18 +1,6 @@
 module.exports = {
-    testEnvironment: 'node',
-    roots: ['.'],
-    transform: {
-      '^.+\\.(ts|tsx)$': 'ts-jest'
-    },
-    collectCoverage: true,
-    collectCoverageFrom: [
-      "**/*.{js,ts}",
-      "!**/node_modules/**",
-      "!Dockerfile",
-      "!jest.config.js",
-      "!**/coverage/**",
-    ],
-    coverageDirectory: "<rootDir>/coverage",
-    coverageReporters: ["json", "lcov", "text", "clover"],
-  };
-    
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+};
