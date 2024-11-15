@@ -16,7 +16,7 @@ a lot of it was  unnecessary    , and it made the codebase harder to work with.
 
 ## Tech Stack
 - Frontend: React, TailwindCSS, Three.js (react-three-fiber), TypeScript
-- Backend: Node.js, Express, PostgreSQL, TypeORM, TypeScript
+- Backend: Node.js, Express, Redis, MongoDB, Typescript
 
 
 ## Setup
@@ -33,16 +33,6 @@ npm install
 
 ### Set Up .env Files
 Create `.env` files with the necessary environment variables. Use the following templates as a starting point, and ask the project administrator for the actual values:
-
-- Root directory `.env` template(for setting up local db):
-  ```env
-  FRONTEND_PORT=<frontend-port>
-  SERVER_PORT=<server-port>
-  DB_PORT=<db-port>
-  POSTGRES_USER=<postgres-user>
-  POSTGRES_PASSWORD=<postgres-password>
-  POSTGRES_DB=<postgres-db>
-  ```
   
 - Frontend directory `.env` template:
   ```env
@@ -52,17 +42,19 @@ Create `.env` files with the necessary environment variables. Use the following 
 
 - Server directory `.env` template:
   ```env
-  JWT_SECRET=<jwt-secret>
-  DATABASE_URL=<db-host>
+JWT_SECRET=<jwt-secret>
+SENTRY_ORG=<sentry-org>
+SENTRY_PROJECT=<sentry-project>
+SENTRY_AUTH_TOKEN=<sentry-auth-token>
+SENTRY_DSN=<sentry-dsn>
+REDIS_PASSWORD=<redis-password>
+REDIS_HOST=<redis-host>
+REDIS_PORT=14309
+MONGO_CONNECTION_STRING=<connection-string>
   ```
 
 
 ## Run the Project
-
-### Run the DB
-```bash
-docker-compose up db
-```
 
 ### Run Only the Backend
 ```bash
@@ -73,39 +65,3 @@ npm run server
 ```bash
 npm run frontend
 ```
-
-
-## Code Analysis Tools
-
-### ESLint
--ESLint is a static code analysis tool for identifying problematic patterns and enforcing coding style guidelines 
-- can be manually run using:
-- ```bash
-  npm run lint-frontend
-  ```
-- ```bash
-    npm run lint-server
-    ```
-- but it is also automatically run when running application
-
-### Prettier
-- code formatting tool
-- can be manually run using:
-- ```bash
-  npm run format-frontend
-  ```
-- ```bash
-    npm run format-server
-    ```
-## Clean code principles
-- Follow proper and consistent naming convention -> shows intention
-- self-documented
-- DRY
-- don't use magic numbers
-- no commented out code
-- clear seperation of concerns
-- few arguments
-- error handling
-- no overuse, no unnecessary nesting of if else statements
-- clear error identification
-- static analysis tools (esling, prettier)
