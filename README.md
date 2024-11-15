@@ -42,15 +42,15 @@ Create `.env` files with the necessary environment variables. Use the following 
 
 - Server directory `.env` template:
   ```env
-JWT_SECRET=<jwt-secret>
-SENTRY_ORG=<sentry-org>
-SENTRY_PROJECT=<sentry-project>
-SENTRY_AUTH_TOKEN=<sentry-auth-token>
-SENTRY_DSN=<sentry-dsn>
-REDIS_PASSWORD=<redis-password>
-REDIS_HOST=<redis-host>
-REDIS_PORT=14309
-MONGO_CONNECTION_STRING=<connection-string>
+  JWT_SECRET=<jwt-secret>
+  SENTRY_ORG=<sentry-org>
+  SENTRY_PROJECT=<sentry-project>
+  SENTRY_AUTH_TOKEN=<sentry-auth-token>
+  SENTRY_DSN=<sentry-dsn>
+  REDIS_PASSWORD=<redis-password>
+  REDIS_HOST=<redis-host>
+  REDIS_PORT=14309
+  MONGO_CONNECTION_STRING=<connection-string>
   ```
 
 
