@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import { IUser, User } from '../models/userModel';
 import { generateToken } from '../utils/token';
+import * as Sentry from '@sentry/node';
 
 
 interface LoginRequestBody {
@@ -26,65 +27,76 @@ class UserController {
 
 
   async register(req: Request, res: Response, next: NextFunction) {
-    const { displayName, email, password } = req.body;
+    await Sentry.startSpan({
+        name: 'register',
+      },
+      async (span: any) => {
 
-    console.log(req.body);
-
-    try {
-
-      if (!displayName || !email || !password) {
-        return res.status(400).send('Please provide all required fields');
-
-      }
-
-      const existingUser = await this.findExistingUser(email);
-      if (existingUser) {
-        return res.status(409).send('Email address already exists');
-      }
+        const { displayName, email, password } = req.body;
 
 
-      const hashedPassword = await this.hashPassword(password);
-      const user = new User({ displayName: displayName, email: email, password: hashedPassword });
-      await user.save();
+        try {
 
-      const token = generateToken(user);
-      return res.json({ token });
+          if (!displayName || !email || !password) {
+            return res.status(400).send('Please provide all required fields');
+
+          }
+
+          const existingUser = await this.findExistingUser(email);
+          if (existingUser) {
+            return res.status(409).send('Email address already exists');
+          }
 
 
-    } catch (err) {
-      next(err);
-    }
+          const hashedPassword = await this.hashPassword(password);
+          const user = new User({ displayName: displayName, email: email, password: hashedPassword });
+          await user.save();
+
+          const token = generateToken(user);
+          return res.json({ token });
+
+
+        } catch (err) {
+          next(err);
+        }
+      },
+    );
 
   }
 
 
   async login(req: Request<{}, {}, LoginRequestBody>, res: Response, next: NextFunction) {
-    console.log(req.body);
-    const { email, password } = req.body;
-    try {
-      if (!email || !password) {
-        return res.status(400).send('Please provide all required fields');
-      }
-      const foundUser = await this.findExistingUser(email);
-      if (!foundUser) {
-        return res.status(401).send('Credentials are incorrect');
-      }
+    Sentry.startSpan({
+        name: 'login',
+      },
+      async (span: any) => {
+        const { email, password } = req.body;
+        try {
+          if (!email || !password) {
+            return res.status(400).send('Please provide all required fields');
+          }
+          const foundUser = await this.findExistingUser(email);
+          if (!foundUser) {
+            return res.status(401).send('Credentials are incorrect');
+          }
 
 
+          const isValidPassword = await bcrypt.compare(req.body.password, foundUser.password);
 
-      const isValidPassword = await bcrypt.compare(req.body.password, foundUser.password);
+          if (!isValidPassword) {
+            return res.status(401).send('Credentials are incorrect');
+          }
 
-      if (!isValidPassword) {
-        return res.status(401).send('Credentials are incorrect');
-      }
+          const token = generateToken(foundUser);
+          return res.json({ token });
 
-      const token = generateToken(foundUser);
-      return res.json({ token });
-
-    } catch (error) {
-     next(error);
-    }
+        } catch (error) {
+          next(error);
+        }
+      });
   }
+
+
 
 }
 
