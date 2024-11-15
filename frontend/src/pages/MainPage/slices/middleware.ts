@@ -15,7 +15,7 @@ export const socketMiddleware = (socket: CustomSocket): Middleware<{}, any> =>
         switch (type) {
 
           case WebSocketActionType.SOCKET_CONNECT:
-            socket.connect('ws://banana-123-af592fb0fa03.herokuapp.com/');
+            socket.connect(process.env.REACT_APP_WS_URL!);
 
 
             socket.on(WebSocketEventType.OPEN, () => {
