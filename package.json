@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "cd server && npm run build",
     "start": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "cd server && npm run dev",
     "frontend": "cd frontend && npm start",
