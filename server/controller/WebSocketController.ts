@@ -55,28 +55,60 @@ class WebSocketController {
   private handleMessage(wsId: string, message: string) {
     let parsedMessage: WebSocketMessageDTO;
 
-    try {
-      parsedMessage = JSON.parse(message);
-    } catch (error) {
-      Sentry.captureException(error);
-      console.error('Failed to parse message:', message);
+    Sentry.startSpan({
+        name: 'handling message in websocket',
+        op: 'parseMessage',
+      },
+      (parentSpan) => {
+        try {
+          parsedMessage = JSON.parse(message);
+        } catch (error) {
+          Sentry.captureException(error);
+          console.error('Failed to parse message:', message);
 
-      return;
-    }
-    switch (parsedMessage.type) {
-      case 'code':
-        this.handleCodeMessage(wsId, parsedMessage);
-        break;
-      case 'codeChange':
-        this.handleCodeChangeMessage(wsId, parsedMessage);
-        break;
-      case 'loadGame':
-        this.handleLoadGameMessage(wsId, parsedMessage);
-        break;
-      default:
-        Sentry.captureMessage('Unknown message type in WebSocketController');
-        console.log('Unknown message type:', parsedMessage);
-    }
+          return;
+        }
+        switch (parsedMessage.type) {
+          case 'code':
+            Sentry.startSpan({
+                name: 'handling code message in websocket',
+                op: 'handleCodeMessage',
+                parentSpan: parentSpan,
+              },
+              (span) => {
+                this.handleCodeMessage(wsId, parsedMessage as WebSocketCodeMessageDTO);
+              });
+            break;
+          case 'codeChange':
+            Sentry.startSpan({
+                name: 'handling code change message in websocket',
+                op: 'handleCodeChangeMessage',
+                parentSpan: parentSpan,
+              },
+              (span) => {
+
+                this.handleCodeChangeMessage(wsId, parsedMessage as WebSocketCodeChangeMessageDTO);
+              },
+            );
+            break;
+          case 'loadGame':
+            Sentry.startSpan({
+              name: 'handling load game message in websocket',
+              op: 'handleLoadGameMessage',
+              parentSpan: parentSpan,
+
+            }, (span) => {
+
+              this.handleLoadGameMessage(wsId, parsedMessage as WebSocketLoadGameMessageDTO);
+            });
+            break;
+          default:
+            Sentry.captureMessage('Unknown message type in WebSocketController');
+            console.log('Unknown message type:', parsedMessage);
+        }
+      },
+    );
+
   }
 
   private async handleLoadGameMessage(wsId: string, msg: WebSocketLoadGameMessageDTO) {

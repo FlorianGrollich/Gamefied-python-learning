@@ -14,14 +14,14 @@ import { rewriteFramesIntegration } from '@sentry/node';
 dotenv.config();
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
-  tracesSampleRate: 1.0,
-  integrations: [
+  tracesSampleRate: 0.01,
+  integrations: [Sentry.mongooseIntegration(),
+    Sentry.redisIntegration(),
     rewriteFramesIntegration({
       root: global.__dirname,
     }),
   ],
 });
-
 
 
 connectMongo();

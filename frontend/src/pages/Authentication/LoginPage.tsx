@@ -6,14 +6,14 @@ import { AppDispatch, RootState } from '../../store';
 import InputField from '../Authentication/components/InputField';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [credError, setCredError] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const errorMsg = await dispatch(login({ username, password }));
+    const errorMsg = await dispatch(login({ email, password }));
     if (errorMsg) {
       setCredError(true);
     }
@@ -37,12 +37,12 @@ const LoginPage: React.FC = () => {
       <div className="bg-white p-8 rounded-2xl shadow-lg">
         <form onSubmit={handleLogin} className="space-y-4">
           <InputField
-            id="username"
-            label="Username"
+            id="Email"
+            label="Email"
             type="text"
-            value={username}
+            value={email}
             error={credError ? '' : ''}
-            onChange={e => setUsername(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
           <InputField
             id="password"

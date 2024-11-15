@@ -45,11 +45,11 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   'auth/login',
   (
-    { username, password }: { username: string; password: string },
+    { email, password }: { email: string; password: string },
     { rejectWithValue },
   ) => {
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/login`, { username, password })
+      .post(`${process.env.REACT_APP_API_URL}/login`, { email, password })
       .then(response => {
         return response.data.token;
       })
