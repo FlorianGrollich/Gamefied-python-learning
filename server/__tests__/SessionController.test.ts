@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import sessionController from '../controller/SessionController';
-import jwt from 'jsonwebtoken';
+
 import { describe, it, expect } from '@jest/globals';
 
 const app = express();
