@@ -1,4 +1,5 @@
 .vercel
+__tests__
 
 # Sentry Config File
 .sentryclirc
