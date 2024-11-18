@@ -42,7 +42,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.8.4",
     "@types/node-fetch": "^2.6.7",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.1.0",
     "eslint-plugin-security": "^1.7.1",
     "react-app-rewired": "^2.2.1",
     "webpack-cli": "^5.1.4"
